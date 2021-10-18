@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Gestor-de-Inmuebles.iml" filepath="$PROJECT_DIR$/.idea/Gestor-de-Inmuebles.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GestorProjecs/GestorProjecs.iml" filepath="$PROJECT_DIR$/GestorProjecs/GestorProjecs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GestorProject/GestorProject.iml" filepath="$PROJECT_DIR$/GestorProject/GestorProject.iml" />
     </modules>
   </component>
 </project>
