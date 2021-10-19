@@ -32,7 +32,7 @@ public class GestorGUI {
             Constructor constructorPanel = proximoPanel.clase.getConstructor();
             Panel nuevoPanel = (Panel) constructorPanel.newInstance();
             framePrincipal.setContentPane(nuevoPanel);
-            framePrincipal.setTitle("Gestor de inmuebles: " + nombrePanel);
+            framePrincipal.setTitle("Gestor de inmuebles: " + nuevoPanel.getTitulo());
             framePrincipal.revalidate();
             historia.push(nuevoPanel);
         } catch (NoSuchMethodException e) {
