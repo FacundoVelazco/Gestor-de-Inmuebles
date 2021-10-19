@@ -1,4 +1,7 @@
-package Gestores.GestoreGUI;
+package Gestores.GestoreGUI.GestorGUITest;
+
+import Gestores.GestoreGUI.GestorGUI;
+import Gestores.GestoreGUI.PanelWrap;
 
 public class MainTestGestorGUI {
     public static void main(String[] args){

@@ -1,5 +1,8 @@
 package Gestores.GestoreGUI;
 
+import GUI.Panel;
+import Gestores.GestoreGUI.GestorGUITest.panelTest1;
+
 import javax.swing.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +12,7 @@ import java.util.Stack;
 public class GestorGUI {
     public static JFrame framePrincipal = new JFrame();
     static ArrayList<PanelWrap> paneles = new ArrayList<PanelWrap>();
-    static Stack<JPanel> historia = new Stack<JPanel>();
+    static Stack<Panel> historia = new Stack<Panel>();
 
     public static void add(PanelWrap nuevoPanel) {
         paneles.add(nuevoPanel);
@@ -27,7 +30,7 @@ public class GestorGUI {
         PanelWrap proximoPanel = PanelWrap.find(nombrePanel,paneles);
         try {
             Constructor constructorPanel = proximoPanel.clase.getConstructor();
-            JPanel nuevoPanel = (JPanel) constructorPanel.newInstance();
+            Panel nuevoPanel = (Panel) constructorPanel.newInstance();
             framePrincipal.setContentPane(nuevoPanel);
             framePrincipal.setTitle("Gestor de inmuebles: " + nombrePanel);
             framePrincipal.revalidate();
@@ -43,7 +46,7 @@ public class GestorGUI {
         if (historia.size() > 1) {
             JPanel panelActual = historia.pop();
             framePrincipal.setContentPane(historia.lastElement());
-            framePrincipal.setTitle(((panelTest1) historia.lastElement()).getTituloPanel());
+            framePrincipal.setTitle("Gestor de inmuebles: " + (historia.lastElement().getTitulo()));
             framePrincipal.revalidate();
         } else {
             System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");

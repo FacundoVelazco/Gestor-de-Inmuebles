@@ -1,6 +1,5 @@
 package Gestores.GestoreGUI;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class PanelWrap {
