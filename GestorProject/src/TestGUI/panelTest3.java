@@ -1,26 +1,23 @@
-package Gestores.GestoreGUI.GestorGUITest;
+package TestGUI;
 
-import GUI.Panel;
-import Gestores.GestoreGUI.GestorGUI;
+import GUI.GestorGUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class panelTest2 extends Panel {
-    public panelTest2(String titulo) {
-        super(titulo);
-    }
-    public panelTest2(){
-        this("Panel 2");
+public class panelTest3 extends JPanel {
+
+    public panelTest3(){
+
         JButton panel2 = new JButton("volver");
+        add(panel2);
         panel2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.pop();
             }
         });
-        add(panel2);
+
     }
 }

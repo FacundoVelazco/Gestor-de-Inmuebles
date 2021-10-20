@@ -1,7 +1,4 @@
-package Gestores.GestoreGUI;
-
-import GUI.Panel;
-import Gestores.GestoreGUI.GestorGUITest.panelTest1;
+package GUI;
 
 import javax.swing.*;
 import java.lang.reflect.Constructor;
@@ -9,10 +6,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Stack;
 
+
+/**
+ * Para añadir paneles a la interfaz debemos pasarle al método GestorGUI.add() un
+ * PanelWrap con el nombre y la clase del panel.
+ * Una vez añadidos los paneles, para iniciar la interfaz llamaremos al método
+ * GestorGUI.init(String nombrePanel) donde nombrePanel es el nombre del panel de
+ * alguno de los panelWraps que hayamos agregado al gestor con el que querramos inicializar.
+ */
 public class GestorGUI {
-    public static JFrame framePrincipal = new JFrame();
+    static JFrame framePrincipal = new JFrame();
     static ArrayList<PanelWrap> paneles = new ArrayList<PanelWrap>();
-    static Stack<Panel> historia = new Stack<Panel>();
+    static Stack<JPanel> historia = new Stack<>();
 
     public static void add(PanelWrap nuevoPanel) {
         paneles.add(nuevoPanel);
@@ -22,17 +27,16 @@ public class GestorGUI {
         push(nombrePanel);
         framePrincipal.pack();
         framePrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        framePrincipal.setTitle("Gestor de inmuebles");
         framePrincipal.setVisible(true);
     }
-    private void cambiarTitulo(String newTitulo){framePrincipal.setTitle(newTitulo);}
 
     public static void push(String nombrePanel) {
         PanelWrap proximoPanel = PanelWrap.find(nombrePanel,paneles);
         try {
             Constructor constructorPanel = proximoPanel.clase.getConstructor();
-            Panel nuevoPanel = (Panel) constructorPanel.newInstance();
+            JPanel nuevoPanel = (JPanel) constructorPanel.newInstance();
             framePrincipal.setContentPane(nuevoPanel);
-            framePrincipal.setTitle("Gestor de inmuebles: " + nuevoPanel.getTitulo());
             framePrincipal.revalidate();
             historia.push(nuevoPanel);
         } catch (NoSuchMethodException e) {
@@ -46,12 +50,13 @@ public class GestorGUI {
         if (historia.size() > 1) {
             JPanel panelActual = historia.pop();
             framePrincipal.setContentPane(historia.lastElement());
-            framePrincipal.setTitle("Gestor de inmuebles: " + (historia.lastElement().getTitulo()));
             framePrincipal.revalidate();
         } else {
             System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
         }
     }
+
+    public static void cambiarTitulo(String newTitulo){framePrincipal.setTitle(newTitulo);}
 
     public static void popToTop() {
         while (historia.size() > 1) {
