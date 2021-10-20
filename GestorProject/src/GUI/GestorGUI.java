@@ -1,15 +1,10 @@
 package GUI;
 
-import GUI.Panels.PanelABMCliente;
 import TestGUI.panelTest1;
 import TestGUI.panelTest2;
 import TestGUI.panelTest3;
-import jdk.jshell.spi.ExecutionControl;
 
 import javax.swing.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class GestorGUI {
@@ -19,12 +14,7 @@ public class GestorGUI {
 
     private static void setPantalla(Pantalla pantalla){
         switch (pantalla){
-            case ABM_CLIENTE:
-                framePrincipal.setContentPane(new PanelABMCliente().getPanelPrincipal());
-                break;
-            case CREAR_CLIENTE:
-                //TODO insertar creación pantalla de crear cliente aqui
-                break;
+            //TODO insertar creación de pantallas en cada case
             case panelTest1:
                 framePrincipal.setContentPane(new panelTest1()); //TODO remover paneles de testeo
                 break;
