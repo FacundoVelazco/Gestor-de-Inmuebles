@@ -1,6 +1,7 @@
 package TestGUI;
 
 import GUI.GestorGUI;
+import GUI.Pantalla;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,13 +17,13 @@ public class panelTest1 extends JPanel {
         panel2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GestorGUI.push("panel2");
+                GestorGUI.push(Pantalla.panelTest2);
             }
         });
         panel3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GestorGUI.push("panel3");
+                GestorGUI.push(Pantalla.panelTest3);
             }
         });
         add(panel2);
