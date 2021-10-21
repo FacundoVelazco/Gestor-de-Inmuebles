@@ -1,15 +1,12 @@
 package GUI;
 
-import GUI.Panels.PanelABMCliente;
+import GUI.Panels.PantallaABMCliente;
+import GUI.Panels.PantallaCrearCliente;
 import TestGUI.panelTest1;
 import TestGUI.panelTest2;
 import TestGUI.panelTest3;
-import jdk.jshell.spi.ExecutionControl;
 
 import javax.swing.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class GestorGUI {
@@ -20,10 +17,10 @@ public class GestorGUI {
     private static void setPantalla(Pantalla pantalla){
         switch (pantalla){
             case ABM_CLIENTE:
-                framePrincipal.setContentPane(new PanelABMCliente().getPanelPrincipal());
+                framePrincipal.setContentPane(new PantallaABMCliente().getPanelPrincipal());
                 break;
             case CREAR_CLIENTE:
-                //TODO insertar creación pantalla de crear cliente aqui
+                framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
                 break;
             case panelTest1:
                 framePrincipal.setContentPane(new panelTest1()); //TODO remover paneles de testeo
@@ -43,6 +40,7 @@ public class GestorGUI {
         framePrincipal.pack();
         framePrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         framePrincipal.setTitle("Gestor de inmuebles");
+        framePrincipal.setLocationRelativeTo(null);
         framePrincipal.setVisible(true);
     }
 
