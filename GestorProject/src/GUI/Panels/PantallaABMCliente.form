@@ -16,7 +16,7 @@
           <opaque value="false"/>
           <visible value="true"/>
         </properties>
-        <border type="empty"/>
+        <border type="none"/>
         <children>
           <component id="80af7" class="javax.swing.JTable" binding="tablaClientes" default-binding="true">
             <constraints/>

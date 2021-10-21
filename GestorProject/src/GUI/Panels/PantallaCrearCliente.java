@@ -1,5 +1,6 @@
 package GUI.Panels;
 
+import GUI.AutoCompletion;
 import GUI.GestorGUI;
 
 import javax.swing.*;
@@ -28,9 +29,9 @@ public class PantallaCrearCliente {
     private JLabel textoIntereses;
     private JPanel panelPreferencias1;
     private JPanel panelPreferencias2;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JComboBox comboBox3;
+    private JComboBox comboBoxTipo;
+    private JComboBox comboBoxLocalidad;
+    private JComboBox comboBoxBarrio;
     private JFormattedTextField formattedTextField2;
 
     private static final int CHECK_COL = 1;
@@ -56,12 +57,20 @@ public class PantallaCrearCliente {
 
     public PantallaCrearCliente() {
 
+        //Configuración de la tabla
         tablaCaracteristicas = new JTable(dataModel);
         scrollPaneCaracteristicas.setViewportView(tablaCaracteristicas);
         tablaCaracteristicas.setPreferredScrollableViewportSize(new Dimension(150, 175));
         tablaCaracteristicas.getColumnModel().getColumn(CHECK_COL).setMaxWidth(60);
+        tablaCaracteristicas.getTableHeader().setReorderingAllowed(false);
         tablaCaracteristicas.getTableHeader().setResizingAllowed(false);
+        tablaCaracteristicas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectionModel = (DefaultListSelectionModel) tablaCaracteristicas.getSelectionModel();
+
+        //Autocompletado de los comboboxes
+        AutoCompletion.enable(comboBoxTipo);
+        AutoCompletion.enable(comboBoxBarrio);
+        AutoCompletion.enable(comboBoxLocalidad);
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
