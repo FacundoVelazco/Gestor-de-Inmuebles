@@ -6,18 +6,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class panelTest2 extends JPanel {
+public class PanelTest3 extends JPanel {
 
-    public panelTest2(){
+    public PanelTest3(){
 
         JButton panel2 = new JButton("volver");
+        add(panel2);
         panel2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.pop();
             }
         });
-        add(panel2);
 
     }
 }

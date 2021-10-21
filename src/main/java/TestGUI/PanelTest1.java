@@ -7,9 +7,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class panelTest1 extends JPanel {
+public class PanelTest1 extends JPanel {
 
-    public panelTest1(){
+    public PanelTest1(){
 
         JButton panel2 = new JButton("ir panel 2");
         JButton panel3 = new JButton("ir panel 3");
