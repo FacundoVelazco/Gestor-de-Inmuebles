@@ -56,7 +56,7 @@ public class Inmueble {
         this.propiedadDestacada = false;
         this.fechaCarga = LocalDate.now();
     }
-    
+
     //Getters and Setters
     public Integer getId() {
         return id;
