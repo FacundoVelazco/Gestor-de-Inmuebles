@@ -1,7 +1,7 @@
 package GUI.Panels;
 
 import GUI.AutoCompletion;
-import GUI.GestorGUI;
+import Services.GestorGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

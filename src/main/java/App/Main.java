@@ -1,13 +1,13 @@
 package App;
 
-import GUI.GestorGUI;
-import GUI.Pantalla;
+import Services.GestorGUI;
+import GUI.Util.Pantalla;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String args[]) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        GestorGUI.init(Pantalla.panelTest3);
+        GestorGUI.init(Pantalla.AM_INMUEBLE);
     }
 }
