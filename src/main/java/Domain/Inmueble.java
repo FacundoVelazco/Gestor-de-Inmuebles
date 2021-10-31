@@ -4,7 +4,6 @@ import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import Domain.Util.Propietario;
 import Domain.Util.TipoInmueble;
-import sun.jvm.hotspot.utilities.ObjectReader;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;

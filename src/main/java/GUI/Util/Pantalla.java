@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Util;
 
 public enum Pantalla {
     ABM_CLIENTE,
@@ -6,4 +6,5 @@ public enum Pantalla {
     panelTest1,
     panelTest2,
     panelTest3,
+    AM_INMUEBLE;
 }

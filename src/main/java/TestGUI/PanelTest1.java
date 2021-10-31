@@ -1,7 +1,7 @@
 package TestGUI;
 
-import GUI.GestorGUI;
-import GUI.Pantalla;
+import Services.GestorGUI;
+import GUI.Util.Pantalla;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

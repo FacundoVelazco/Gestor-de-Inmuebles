@@ -1,7 +1,7 @@
 package TestGUI;
 
-import GUI.GestorGUI;
-import GUI.Pantalla;
+import Services.GestorGUI;
+import GUI.Util.Pantalla;
 
 public class MainTestGestorGUI {
     public static void main(String[] args){

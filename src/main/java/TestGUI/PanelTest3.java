@@ -1,6 +1,6 @@
 package TestGUI;
 
-import GUI.GestorGUI;
+import Services.GestorGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
