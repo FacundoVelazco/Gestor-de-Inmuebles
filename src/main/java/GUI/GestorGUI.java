@@ -1,6 +1,7 @@
 package GUI;
 
 import GUI.Panels.PantallaABMCliente;
+import GUI.Panels.PantallaABMVendedor;
 import GUI.Panels.PantallaCrearCliente;
 import TestGUI.PanelTest1;
 import TestGUI.PanelTest2;
@@ -18,6 +19,9 @@ public class GestorGUI {
 
             case ABM_CLIENTE:
                 framePrincipal.setContentPane(new PantallaABMCliente().getPanelPrincipal());
+                break;
+            case ABM_VENDEDOR:
+                framePrincipal.setContentPane(new PantallaABMVendedor().getPanelPrincipal());
                 break;
             case CREAR_CLIENTE:
                 framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
