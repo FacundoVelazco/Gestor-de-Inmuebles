@@ -3,6 +3,7 @@ package GUI;
 import GUI.Panels.PantallaABMCliente;
 import GUI.Panels.PantallaABMVendedor;
 import GUI.Panels.PantallaCrearCliente;
+import GUI.Panels.PantallaLogIn;
 import TestGUI.PanelTest1;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
@@ -25,6 +26,9 @@ public class GestorGUI {
                 break;
             case CREAR_CLIENTE:
                 framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
+                break;
+            case LOGIN:
+                framePrincipal.setContentPane(new PantallaLogIn().getPanelPrincipal());
                 break;
             //TODO insertar creación de pantallas en cada case
             case panelTest1:
