@@ -79,4 +79,6 @@ public class GestorGUI {
     public static Pantalla peek(){
         return historia.peek();
     }
+
+
 }

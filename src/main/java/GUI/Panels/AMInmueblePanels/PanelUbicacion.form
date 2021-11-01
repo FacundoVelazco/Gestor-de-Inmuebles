@@ -8,6 +8,7 @@
     <properties>
       <maximumSize width="-1" height="-1"/>
       <minimumSize width="-1" height="-1"/>
+      <name value="UBICACION"/>
       <preferredSize width="900" height="400"/>
     </properties>
     <border type="none"/>
@@ -17,7 +18,8 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Pruebita"/>
+          <name value=""/>
+          <text value="Ubicación"/>
         </properties>
       </component>
     </children>
