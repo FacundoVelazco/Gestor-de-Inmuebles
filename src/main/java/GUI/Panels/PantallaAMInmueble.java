@@ -23,12 +23,16 @@ public class PantallaAMInmueble {
     private JButton botonCancelar;
     private JButton botonAnterior;
     private JButton botonSiguiente;
+
+    private PanelUbicacion panelUbicacionClase;
+    private PanelCaracteristicas panelCaracteristicasClase;
+    private PanelExtras panelExtrasClase;
+    private PanelFotosAndObservaciones panelFotosAndObservacionesClase;
+
     private JPanel panelUbicacion;
     private JPanel panelCaracteristicas;
     private JPanel panelExtras;
     private JPanel panelFotosAndObservaciones;
-
-
 
 
     public JPanel getPanelPrincipal() {
@@ -37,11 +41,18 @@ public class PantallaAMInmueble {
 
 
     public PantallaAMInmueble() {
-        //Definimos todos los paneles que vamos a utilizar
-        panelUbicacion = new PanelUbicacion().getPanelUbicacion();
-        panelCaracteristicas = new PanelCaracteristicas().getPanelCaracteristicas();
-        panelExtras = new PanelExtras().getPanelExtras();
-        panelFotosAndObservaciones = new PanelFotosAndObservaciones().getPanelFotosAndObservaciones();
+
+        //Creamos todas las clases asociadas a los paneles a utilizar
+        panelUbicacionClase = new PanelUbicacion();
+        panelCaracteristicasClase = new PanelCaracteristicas();
+        panelExtrasClase = new PanelExtras();
+        panelFotosAndObservacionesClase = new PanelFotosAndObservaciones();
+
+        //Seteamos todos los paneles que vamos a utilizar
+        panelUbicacion = panelUbicacionClase.getPanelUbicacion();
+        panelCaracteristicas = panelCaracteristicasClase.getPanelCaracteristicas();
+        panelExtras = panelExtrasClase.getPanelExtras();
+        panelFotosAndObservaciones = panelFotosAndObservacionesClase.getPanelFotosAndObservaciones();
 
         //Añadimos el panel de ubicación, que es el que aparece en primer instancia
         panelRotativo.add(panelUbicacion);
@@ -91,6 +102,7 @@ public class PantallaAMInmueble {
     private void cambioPanelSiguiente(TipoPanelAMInmueble panelActual){
         switch (panelActual){
             case UBICACION:
+                panelUbicacionClase.validarDatos();
                 panelRotativo.remove(0);
                 panelRotativo.add(panelCaracteristicas);
                 botonAnterior.setEnabled(true);

@@ -1,26 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.Panels.AMInmueblePanels.PanelExtras">
-  <grid id="27dc6" binding="panelExtras" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="panelExtras" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="795" height="679"/>
     </constraints>
     <properties>
+      <maximumSize width="-1" height="-1"/>
+      <minimumSize width="-1" height="-1"/>
       <name value="EXTRAS"/>
+      <preferredSize width="900" height="400"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="bcad0" class="javax.swing.JLabel" binding="tituloLabel">
+      <grid id="e990f" binding="panelTitulo" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <text value="Información Adicional"/>
-        </properties>
-      </component>
-      <hspacer id="52525">
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="bcad0" class="javax.swing.JLabel" binding="tituloLabel">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="20"/>
+              <text value="Información Adicional"/>
+            </properties>
+          </component>
+          <hspacer id="c2dfd">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="75735">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+      <grid id="43926" binding="panelIzquierda" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4fd6d" class="javax.swing.JCheckBox" binding="checkBoxCochera">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Cochera"/>
+            </properties>
+          </component>
+          <component id="2e842" class="javax.swing.JCheckBox" binding="checkBoxPatio">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Patio"/>
+            </properties>
+          </component>
+          <component id="a241f" class="javax.swing.JCheckBox" binding="checkBoxPiscina">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Piscina"/>
+            </properties>
+          </component>
+          <component id="753af" class="javax.swing.JCheckBox" binding="checkBoxAguaCorriente">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Agua Corriente"/>
+            </properties>
+          </component>
+          <component id="e40b7" class="javax.swing.JCheckBox" binding="checkBoxCloacas">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Cloacas"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="b58c9" binding="panelDerecha" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="13d79" class="javax.swing.JCheckBox" binding="checkBoxGasNatural">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Gas Natural"/>
+            </properties>
+          </component>
+          <component id="f3c30" class="javax.swing.JCheckBox" binding="checkBoxAguaCaliente">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Agua Caliente"/>
+            </properties>
+          </component>
+          <component id="10aa" class="javax.swing.JCheckBox" binding="checkBoxTelefono">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Teléfono"/>
+            </properties>
+          </component>
+          <component id="1cab0" class="javax.swing.JCheckBox" binding="checkBoxLavadero">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Lavadero"/>
+            </properties>
+          </component>
+          <component id="693f8" class="javax.swing.JCheckBox" binding="checkBoxPavimento">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="14" style="2"/>
+              <text value="Pavimento"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <hspacer id="e202d">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="30364">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
     </children>
