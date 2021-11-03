@@ -2,7 +2,6 @@ package Domain;
 
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
-import Domain.Util.Propietario;
 import Domain.Util.TipoInmueble;
 
 import java.awt.image.BufferedImage;
@@ -15,15 +14,7 @@ public class Inmueble {
     private EstadoInmueble estado;
     private LocalDate fechaCarga;
     private Boolean propiedadDestacada;
-    private String provincia;
-    private String localidad;
-    private String calle;
-    private Integer numeroCalle;
-    private Double longitud;
-    private Double latitud;
-    private String piso;
-    private String departamento;
-    private String barrio;
+    private Direccion direccion;
     private TipoInmueble tipoInmueble;
     private Float precio;
     private Orientacion orientacion;
@@ -50,7 +41,6 @@ public class Inmueble {
 
     public Inmueble(Propietario pI) {
         this.estado = EstadoInmueble.ALTA;
-        this.provincia = "Santa Fe";
         this.propietarioInmueble = pI;
         this.propiedadDestacada = false;
         this.fechaCarga = LocalDate.now();
@@ -87,78 +77,6 @@ public class Inmueble {
 
     public void setPropiedadDestacada(Boolean propiedadDestacada) {
         this.propiedadDestacada = propiedadDestacada;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public Integer getNumeroCalle() {
-        return numeroCalle;
-    }
-
-    public void setNumeroCalle(Integer numeroCalle) {
-        this.numeroCalle = numeroCalle;
-    }
-
-    public Double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
-    }
-
-    public Double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(Double latitud) {
-        this.latitud = latitud;
-    }
-
-    public String getPiso() {
-        return piso;
-    }
-
-    public void setPiso(String piso) {
-        this.piso = piso;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
     }
 
     public TipoInmueble getTipoInmueble() {
