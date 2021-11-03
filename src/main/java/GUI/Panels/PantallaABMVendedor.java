@@ -1,5 +1,8 @@
 package GUI.Panels;
 
+import GUI.GestorGUI;
+import GUI.Pantalla;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +25,7 @@ public class PantallaABMVendedor {
     private JPanel panelTitulo;
     private JPanel panelControles;
     private JButton buttonLimpiar;
+    private JButton buttonNuevoVendedor;
 
     private DataModel dataModel = new DataModel(DATA, COLUMNS);
     private static final String[] COLUMNS = {"Nombre", "Apellido","Nombre de usuario"};
@@ -53,6 +57,25 @@ public class PantallaABMVendedor {
         tablaVendedores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         sorter = new TableRowSorter<>(dataModel);
         tablaVendedores.setRowSorter(sorter);
+
+        buttonNuevoVendedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {GestorGUI.push(Pantalla.CREAR_VENDEDOR);
+            }
+        });
+
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog framePopUp = new JDialog(GestorGUI.getFrame());
+                framePopUp.add(new PantallaModificarVendedorPopup().getPanelPrincipal());
+                framePopUp.setLocationRelativeTo(null);
+                framePopUp.setResizable(false);
+                framePopUp.setSize(350,250);
+                framePopUp.setVisible(true);
+
+            }
+        });
 
         textFieldBuscar.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -91,7 +114,7 @@ public class PantallaABMVendedor {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaVendedores.getSelectedRow()>-1 && e.getValueIsAdjusting()){
-                    System.out.println("Cliente seleccionado: " +
+                    System.out.println("Vendedor seleccionado: " +
                             dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),0));
                     botonesActivados(true);
                 }

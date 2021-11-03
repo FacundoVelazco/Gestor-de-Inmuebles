@@ -1,13 +1,11 @@
 package GUI;
 
-import GUI.Panels.PantallaABMCliente;
-import GUI.Panels.PantallaABMVendedor;
-import GUI.Panels.PantallaCrearCliente;
-import GUI.Panels.PantallaLogIn;
+import GUI.Panels.*;
 import TestGUI.PanelTest1;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
 import javax.swing.*;
+import java.awt.*;
 import java.util.Stack;
 
 public class GestorGUI {
@@ -26,6 +24,15 @@ public class GestorGUI {
                 break;
             case CREAR_CLIENTE:
                 framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
+                break;
+            case CREAR_VENDEDOR:
+                framePrincipal.setContentPane(new PantallaCrearVendedor().getPanelPrincipal());
+                break;
+            case MODIFICAR_VENDEDOR:
+                framePrincipal.setContentPane(new PantallaModificarVendedor().getPanelPrincipal());
+                break;
+            case MODIFICAR_VENDEDOR_POPUP:
+                framePrincipal.setContentPane(new PantallaModificarVendedorPopup().getPanelPrincipal());
                 break;
             case LOGIN:
                 framePrincipal.setContentPane(new PantallaLogIn().getPanelPrincipal());
@@ -79,5 +86,9 @@ public class GestorGUI {
 
     public static Pantalla peek(){
         return historia.peek();
+    }
+
+    public static Frame getFrame() {
+        return framePrincipal;
     }
 }
