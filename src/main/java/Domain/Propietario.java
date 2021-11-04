@@ -1,4 +1,4 @@
-package Domain.Util;
+package Domain;
 
 public class Propietario {
 

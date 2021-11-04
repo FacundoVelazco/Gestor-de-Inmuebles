@@ -2,11 +2,10 @@ package Domain;
 
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
-import Domain.Util.Propietario;
 import Domain.Util.TipoInmueble;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Inmueble {
@@ -30,7 +29,7 @@ public class Inmueble {
     private Double longitudFrente;
     private Double longitudFondo;
     private Double tamanioInmueble;
-    private Boolean propiedadHorizontal;
+    private Boolean esPropiedadHorizontal;
     private Integer antiguedad;
     private Integer cantidadDormitorios;
     private Integer cantidadBanios;
@@ -44,8 +43,9 @@ public class Inmueble {
     private Boolean tieneTelefono;
     private Boolean tieneLavadero;
     private Boolean tienePavimento;
-    private BufferedImage fotoPrincipal;
-    private List<BufferedImage> fotosInmueble;
+    private Imagen fotoPrincipal;
+    private List<Imagen> fotosInmueble = new ArrayList<>();
+    private String observaciones;
     private Propietario propietarioInmueble;
 
     public Inmueble(Propietario pI) {
@@ -209,12 +209,12 @@ public class Inmueble {
         this.tamanioInmueble = tamanioInmueble;
     }
 
-    public Boolean getPropiedadHorizontal() {
-        return propiedadHorizontal;
+    public Boolean getEsPropiedadHorizontal() {
+        return esPropiedadHorizontal;
     }
 
-    public void setPropiedadHorizontal(Boolean propiedadHorizontal) {
-        this.propiedadHorizontal = propiedadHorizontal;
+    public void setEsPropiedadHorizontal(Boolean esPropiedadHorizontal) {
+        this.esPropiedadHorizontal = esPropiedadHorizontal;
     }
 
     public Integer getAntiguedad() {
@@ -321,19 +321,19 @@ public class Inmueble {
         this.tienePavimento = tienePavimento;
     }
 
-    public BufferedImage getFotoPrincipal() {
+    public Imagen getFotoPrincipal() {
         return fotoPrincipal;
     }
 
-    public void setFotoPrincipal(BufferedImage fotoPrincipal) {
+    public void setFotoPrincipal(Imagen fotoPrincipal) {
         this.fotoPrincipal = fotoPrincipal;
     }
 
-    public List<BufferedImage> getFotosInmueble() {
+    public List<Imagen> getFotosInmueble() {
         return fotosInmueble;
     }
 
-    public void setFotosInmueble(List<BufferedImage> fotosInmueble) {
+    public void setFotosInmueble(List<Imagen> fotosInmueble) {
         this.fotosInmueble = fotosInmueble;
     }
 
@@ -343,5 +343,13 @@ public class Inmueble {
 
     public void setPropietarioInmueble(Propietario propietarioInmueble) {
         this.propietarioInmueble = propietarioInmueble;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 }
