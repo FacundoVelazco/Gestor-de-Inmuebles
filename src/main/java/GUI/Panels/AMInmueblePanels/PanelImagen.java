@@ -13,9 +13,16 @@ public class PanelImagen {
     }
 
 
-    public void setImagen(String ruta){
-        labelFoto.setIcon(new ImageIcon(new ImageIcon(ruta).getImage().getScaledInstance(497, 497, Image.SCALE_AREA_AVERAGING)));
+    public void setImagenVisible(ImageIcon fotoAMostrar){
+
+        labelFoto.setIcon(fotoAMostrar);
         panelPrincipal.revalidate();
         panelPrincipal.repaint();
     }
+
+    public ImageIcon obtenerImagen(String ruta){
+        ImageIcon imagen = new ImageIcon(new ImageIcon(ruta).getImage().getScaledInstance(497, 497, Image.SCALE_AREA_AVERAGING));
+        return imagen;
+    }
+
 }
