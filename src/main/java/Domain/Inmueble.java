@@ -48,10 +48,9 @@ public class Inmueble {
     private String observaciones;
     private Propietario propietarioInmueble;
 
-    public Inmueble(Propietario pI) {
+    public Inmueble() {
         this.estado = EstadoInmueble.ALTA;
         this.provincia = "Santa Fe";
-        this.propietarioInmueble = pI;
         this.propiedadDestacada = false;
         this.fechaCarga = LocalDate.now();
     }
