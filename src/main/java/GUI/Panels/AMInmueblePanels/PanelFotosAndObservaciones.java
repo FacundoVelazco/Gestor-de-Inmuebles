@@ -27,6 +27,7 @@ public class PanelFotosAndObservaciones{
     private JPanel panelImagen;
     private JCheckBox checkBoxFotoPortada;
     private JLabel archivosAbiertosLabel;
+    private JLabel errorImagenLabel;
     private JLabel imagenLabel;
     private PanelImagen panelImagenExternoClase;
     private JPanel panelImagenExterno;
@@ -67,6 +68,7 @@ public class PanelFotosAndObservaciones{
         buttonSiguienteImagen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                limpiarLabelErrores();
                 imagenSeleccionada++;
                 panelImagenExternoClase.setImagenVisible(fotosSeleccionadas.get(imagenSeleccionada));
                 manejoBotones();
@@ -78,6 +80,7 @@ public class PanelFotosAndObservaciones{
         buttonAnteriorImagen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                limpiarLabelErrores();
                 imagenSeleccionada--;
                 panelImagenExternoClase.setImagenVisible(fotosSeleccionadas.get(imagenSeleccionada));
                 manejoBotones();
@@ -89,6 +92,8 @@ public class PanelFotosAndObservaciones{
         buttonEliminarImagen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                limpiarLabelErrores();
 
                 int borrado;
                 borrado = imagenSeleccionada;
@@ -119,6 +124,7 @@ public class PanelFotosAndObservaciones{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int seleccion = selectorDeArchivosFotos.showOpenDialog(panelFotosAndObservaciones);
+                limpiarLabelErrores();
                 // Si el usuario presiona Seleccionar
                 if(seleccion == JFileChooser.APPROVE_OPTION) {
 
@@ -128,7 +134,7 @@ public class PanelFotosAndObservaciones{
 
                     //Chequeamos que la cantidad de fotos subidas no exceda las 20 imagenes
                     if(arrayFileFotos.length + fotosSeleccionadas.size() > 20){
-                        System.out.println("Cantidad de imagenes > 20");
+                        errorImagenLabel.setText("No puede ingresar más de 20 imágenes");
                     }else{
                         //Por cada file seleccionado, convierto a imagen, primero chequeando que respete el formato.
                         for(File f : arrayFileFotos){
@@ -139,7 +145,7 @@ public class PanelFotosAndObservaciones{
                                 nombresArchivosFotos.add(f.getName());
                                 contador++;
                             }else{
-                                System.out.println("ETO NO E UNA IMAGEN");
+                                errorImagenLabel.setText("Algunos archivos ingresados no eran imágenes");
                             }
                         }
                         //Mostramos la primer imagen subida en esta tanda
@@ -152,7 +158,7 @@ public class PanelFotosAndObservaciones{
                             actualizarLabelArchivos();
                             manejoCheckBoxFotoPortada(false);
                         }catch (Exception ex){
-                            System.out.println("No hay imagen para mostrar");
+                            errorImagenLabel.setText("No se ingresó ninguna imagen");
                         }
 
 
@@ -164,6 +170,9 @@ public class PanelFotosAndObservaciones{
         checkBoxFotoPortada.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                limpiarLabelErrores();
+
                 if(checkBoxFotoPortada.isSelected()){
                     imagenSeleccionadaParaPortada = imagenSeleccionada;
                 }else{
@@ -234,6 +243,27 @@ public class PanelFotosAndObservaciones{
         }else{
             checkBoxFotoPortada.setSelected(false);
         }
+    }
+
+    public Boolean validarDatos(){
+        Boolean datosValidadosCorrectamente = true;
+
+        limpiarLabelErrores();
+
+        if(imagenSeleccionada == -1){
+            datosValidadosCorrectamente = false;
+            errorImagenLabel.setText("Debe ingresar al menos una imagen");
+        }else{
+            if(imagenSeleccionadaParaPortada == -2){
+                datosValidadosCorrectamente = false;
+                errorImagenLabel.setText("Debe seleccionar una imagen como portada");
+            }
+        }
+        return datosValidadosCorrectamente;
+    }
+
+    private void limpiarLabelErrores(){
+        errorImagenLabel.setText(" ");
     }
 
     public JPanel getPanelFotosAndObservaciones() {

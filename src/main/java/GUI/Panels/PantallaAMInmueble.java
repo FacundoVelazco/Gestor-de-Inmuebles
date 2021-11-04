@@ -4,7 +4,9 @@ import GUI.Panels.AMInmueblePanels.PanelCaracteristicas;
 import GUI.Panels.AMInmueblePanels.PanelExtras;
 import GUI.Panels.AMInmueblePanels.PanelFotosAndObservaciones;
 import GUI.Panels.AMInmueblePanels.PanelUbicacion;
+import GUI.Util.Pantalla;
 import GUI.Util.TipoPanelAMInmueble;
+import Services.GestorGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -100,21 +102,36 @@ public class PantallaAMInmueble {
     }
 
     private void cambioPanelSiguiente(TipoPanelAMInmueble panelActual){
+
+        Boolean perimtidoCambiarPantalla = true;
+
         switch (panelActual){
             case UBICACION:
-                panelUbicacionClase.validarDatos();
-                panelRotativo.remove(0);
-                panelRotativo.add(panelCaracteristicas);
-                botonAnterior.setEnabled(true);
+                perimtidoCambiarPantalla = panelUbicacionClase.validarDatos();
+                if(perimtidoCambiarPantalla) {
+                    panelRotativo.remove(0);
+                    panelRotativo.add(panelCaracteristicas);
+                    botonAnterior.setEnabled(true);
+                }
                 break;
             case CARACTERISTICAS:
-                panelRotativo.remove(0);
-                panelRotativo.add(panelExtras);
+                perimtidoCambiarPantalla = panelCaracteristicasClase.validarDatos();
+                if(perimtidoCambiarPantalla){
+                    panelRotativo.remove(0);
+                    panelRotativo.add(panelExtras);
+                }
                 break;
             case EXTRAS:
                 panelRotativo.remove(0);
                 panelRotativo.add(panelFotosAndObservaciones);
-                botonSiguiente.setEnabled(false);
+                botonSiguiente.setText("Finalizar");
+                break;
+            case FOTOS_Y_OBSERVACIONES:
+                perimtidoCambiarPantalla = panelFotosAndObservacionesClase.validarDatos();
+                if(perimtidoCambiarPantalla){
+                    GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
+                    //TODO GestorGUI.push();
+                }
                 break;
         }
 
@@ -136,7 +153,7 @@ public class PantallaAMInmueble {
             case FOTOS_Y_OBSERVACIONES:
                 panelRotativo.remove(0);
                 panelRotativo.add(panelExtras);
-                botonSiguiente.setEnabled(true);
+                botonSiguiente.setText("Siguiente");
                 break;
         }
 

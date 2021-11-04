@@ -60,7 +60,7 @@
                 </constraints>
                 <properties>
                   <font size="14"/>
-                  <text value="Label"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="eddd8" class="javax.swing.JLabel" binding="estadoLabel">
@@ -69,7 +69,7 @@
                 </constraints>
                 <properties>
                   <font size="14"/>
-                  <text value="Label"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="884e4" class="javax.swing.JLabel" binding="fechaDeCargaLabel">
@@ -78,7 +78,7 @@
                 </constraints>
                 <properties>
                   <font size="14"/>
-                  <text value="Label"/>
+                  <text value=""/>
                 </properties>
               </component>
               <hspacer id="a9a30">

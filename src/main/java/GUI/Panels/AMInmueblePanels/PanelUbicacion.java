@@ -34,6 +34,10 @@ public class PanelUbicacion {
     private JLabel tituloSVDireccionLabel;
     private JLabel tituloPisoLabel;
     private JPanel espacioPisoDepto;
+    private JPanel espacioDepartamento;
+    private JPanel espacioPiso;
+    private JLabel errorPVDireccionLabel;
+    private JLabel errorSVDireccionLabel;
     private TipoPanelAMInmueble tipo;
 
 
@@ -53,6 +57,10 @@ public class PanelUbicacion {
         checkBoxActivador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                limpiarLabelErrores();
+                limpiarCamposDireccion();
+
                 if(checkBoxActivador.isSelected()){
                     tituloPVDireccionLabel.setText("Latitud:");
                     tituloSVDireccionLabel.setText("Longitud:");
@@ -70,36 +78,56 @@ public class PanelUbicacion {
         return panelUbicacion;
     }
 
-    public void validarDatos(){
-        Boolean barrioCompletado = !textFieldBarrio.getText().equals("");
+    public Boolean validarDatos(){
         Boolean primerValorDireccion = true;
         Boolean segundoValorDireccion =true;
+        Boolean datosValidadosCorrectamente;
+
+        limpiarLabelErrores();
+
         if(checkBoxActivador.isSelected()){
             try{
                 Double.parseDouble(textFieldPVDireccion.getText());
-                primerValorDireccion = true;
             }catch(Exception e){
                 primerValorDireccion = false;
+                errorPVDireccionLabel.setText("Inserte un valor de latitud válido");
             }
             try{
                 Double.parseDouble(textFieldSVDireccion.getText());
-                segundoValorDireccion = true;
             }catch(Exception e){
                 segundoValorDireccion = false;
+                errorSVDireccionLabel.setText("Inserte un valor de longitud válido");
             }
         }else{
             primerValorDireccion = !textFieldSVDireccion.getText().equals("");
+
+            if(!primerValorDireccion){
+                errorPVDireccionLabel.setText("Este campo es obligatorio");
+            }
+
             try{
                 if(Integer.parseInt(textFieldSVDireccion.getText()) <= 0){
-                    throw new Exception("");
+                    throw new Exception();
                 }
-                segundoValorDireccion = true;
             }catch(Exception e){
                 segundoValorDireccion = false;
+                errorSVDireccionLabel.setText("Inserte un valor de número válido");
             }
         }
 
-        System.out.println(barrioCompletado && primerValorDireccion && segundoValorDireccion);
+        datosValidadosCorrectamente = primerValorDireccion && segundoValorDireccion;
+
+        return datosValidadosCorrectamente;
+    }
+
+    private void limpiarLabelErrores(){
+        errorPVDireccionLabel.setText(" ");
+        errorSVDireccionLabel.setText(" ");
+    }
+
+    private void limpiarCamposDireccion(){
+        textFieldPVDireccion.setText("");
+        textFieldSVDireccion.setText("");
     }
 
 

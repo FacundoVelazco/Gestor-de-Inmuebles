@@ -80,5 +80,8 @@ public class GestorGUI {
         return historia.peek();
     }
 
+    public static void popUpExito(String titulo, String mensaje){
+        JOptionPane.showMessageDialog(framePrincipal,mensaje,titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
 
 }
