@@ -11,6 +11,7 @@ import java.util.Stack;
 public class GestorGUI {
 
     static JFrame framePrincipal = new JFrame();
+
     static Stack<Pantalla> historia = new Stack<>();
 
     private static void setPantalla(Pantalla pantalla){
@@ -28,12 +29,9 @@ public class GestorGUI {
             case CREAR_VENDEDOR:
                 framePrincipal.setContentPane(new PantallaCrearVendedor().getPanelPrincipal());
                 break;
-            case MODIFICAR_VENDEDOR:
-                framePrincipal.setContentPane(new PantallaModificarVendedor().getPanelPrincipal());
-                break;
-            case MODIFICAR_VENDEDOR_POPUP:
-                framePrincipal.setContentPane(new PantallaModificarVendedorPopup().getPanelPrincipal());
-                break;
+//            case MODIFICAR_VENDEDOR:
+//                framePrincipal.setContentPane(new PantallaModificarVendedor().getPanelPrincipal());
+//                break;
             case LOGIN:
                 framePrincipal.setContentPane(new PantallaLogIn().getPanelPrincipal());
                 break;
@@ -88,7 +86,10 @@ public class GestorGUI {
         return historia.peek();
     }
 
-    public static Frame getFrame() {
+    public static JFrame getFrame() {
         return framePrincipal;
+    }
+    public static Stack<Pantalla> getHistoria() {
+        return historia;
     }
 }

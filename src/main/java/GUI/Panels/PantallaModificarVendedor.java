@@ -33,7 +33,7 @@ public class PantallaModificarVendedor {
         return panelPrincipal;
     }
 
-    public PantallaModificarVendedor(){
+    public PantallaModificarVendedor(String nombreUsuario){
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,5 +45,7 @@ public class PantallaModificarVendedor {
             public void actionPerformed(ActionEvent e) { GestorGUI.pop();
             }
         });
+        textFieldNombreUsuario.setText(nombreUsuario);
+        textFieldNombreUsuario.setEnabled(false);
     }
 }

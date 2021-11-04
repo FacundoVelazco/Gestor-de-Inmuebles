@@ -68,10 +68,10 @@ public class PantallaABMVendedor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog framePopUp = new JDialog(GestorGUI.getFrame());
-                framePopUp.add(new PantallaModificarVendedorPopup().getPanelPrincipal());
+                framePopUp.add(new PantallaModificarVendedorPopup(framePopUp, (String) dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),2)).getPanelPrincipal());
                 framePopUp.setLocationRelativeTo(null);
                 framePopUp.setResizable(false);
-                framePopUp.setSize(350,250);
+                framePopUp.setSize(350,275);
                 framePopUp.setVisible(true);
 
             }
