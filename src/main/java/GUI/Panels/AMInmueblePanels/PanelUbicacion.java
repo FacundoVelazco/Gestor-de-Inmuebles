@@ -1,5 +1,6 @@
 package GUI.Panels.AMInmueblePanels;
 
+import DAO.Util.InmuebleDTO;
 import GUI.AutoCompletion;
 import GUI.Util.TipoPanelAMInmueble;
 
@@ -39,6 +40,7 @@ public class PanelUbicacion {
     private JLabel errorPVDireccionLabel;
     private JLabel errorSVDireccionLabel;
     private TipoPanelAMInmueble tipo;
+    private InmuebleDTO inmuebleDTO;
 
 
 
@@ -52,6 +54,8 @@ public class PanelUbicacion {
         }
         comboBoxLocalidad.setSelectedItem("Santa Fe");
 
+        //Creo el inmuebleDTO para el manejo de datos
+        inmuebleDTO = new InmuebleDTO();
 
         //Seteo listener checkbox
         checkBoxActivador.addActionListener(new ActionListener() {
@@ -99,7 +103,7 @@ public class PanelUbicacion {
                 errorSVDireccionLabel.setText("Inserte un valor de longitud válido");
             }
         }else{
-            primerValorDireccion = !textFieldSVDireccion.getText().equals("");
+            primerValorDireccion = !textFieldPVDireccion.getText().equals("");
 
             if(!primerValorDireccion){
                 errorPVDireccionLabel.setText("Este campo es obligatorio");
@@ -128,6 +132,41 @@ public class PanelUbicacion {
     private void limpiarCamposDireccion(){
         textFieldPVDireccion.setText("");
         textFieldSVDireccion.setText("");
+    }
+
+    //Solo ingreso al obtener datos si previamente valide los mismos
+    public InmuebleDTO obtenerDatos() {
+
+        inmuebleDTO.setProvincia("Santa Fe");
+        inmuebleDTO.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+
+        String barrio = textFieldBarrio.getText();
+        String pvDireccion = textFieldPVDireccion.getText();
+        String svDireccion = textFieldSVDireccion.getText();
+        String piso = textFieldPiso.getText();
+        String departamento = textFieldDepartamento.getText();
+
+        if(!barrio.equals("")){
+            inmuebleDTO.setBarrio(barrio);
+        }
+
+        if(!piso.equals("")){
+            inmuebleDTO.setPiso(piso);
+        }
+
+        if(!piso.equals("")){
+            inmuebleDTO.setDepartamento(departamento);
+        }
+
+        if(checkBoxActivador.isSelected()){
+            inmuebleDTO.setLatitud(Double.parseDouble(pvDireccion));
+            inmuebleDTO.setLongitud(Double.parseDouble(svDireccion));
+        }else{
+            inmuebleDTO.setCalle(pvDireccion);
+            inmuebleDTO.setNumeroCalle(Integer.parseInt(svDireccion));
+        }
+
+        return inmuebleDTO;
     }
 
 
@@ -516,5 +555,6 @@ public class PanelUbicacion {
             "Zavalla",
             "Zenón Pereyra"
     };
+
 
 }

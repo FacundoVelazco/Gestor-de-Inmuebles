@@ -1,5 +1,6 @@
 package GUI.Panels;
 
+import DAO.Util.InmuebleDTO;
 import GUI.Panels.AMInmueblePanels.PanelCaracteristicas;
 import GUI.Panels.AMInmueblePanels.PanelExtras;
 import GUI.Panels.AMInmueblePanels.PanelFotosAndObservaciones;
@@ -7,10 +8,13 @@ import GUI.Panels.AMInmueblePanels.PanelUbicacion;
 import GUI.Util.Pantalla;
 import GUI.Util.TipoPanelAMInmueble;
 import Services.GestorGUI;
+import Services.GestorInmuebles;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PantallaAMInmueble {
     private JPanel panelPrincipal;
@@ -25,17 +29,19 @@ public class PantallaAMInmueble {
     private JButton botonCancelar;
     private JButton botonAnterior;
     private JButton botonSiguiente;
-
     private PanelUbicacion panelUbicacionClase;
     private PanelCaracteristicas panelCaracteristicasClase;
     private PanelExtras panelExtrasClase;
     private PanelFotosAndObservaciones panelFotosAndObservacionesClase;
-
     private JPanel panelUbicacion;
     private JPanel panelCaracteristicas;
     private JPanel panelExtras;
     private JPanel panelFotosAndObservaciones;
+    private GestorInmuebles gestorInmuebles;
 
+
+    //Creamos el Data Transfer Object para el manejo de la información del inmueble
+    private InmuebleDTO inmuebleDTO;
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
@@ -43,6 +49,12 @@ public class PantallaAMInmueble {
 
 
     public PantallaAMInmueble() {
+
+        //Creo el inmuebleDTO para el manejo de datos
+        inmuebleDTO = new InmuebleDTO();
+
+        //Definimos el gestor de inmuebles
+        gestorInmuebles = new GestorInmuebles();
 
         //Creamos todas las clases asociadas a los paneles a utilizar
         panelUbicacionClase = new PanelUbicacion();
@@ -109,19 +121,23 @@ public class PantallaAMInmueble {
             case UBICACION:
                 perimtidoCambiarPantalla = panelUbicacionClase.validarDatos();
                 if(perimtidoCambiarPantalla) {
+                    obtenerDatosPanel(panelActual);
                     panelRotativo.remove(0);
                     panelRotativo.add(panelCaracteristicas);
                     botonAnterior.setEnabled(true);
+
                 }
                 break;
             case CARACTERISTICAS:
                 perimtidoCambiarPantalla = panelCaracteristicasClase.validarDatos();
                 if(perimtidoCambiarPantalla){
+                    obtenerDatosPanel(panelActual);
                     panelRotativo.remove(0);
                     panelRotativo.add(panelExtras);
                 }
                 break;
             case EXTRAS:
+                obtenerDatosPanel(panelActual);
                 panelRotativo.remove(0);
                 panelRotativo.add(panelFotosAndObservaciones);
                 botonSiguiente.setText("Finalizar");
@@ -129,6 +145,8 @@ public class PantallaAMInmueble {
             case FOTOS_Y_OBSERVACIONES:
                 perimtidoCambiarPantalla = panelFotosAndObservacionesClase.validarDatos();
                 if(perimtidoCambiarPantalla){
+                    obtenerDatosPanel(panelActual);
+                    gestorInmuebles.guardarInmueble(inmuebleDTO);
                     GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
                     //TODO GestorGUI.push();
                 }
@@ -156,9 +174,71 @@ public class PantallaAMInmueble {
                 botonSiguiente.setText("Siguiente");
                 break;
         }
-
-
     }
 
+    private void obtenerDatosPanel(TipoPanelAMInmueble panelActual){
+        switch (panelActual){
+            case UBICACION:
+                actualizarDatosUbicacionDTO(panelUbicacionClase.obtenerDatos());
+                break;
+            case CARACTERISTICAS:
+                actualizarDatosCaracteristicasDTO(panelCaracteristicasClase.obtenerDatos());
+                break;
+            case EXTRAS:
+                actualizarDatosExtrasDTO(panelExtrasClase.obtenerDatos());
+                break;
+            case FOTOS_Y_OBSERVACIONES:
+                actualizarDatosFotosDTO(panelFotosAndObservacionesClase.obtenerDatos());
+                break;
+        }
+    }
+
+
+
+    private void actualizarDatosUbicacionDTO(InmuebleDTO aux){
+        inmuebleDTO.setProvincia(aux.getProvincia());
+        inmuebleDTO.setLocalidad(aux.getLocalidad());
+        inmuebleDTO.setBarrio(aux.getBarrio());
+        inmuebleDTO.setCalle(aux.getCalle());
+        inmuebleDTO.setNumeroCalle(aux.getNumeroCalle());
+        inmuebleDTO.setLatitud(aux.getLatitud());
+        inmuebleDTO.setLongitud(aux.getLongitud());
+        inmuebleDTO.setPiso(aux.getPiso());
+        inmuebleDTO.setDepartamento(aux.getDepartamento());
+    }
+
+    private void actualizarDatosCaracteristicasDTO(InmuebleDTO aux){
+        inmuebleDTO.setTipoInmueble(aux.getTipoInmueble());
+        inmuebleDTO.setOrientacion(aux.getOrientacion());
+        inmuebleDTO.setLongitudFrente(aux.getLongitudFrente());
+        inmuebleDTO.setLongitudFondo(aux.getLongitudFondo());
+        inmuebleDTO.setTamanioInmueble(aux.getTamanioInmueble());
+        inmuebleDTO.setPrecio(aux.getPrecio());
+        inmuebleDTO.setCantidadBanios(aux.getCantidadBanios());
+        inmuebleDTO.setCantidadDormitorios(aux.getCantidadDormitorios());
+        inmuebleDTO.setAntiguedad(aux.getAntiguedad());
+        inmuebleDTO.setEsPropiedadHorizontal(aux.getEsPropiedadHorizontal());
+    }
+
+    private void actualizarDatosExtrasDTO(InmuebleDTO aux){
+        inmuebleDTO.setTieneCochera(aux.getTieneCochera());
+        inmuebleDTO.setTienePatio(aux.getTienePatio());
+        inmuebleDTO.setTienePiscina(aux.getTienePiscina());
+        inmuebleDTO.setTieneAguaCorriente(aux.getTieneAguaCorriente());
+        inmuebleDTO.setTieneCloacas(aux.getTieneCloacas());
+        inmuebleDTO.setTieneGasNatural(aux.getTieneGasNatural());
+        inmuebleDTO.setTieneAguaCaliente(aux.getTieneAguaCaliente());
+        inmuebleDTO.setTieneTelefono(aux.getTieneTelefono());
+        inmuebleDTO.setTieneLavadero(aux.getTieneLavadero());
+        inmuebleDTO.setTienePavimento(aux.getTienePavimento());
+    }
+
+    private void actualizarDatosFotosDTO(InmuebleDTO aux){
+        inmuebleDTO.setFotoPrincipal(aux.getFotoPrincipal());
+        inmuebleDTO.setNombreArchivoFotoPrincipal(aux.getNombreArchivoFotoPrincipal());
+        inmuebleDTO.setFotosInmueble(aux.getFotosInmueble());
+        inmuebleDTO.setNombresArchivosFotos(aux.getNombresArchivosFotos());
+        inmuebleDTO.setObservaciones(aux.getObservaciones());
+    }
 
 }

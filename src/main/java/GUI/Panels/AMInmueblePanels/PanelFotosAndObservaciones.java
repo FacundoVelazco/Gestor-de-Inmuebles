@@ -1,5 +1,7 @@
 package GUI.Panels.AMInmueblePanels;
 
+import DAO.Util.InmuebleDTO;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -37,9 +39,12 @@ public class PanelFotosAndObservaciones{
     private Integer imagenSeleccionada;
     private ImageIcon imagenPorDefecto;
     private Integer imagenSeleccionadaParaPortada;
+    private InmuebleDTO inmuebleDTO;
 
     public PanelFotosAndObservaciones() {
 
+        //Creo el inmuebleDTO para el manejo de datos
+        inmuebleDTO = new InmuebleDTO();
 
         //Creamos el panel externo que va a mostrar nuestras imagenes
         panelImagenExternoClase = new PanelImagen();
@@ -270,4 +275,29 @@ public class PanelFotosAndObservaciones{
         return panelFotosAndObservaciones;
     }
 
+
+    //Se asume la correctitud de los datos dada la validacion previa
+    public InmuebleDTO obtenerDatos() {
+
+        inmuebleDTO.setFotoPrincipal(fotosSeleccionadas.get(imagenSeleccionadaParaPortada));
+        inmuebleDTO.setNombreArchivoFotoPrincipal(nombresArchivosFotos.get(imagenSeleccionadaParaPortada));
+
+        ArrayList<ImageIcon> auxListaImagenes = new ArrayList<>();
+        auxListaImagenes.addAll(fotosSeleccionadas);
+        auxListaImagenes.remove(imagenSeleccionadaParaPortada);
+        inmuebleDTO.setFotosInmueble(auxListaImagenes);
+
+        List<String> auxListaNombres = new ArrayList<>();
+        auxListaNombres.addAll(nombresArchivosFotos);
+        auxListaNombres.remove(imagenSeleccionadaParaPortada);
+        inmuebleDTO.setNombresArchivosFotos(auxListaNombres);
+
+        String observaciones = textAreaObservaciones.getText();
+
+        if(!observaciones.equals("")){
+            inmuebleDTO.setObservaciones(observaciones);
+        }
+
+        return inmuebleDTO;
+    }
 }

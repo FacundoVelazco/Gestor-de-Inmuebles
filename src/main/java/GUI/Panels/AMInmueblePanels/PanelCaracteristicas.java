@@ -1,5 +1,6 @@
 package GUI.Panels.AMInmueblePanels;
 
+import DAO.Util.InmuebleDTO;
 import GUI.AutoCompletion;
 
 import javax.swing.*;
@@ -43,9 +44,13 @@ public class PanelCaracteristicas {
     private JLabel errorCantDormitoriosLabel;
     private JLabel errorCantidadBaniosLabel;
     private JLabel errorPrecioLabel;
-
+    private InmuebleDTO inmuebleDTO;
 
     public PanelCaracteristicas() {
+
+        //Creo el inmuebleDTO para el manejo de datos
+        inmuebleDTO = new InmuebleDTO();
+
         //Rellenado de los combobox
         AutoCompletion.enable(comboBoxTipoInmueble);
         AutoCompletion.enable(comboBoxOrientacion);
@@ -153,7 +158,35 @@ public class PanelCaracteristicas {
         errorPrecioLabel.setText(" ");
     }
 
+    //Se asume la correctitud de los datos ya que previamente se hace la validacion antes de utilizar este metodo
+    public InmuebleDTO obtenerDatos() {
+
+        inmuebleDTO.setTipoInmueble(comboBoxTipoInmueble.getSelectedItem().toString());
+        inmuebleDTO.setOrientacion(comboBoxOrientacion.getSelectedItem().toString());
+
+        String longFrente = textFieldLongFrente.getText();
+        String longFondo = textFieldLongFondo.getText();
+        String tamanio = textFieldTamanio.getText();
+        String antiguedad = textFieldAntiguedad.getText();
+        String cantDormitorios = textFieldCantidadDormitorios.getText();
+        String cantBanios = textFieldCantidadBanios.getText();
+        String precioVenta = textFieldPrecioDeVenta.getText();
+
+        inmuebleDTO.setLongitudFrente(Double.parseDouble(longFrente));
+        inmuebleDTO.setLongitudFondo(Double.parseDouble(longFondo));
+        inmuebleDTO.setTamanioInmueble(Double.parseDouble(tamanio));
+        inmuebleDTO.setPrecio(Float.parseFloat(precioVenta));
+        inmuebleDTO.setCantidadBanios(Integer.parseInt(cantBanios));
+        inmuebleDTO.setCantidadDormitorios(Integer.parseInt(cantDormitorios));
+        inmuebleDTO.setAntiguedad(Integer.parseInt(antiguedad));
+
+        inmuebleDTO.setEsPropiedadHorizontal(CheckBoxPropiedadHorizontal.isSelected());
+
+        return inmuebleDTO;
+    }
+
     private static final String[] TIPOS_INMUEBLE = {"Local-Oficina", "Casa", "Departamento", "Terreno", "Quinta", "Galpón"};
     private static final String[] ORIENTACION = {"Norte", "Sur", "Este", "Oeste", "Noreste", "Noroeste", "Sureste", "Suroeste"};
+
 
 }
