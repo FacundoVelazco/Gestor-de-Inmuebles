@@ -57,16 +57,17 @@ public class PantallaCInmueble {
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
+    private class DataModel extends DefaultTableModel {
+        public DataModel(Object[][] data, Object[] columnNames) {
+            super(data, columnNames);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    }
 }
 
-class DataModel extends DefaultTableModel {
-    public DataModel(Object[][] data, Object[] columnNames) {
-        super(data, columnNames);
-    }
 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        //all cells false
-        return false;
-    }
-}
