@@ -1,7 +1,11 @@
 package GUI.Panels;
 
+import DAO.Util.InmuebleDTO;
+import Services.GestorInmuebles;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PantallaMisInmuebles {
     private JPanel panelPrincipal;
@@ -64,20 +68,112 @@ public class PantallaMisInmuebles {
     private JButton buttonEliminarProp3;
     private JButton buttonEliminarProp4;
     private JButton buttonEliminarProp5;
-    private ImageIcon imagenPorDefecto;
+    private GestorInmuebles gestorInmuebles;
+    private ArrayList<InmuebleDTO> inmueblesActuales;
+    private InmuebleDTO inmueblePorDefecto;
+    private Integer idPropietario;
 
 
     public PantallaMisInmuebles() {
-        //Seteamos la imagen por defecto
-        imagenPorDefecto = new ImageIcon(new ImageIcon("src/main/java/Materials/casitadefault.png").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING));
-        imagenProp1Label.setIcon(imagenPorDefecto);
-        imagenProp2Label.setIcon(imagenPorDefecto);
-        imagenProp3Label.setIcon(imagenPorDefecto);
-        imagenProp4Label.setIcon(imagenPorDefecto);
-        imagenProp5Label.setIcon(imagenPorDefecto);
+        //Seteamos parámetros del inmueble por defecto
+        crearInmueblePorDefecto();
+
+        //Defino el gestor
+        gestorInmuebles = new GestorInmuebles();
+
+        //Obtengo los primeros 6 inmuebles del propietario (el ultimo solo para determinar si se habilita o no el boton de siguiente)
+        inmueblesActuales = new ArrayList<>();
+        inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(idPropietario,1,6));
+
+        actualizarTablitaInmuebles(inmueblesActuales);
+
+    }
+
+    private void crearInmueblePorDefecto() {
+        inmueblePorDefecto = new InmuebleDTO();
+        inmueblePorDefecto.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/casitadefault.png").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+        inmueblePorDefecto.setId(-1);
+        inmueblePorDefecto.setLocalidad("Localidad de Prueba");
+        inmueblePorDefecto.setCalle("Calle de Prueba");
+        inmueblePorDefecto.setNumeroCalle(-1111);
     }
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
+    }
+
+    private void actualizarTablitaInmuebles(ArrayList<InmuebleDTO> listaInmuebles){
+
+        Integer totalImagenes = listaInmuebles.size();
+
+        //Solo mostramos 5, el 6to es para manejar logica de siguiente
+        if(totalImagenes >= 6){
+            totalImagenes = 5;
+        }
+
+        for(int i = 1 ; i <= totalImagenes ; i++){
+            mostrarInmueble(listaInmuebles.get(i-1),i);
+        }
+
+        for(int i = totalImagenes + 1 ; i<= 5 ; i++){
+            mostrarInmueble(inmueblePorDefecto,i);
+
+        }
+    }
+
+    private void mostrarInmueble(InmuebleDTO inmuebleDTO, int i) {
+
+        ImageIcon foto = new ImageIcon(inmuebleDTO.getFotoPrincipal().getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING));
+        String codigo = "Código: " + inmuebleDTO.getId().toString();
+        String localidad = "Localidad: " + inmuebleDTO.getLocalidad();
+        String pvDireccion;
+        String svDireccion;
+
+        if(inmuebleDTO.getLatitud()==null){
+            pvDireccion = "Calle: " + inmuebleDTO.getCalle();
+            svDireccion = "Número: " + inmuebleDTO.getNumeroCalle().toString();
+        }else{
+            pvDireccion = "Latitud: " + inmuebleDTO.getLatitud().toString();
+            svDireccion = "Longitud: " + inmuebleDTO.getLongitud().toString();
+        }
+
+        switch (i){
+            case 1:
+                imagenProp1Label.setIcon(foto);
+                codigoProp1Label.setText(codigo);
+                localidadProp1Label.setText(localidad);
+                pvDireccionProp1Label.setText(pvDireccion);
+                svDireccionProp1Label.setText(svDireccion);
+                break;
+            case 2:
+                imagenProp2Label.setIcon(foto);
+                codigoProp2Label.setText(codigo);
+                localidadProp2Label.setText(localidad);
+                pvDireccionProp2Label.setText(pvDireccion);
+                svDireccionProp2Label.setText(svDireccion);
+                break;
+            case 3:
+                imagenProp3Label.setIcon(foto);
+                codigoProp3Label.setText(codigo);
+                localidadProp3Label.setText(localidad);
+                pvDireccionProp3Label.setText(pvDireccion);
+                svDireccionProp3Label.setText(svDireccion);
+                break;
+            case 4:
+                imagenProp4Label.setIcon(foto);
+                codigoProp4Label.setText(codigo);
+                localidadProp4Label.setText(localidad);
+                pvDireccionProp4Label.setText(pvDireccion);
+                svDireccionProp4Label.setText(svDireccion);
+                break;
+            case 5:
+                imagenProp5Label.setIcon(foto);
+                codigoProp5Label.setText(codigo);
+                localidadProp5Label.setText(localidad);
+                pvDireccionProp5Label.setText(pvDireccion);
+                svDireccionProp5Label.setText(svDireccion);
+                break;
+        }
+
     }
 }
