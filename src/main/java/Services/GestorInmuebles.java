@@ -109,6 +109,7 @@ public class GestorInmuebles {
         Imagen fotoPrincipal = new Imagen();
         fotoPrincipal.setImagen(iDTO.getFotoPrincipal());
         fotoPrincipal.setNombreArchivo(iDTO.getNombreArchivoFotoPrincipal());
+        fotoPrincipal.setInmuebleAsociado(inmueble);
         inmueble.setFotoPrincipal(fotoPrincipal);
 
         ArrayList<Imagen> listaFotos = new ArrayList<>();
@@ -116,6 +117,7 @@ public class GestorInmuebles {
             Imagen aux = new Imagen();
             aux.setImagen(iDTO.getFotosInmueble().get(i));
             aux.setNombreArchivo(iDTO.getNombresArchivosFotos().get(i));
+            aux.setInmuebleAsociado(inmueble);
             listaFotos.add(aux);
         }
         inmueble.setFotosInmueble(listaFotos);

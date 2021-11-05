@@ -19,4 +19,9 @@ public class DAOBdInmueble implements InmuebleDAO{
     public List<Inmueble> listAllByPropietario(int idPropietario) {
         return null;
     }
+
+    @Override
+    public List<Inmueble> listAllByPropietario(int idPropietario, int inicio, int fin) {
+        return null;
+    }
 }
