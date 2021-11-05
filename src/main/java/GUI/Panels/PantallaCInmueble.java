@@ -48,6 +48,10 @@ public class PantallaCInmueble {
         sorter = new TableRowSorter<>(dataModel);
         inmueblesTable.setRowSorter(sorter);
 
+        AutoCompletion.enable(provinciaCombo);
+        AutoCompletion.enable(localidadCombo);
+        AutoCompletion.enable(barrioCombo);
+        AutoCompletion.enable(tipoCombo);
     }
 
     private void createUIComponents() {
@@ -57,16 +61,18 @@ public class PantallaCInmueble {
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
+
+    private class DataModel extends DefaultTableModel {
+        public DataModel(Object[][] data, Object[] columnNames) {
+            super(data, columnNames);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    }
 }
 
-class DataModel extends DefaultTableModel {
-    public DataModel(Object[][] data, Object[] columnNames) {
-        super(data, columnNames);
-    }
 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        //all cells false
-        return false;
-    }
-}
