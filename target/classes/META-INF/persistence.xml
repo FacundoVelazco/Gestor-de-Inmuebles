@@ -5,11 +5,7 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
     <persistence-unit name="Persistence">
-<<<<<<< HEAD
         <class></class>
-=======
-        <class>Negocio.Test</class>
->>>>>>> feature/H04T01
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/TP-MA"/>
