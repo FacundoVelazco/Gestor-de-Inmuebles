@@ -4,6 +4,7 @@ import GUI.Panels.PantallaABMCliente;
 import GUI.Panels.PantallaAMInmueble;
 import GUI.Panels.PantallaCrearCliente;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
+import GUI.Panels.PantallaMisInmuebles;
 import GUI.Util.Pantalla;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
@@ -28,6 +29,11 @@ public class GestorGUI {
             case AM_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaAMInmueble().getPanelPrincipal());
                 break;
+
+            case MIS_INMUEBLES:
+                framePrincipal.setContentPane(new PantallaMisInmuebles().getPanelPrincipal());
+                break;
+
 
             //TODO insertar creación de pantallas en cada case
             case panelTest1:
