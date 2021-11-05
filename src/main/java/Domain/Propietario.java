@@ -1,7 +1,5 @@
 package Domain;
 
-public class Propietario {
-
-    //TODO hacer propietario
+public class Propietario extends Persona{
 
 }
