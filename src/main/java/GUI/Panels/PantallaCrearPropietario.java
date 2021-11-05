@@ -4,6 +4,7 @@ import GUI.AutoCompletion;
 import GUI.GestorGUI;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -38,9 +39,35 @@ public class PantallaCrearPropietario {
     private JLabel labelTelefono;
     private JTextField textFieldNumeroDocumento;
     private JTextField textFieldContraseña;
-    private JTextField textFieldNombreUsuario;
+    private JFormattedTextField textFieldNombreUsuario;
     private JTextField textFieldNombre;
     private JTextField textFieldApellido;
+    private JLabel labelErrorUsuario;
+    private JLabel labelErrorNombre;
+    private JLabel labelErrorApellido;
+    private JLabel labelErrorDocumento;
+    private JLabel labelErrorCalleNumero;
+    private JLabel labelErrorTelefono;
+    private JLabel labelErrorEmail;
+    private JLabel labelErrorContraseña;
+
+    /*Método que retorna true si un string es un numero entero escrito como string*/
+
+    public boolean isInteger(String s) {
+        return isInteger(s,10);
+    }
+
+    public boolean isInteger(String s, int radix) {
+        if(s.isEmpty()) return false;
+        for(int i = 0; i < s.length(); i++) {
+            if(i == 0 && s.charAt(i) == '-') {
+                if(s.length() == 1) return false;
+                else continue;
+            }
+            if(Character.digit(s.charAt(i),radix) < 0) return false;
+        }
+        return true;
+    }
 
     public PantallaCrearPropietario() {
 
@@ -58,8 +85,55 @@ public class PantallaCrearPropietario {
         buttonCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GestorGUI.pop();
+
+                boolean bandera = true;
+
+                if (textFieldNombreUsuario.getText().length() > 20){
+                    labelErrorUsuario.setVisible(true);
+                    bandera = false;
+                }
+
+                if ((textFieldContraseña.getText().length() < 6) || (textFieldContraseña.getText().length() > 20)){
+                    labelErrorContraseña.setVisible(true);
+                    bandera = false;
+                }
+
+                if (textFieldNombre.getText().length() > 20){
+                    labelErrorNombre.setVisible(true);
+                    bandera = false;
+                }
+
+                if (textFieldApellido.getText().length() > 20){
+                    labelErrorApellido.setVisible(true);
+                    bandera = false;
+                }
+
+                if (!(isInteger(textFieldNumeroDocumento.getText()))){
+                    labelErrorDocumento.setVisible(true);
+                    bandera = false;
+                }
+
+                if (textFieldCalleNumero.getText().length() > 40){
+                    labelErrorCalleNumero.setVisible(true);
+                    bandera = false;
+                }
+
+                if (!(isInteger(textFieldTelefono.getText()))){
+                    labelErrorTelefono.setVisible(true);
+                    bandera = false;
+                }
+
+                if (textFieldEmail.getText().length() > 60){
+                    labelErrorEmail.setVisible(true);
+                    bandera = false;
+                }
+
+                if (bandera) {
+                    GestorGUI.pop();
+                }
             }
+
+
         });
     }
 
@@ -69,4 +143,7 @@ public class PantallaCrearPropietario {
         return panelPrincipal;
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }
