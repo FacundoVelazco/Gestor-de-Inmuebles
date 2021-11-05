@@ -1,9 +1,6 @@
 package Services;
 
-import GUI.Panels.PantallaABMCliente;
-import GUI.Panels.PantallaAMInmueble;
-import GUI.Panels.PantallaCInmueble;
-import GUI.Panels.PantallaCrearCliente;
+import GUI.Panels.*;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
 import TestGUI.PanelTest2;
@@ -30,6 +27,12 @@ public class GestorGUI {
                 break;
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
+                break;
+            case ABM_PROPIETARIO:
+                framePrincipal.setContentPane(new PantallaABMPropietario().getPanelPrincipal());
+                break;
+            case CREAR_PROPIETARIO:
+                framePrincipal.setContentPane(new PantallaCrearPropietario().getPanelPrincipal());
                 break;
             //TODO insertar creación de pantallas en cada case
             case panelTest1:
