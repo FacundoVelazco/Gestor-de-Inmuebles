@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "localidad")
@@ -20,5 +21,5 @@ public class Localidad {
     private Provincia provincia;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "localidad",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    private ArrayList<Barrio> barrios;
+    private List<Barrio> barrios;
 }
