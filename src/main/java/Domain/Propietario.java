@@ -21,6 +21,9 @@ public class Propietario extends Persona{
     private Direccion direccion;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
+    @ManyToOne()
+    @JoinColumn(name = "id_persona_vendedor")
+    private Vendedor vendedor;
     public TipoDNI getTipoDNI() {
         return tipoDNI;
     }
