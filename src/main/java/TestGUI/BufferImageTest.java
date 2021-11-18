@@ -12,13 +12,13 @@ import java.awt.*;
 
 public class BufferImageTest {
     public static void main(String[] args) throws Exception {
-        ImageIcon imagenExterna = new ImageIcon("C:\\Users\\Facundo\\IdeaProjects\\Gestor-de-Inmuebles\\src\\main\\java\\TestGUI\\Imagen1.jpg");
+        ImageIcon imagenExterna = new ImageIcon("src\\main\\java\\TestGUI\\Imagen1.jpg");
         Imagen imagen = new Imagen();
         imagen.setImagen(imagenExterna);
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager manager = entityManagerFactory.createEntityManager();
         manager.getTransaction().begin();
-        imagen = manager.find(Imagen.class,2);
+        imagen = manager.find(Imagen.class,1);
         manager.getTransaction().commit();
         manager.close();
 
