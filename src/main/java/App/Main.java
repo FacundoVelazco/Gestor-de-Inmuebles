@@ -15,6 +15,5 @@ public class Main {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager manager;
         GestorGUI.init(Pantalla.C_INMUEBLE);
-
     }
 }

@@ -16,10 +16,41 @@ public class Localidad {
     private Integer id;
     @Column(name = "nombre")
     private String nombre;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_provincia")
     private Provincia provincia;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "localidad",fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "localidad")
     @Fetch(FetchMode.SELECT)
     private List<Barrio> barrios;
+
+    public Localidad() {
+    }
+
+    public Localidad(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public List<Barrio> getBarrios() {
+        return barrios;
+    }
+
+    public void setBarrios(List<Barrio> barrios) {
+        this.barrios = barrios;
+    }
 }
