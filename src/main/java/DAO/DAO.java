@@ -30,6 +30,10 @@ public class DAO implements DAOInterface{
         query.setParameter("nombre",nombre);
         return query.getSingleResult();
     }
+    @Override
+    public Object getObject(Integer id,Class objectClass) {
+        return manager.find(objectClass,id);
+    }
 
     @Override
     public void setObject(Object object) {
@@ -41,6 +45,9 @@ public class DAO implements DAOInterface{
     @Override
     public void refresh(Object object) {
         manager.refresh(object);
+    }
+    public void merge(Object object){
+        manager.merge(object);
     }
     @Override
     public void close(){

@@ -1,5 +1,7 @@
 package Domain;
 
+import DAO.Util.LocalidadDTO;
+import DAO.Util.ProvinciaDTO;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -16,8 +18,7 @@ public class Provincia {
     private Integer id;
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "provincia")
-    //@Fetch(FetchMode.SELECT)
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "provincia",fetch = FetchType.LAZY)
     private List<Localidad> localidades;
 
     public Provincia() {
@@ -27,6 +28,18 @@ public class Provincia {
         this.nombre = nombre;
     }
 
+    public Provincia(ProvinciaDTO provinciaDTO) {
+        this.id = provinciaDTO.id;
+        this.nombre = provinciaDTO.nombre;
+        this.localidades = new ArrayList<>();
+        for(LocalidadDTO localidadDTO: provinciaDTO.localidades){
+            this.localidades.add(new Localidad(localidadDTO));
+        }
+    }
+
+    public Integer getId(){
+        return this.id;
+    }
     public String getNombre() {
         return nombre;
     }

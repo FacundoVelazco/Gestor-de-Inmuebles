@@ -1,5 +1,8 @@
 package Domain;
 
+import DAO.Util.BarrioDTO;
+import DAO.Util.LocalidadDTO;
+import Services.GestorLocalidades;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -19,7 +22,33 @@ public class Barrio {
     @ManyToOne
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "barrio",fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    private List<Direccion> direcciones;
+
+    public Barrio(){
+
+    }
+    public Barrio(BarrioDTO barrioDTO){
+        this.id = barrioDTO.id;
+        this.nombre = barrioDTO.nombre;
+        this.localidad = (new GestorLocalidades()).getLocalidad(barrioDTO.localidadId);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
 }
