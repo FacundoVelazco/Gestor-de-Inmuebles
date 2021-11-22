@@ -17,8 +17,7 @@ public class PropietarioDTO {
     private List<InmuebleDTO> inmuebles;
     private VendedorDTO vendedor;
 
-    public PropietarioDTO(){ // necesita constructor?
-
+    public PropietarioDTO(){
     }
 
     public TipoDNI getTipoDNI() {

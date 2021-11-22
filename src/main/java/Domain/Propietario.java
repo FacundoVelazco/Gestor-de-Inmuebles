@@ -4,6 +4,7 @@ import Domain.Util.TipoDNI;
 
 import javax.persistence.*;
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,16 +22,15 @@ public class Propietario extends Persona{
     private Direccion direccion;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
-    @ManyToOne()
-    @JoinColumn(name = "id_persona_vendedor")
-    private Vendedor vendedor;
+//    @ManyToOne()
+//    @JoinColumn(name = "id_persona_vendedor")     VER el tema de Vendedor -> va a tener uno asociado?
+//    private Vendedor vendedor;
 
-    public Propietario(Vendedor v,TipoDNI tipoDNI, String Dni, Direccion direccion, List<Inmueble> inmuebles){ // Se le tiene que pasar como parametro una lista con todos los Inmuebles?
+    public Propietario(TipoDNI tipoDNI, String Dni, Direccion direccion){
             this.tipoDNI = tipoDNI;
             this.Dni = Dni;
             this.direccion = direccion;
-            this.inmuebles = inmuebles;
-            this.vendedor = v; // el Vendedor lo podria tener guardada la GUI al iniciar sesion?
+            this.inmuebles = new ArrayList<Inmueble>();
     }
 
     public TipoDNI getTipoDNI() {

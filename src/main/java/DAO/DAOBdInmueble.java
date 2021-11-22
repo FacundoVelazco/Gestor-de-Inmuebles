@@ -1,4 +1,4 @@
 package DAO;
 
-public class DAOBdInmueble {
+public class DAOBdInmueble{
 }
