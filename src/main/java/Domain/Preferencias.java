@@ -3,7 +3,8 @@ package Domain;
 import Domain.Util.Orientacion;
 import Domain.Util.TipoInmueble;
 
-public class Preferencia {
+public class Preferencias {
+
     private TipoInmueble tipoInmueble;
     private Float montoDisponible;
     private Orientacion orientacion;
@@ -24,4 +25,5 @@ public class Preferencia {
     private Boolean tieneTelefono;
     private Boolean tieneLavadero;
     private Boolean tienePavimento;
+
 }

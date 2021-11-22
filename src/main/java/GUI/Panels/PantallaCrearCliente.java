@@ -1,5 +1,6 @@
 package GUI.Panels;
 
+import Domain.Util.TipoInmueble;
 import GUI.AutoCompletion;
 import Services.GestorGUI;
 
@@ -8,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 
 public class PantallaCrearCliente {
     private JPanel panelTitulo;
@@ -31,29 +33,26 @@ public class PantallaCrearCliente {
     private JPanel panelPreferencias2;
     private JComboBox comboBoxTipo;
     private JComboBox comboBoxLocalidad;
-    private JComboBox comboBoxBarrio;
     private JFormattedTextField formattedTextField2;
 
     private static final int CHECK_COL = 1;
 
     //TODO Datos de ejemplo
     private static final Object[][] DATA = {
-            {"Salida a la calle", Boolean.TRUE}, {"Patio trasero", Boolean.FALSE},
-            {"Patio delantero", Boolean.TRUE}, {"Quincho", Boolean.FALSE},
-            {"Sótano", Boolean.TRUE}, {"Ático", Boolean.FALSE},
-            {"Garaje", Boolean.TRUE}, {"Piscina", Boolean.FALSE},
-            {"Luz eléctrica", Boolean.TRUE}, {"Agua y cloaca", Boolean.FALSE},
-            {"Piso de madera", Boolean.TRUE}, {"Piso cerámico", Boolean.FALSE},
-            {"Piso alfombrado", Boolean.TRUE}, {"Piso de madera flotante", Boolean.FALSE},
-            {"Tejado a dos aguas", Boolean.TRUE}, {"Tejado a 4 aguas", Boolean.FALSE},
-            {"Techo de loza", Boolean.TRUE}, {"Frente amplio", Boolean.FALSE},
-            {"Ladrillo visto", Boolean.TRUE}, {"Portón", Boolean.FALSE}};
+            {"Cochera", Boolean.FALSE},{"Patio", Boolean.FALSE},
+            {"Piscina", Boolean.FALSE},{"Agua corriente", Boolean.FALSE},
+            {"Cloaca", Boolean.FALSE},{"Gas natural", Boolean.FALSE},
+            {"Agua caliente", Boolean.FALSE},{"Teléfono", Boolean.FALSE},
+            {"Lavadero", Boolean.FALSE},{"Pavimento", Boolean.FALSE}
+    };
 
     private static final String[] COLUMNS = {"Característica", "Presente"};
     private DataModel dataModel = new DataModel(DATA, COLUMNS);
     private DefaultListSelectionModel selectionModel;
     private JTable tablaCaracteristicas = new JTable(dataModel);
     private JScrollPane scrollPaneCaracteristicas;
+    private JTextField textFieldBarrio;
+    private JLabel labelNombreBarrio;
 
     public PantallaCrearCliente() {
 
@@ -69,8 +68,15 @@ public class PantallaCrearCliente {
 
         //Autocompletado de los comboboxes
         AutoCompletion.enable(comboBoxTipo);
-        AutoCompletion.enable(comboBoxBarrio);
         AutoCompletion.enable(comboBoxLocalidad);
+
+        //Inicializado del combo box
+        for(TipoInmueble tipo : TipoInmueble.values()){
+            comboBoxTipo.addItem(tipo);
+        }
+
+        //init de combo box localidades
+        comboBoxLocalidad.addItem("Santa Fe");
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
