@@ -2,9 +2,10 @@ package Services;
 
 import GUI.Panels.PantallaABMCliente;
 import GUI.Panels.PantallaAMInmueble;
+import GUI.Panels.PantallaCInmueble;
 import GUI.Panels.PantallaCrearCliente;
+import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
-import TestGUI.PanelTest1;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
 import javax.swing.*;
@@ -24,14 +25,15 @@ public class GestorGUI {
             case CREAR_CLIENTE:
                 framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
                 break;
-
             case AM_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaAMInmueble().getPanelPrincipal());
                 break;
-
+            case C_INMUEBLE:
+                framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
+                break;
             //TODO insertar creación de pantallas en cada case
             case panelTest1:
-                framePrincipal.setContentPane(new PanelTest1()); //TODO remover paneles de testeo
+                framePrincipal.setContentPane(new PanelImagen().getPanelPrincipal()); //TODO remover paneles de testeo
                 break;
             case panelTest2:
                 framePrincipal.setContentPane(new PanelTest2());
@@ -66,6 +68,13 @@ public class GestorGUI {
         }
     }
 
+    /** Recarga la pantalla actual completamente */
+    public static void refreshCurrent(){
+        Pantalla pantallaActual = peek();
+        pop();
+        push(pantallaActual);
+    }
+
     public static void cambiarTitulo(String newTitulo){
         framePrincipal.setTitle(newTitulo);
     }
@@ -79,4 +88,9 @@ public class GestorGUI {
     public static Pantalla peek(){
         return historia.peek();
     }
+
+    public static void popUpExito(String titulo, String mensaje){
+        JOptionPane.showMessageDialog(framePrincipal,mensaje,titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

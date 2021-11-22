@@ -1,7 +1,11 @@
 package GUI.Panels;
 
+import DAO.Util.ClienteDTO;
+import DAO.Util.PreferenciaDTO;
+import Domain.Localidad;
 import Domain.Util.TipoInmueble;
 import GUI.AutoCompletion;
+import Services.GestorClientes;
 import Services.GestorGUI;
 
 import javax.swing.*;
@@ -18,12 +22,12 @@ public class PantallaCrearCliente {
     private JLabel textoTitulo;
     private JPanel panelCampos2;
     private JLabel textoUser;
-    private JTextField textField1;
+    private JTextField textFieldUsername;
     private JLabel textoContrasena;
-    private JPasswordField passwordField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JFormattedTextField formattedTextField1;
+    private JPasswordField passwordFieldContrasenia;
+    private JTextField textFieldNombre;
+    private JTextField textFieldApellido;
+    private JFormattedTextField formattedTextFieldTelefono;
     private JButton buttonCrear;
     private JButton buttonCancelar;
     private JPanel panelPrincipal;
@@ -33,7 +37,7 @@ public class PantallaCrearCliente {
     private JPanel panelPreferencias2;
     private JComboBox comboBoxTipo;
     private JComboBox comboBoxLocalidad;
-    private JFormattedTextField formattedTextField2;
+    private JFormattedTextField formattedTextFieldMonto;
 
     private static final int CHECK_COL = 1;
 
@@ -55,6 +59,8 @@ public class PantallaCrearCliente {
     private JLabel labelNombreBarrio;
 
     public PantallaCrearCliente() {
+
+        GestorClientes gestorClientes = new GestorClientes();
 
         //Configuración de la tabla
         tablaCaracteristicas = new JTable(dataModel);
@@ -87,12 +93,51 @@ public class PantallaCrearCliente {
         buttonCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ClienteDTO clienteDTO = collectDataCliente();
+                PreferenciaDTO preferenciaDTO = collectDataPreferencias();
+                clienteDTO.setPreferencias(preferenciaDTO);
+
+                gestorClientes.guardarCliente(clienteDTO);
                 GestorGUI.pop();
             }
         });
     }
 
+    private PreferenciaDTO collectDataPreferencias() {
+    PreferenciaDTO preferencias = new PreferenciaDTO();
+    preferencias.setTipoInmueble((TipoInmueble) comboBoxTipo.getSelectedItem());
+    preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+    preferencias.setMontoDisponible(Float.parseFloat(formattedTextFieldMonto.getText()));
+    preferencias.setBarrio(labelNombreBarrio.getText());
 
+    preferencias.setTieneCochera((Boolean) dataModel.getValueAt(0,1));
+    preferencias.setTienePatio((Boolean) dataModel.getValueAt(1,1));
+    preferencias.setTienePiscina((Boolean) dataModel.getValueAt(2,1));
+    preferencias.setTieneAguaCorriente((Boolean) dataModel.getValueAt(3,1));
+    preferencias.setTieneCloacas((Boolean) dataModel.getValueAt(4,1));
+    preferencias.setTieneGasNatural((Boolean) dataModel.getValueAt(5,1));
+    preferencias.setTieneAguaCaliente((Boolean) dataModel.getValueAt(6,1));
+    preferencias.setTieneTelefono((Boolean) dataModel.getValueAt(7,1));
+    preferencias.setTieneLavadero((Boolean) dataModel.getValueAt(8,1));
+    preferencias.setTienePavimento((Boolean) dataModel.getValueAt(9,1));
+
+    return preferencias;
+    }
+
+    private ClienteDTO collectDataCliente() {
+
+        ClienteDTO cliente = new ClienteDTO();
+        cliente.setUsername(textFieldUsername.getText());
+        cliente.setPassword(passwordFieldContrasenia.getPassword().toString());
+        cliente.setNombre(textFieldNombre.getText());
+        cliente.setApellido(textFieldApellido.getText());
+        return cliente;
+
+    }
+
+    private void validarCampos(){
+
+    }
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;

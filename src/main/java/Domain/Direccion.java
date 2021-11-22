@@ -1,8 +1,32 @@
 package Domain;
 
-import java.awt.*;
 
+import javax.persistence.*;
+import java.awt.*;
+@Entity
+@Table(name = "direccion")
 public class Direccion {
+    @Id
+    @Column(name = "id_direccion")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    @Column(name = "calle")
+    private String calle;
+    @Column(name = "numero")
+    private Integer numero;
+    @Column(name = "ubicacion_x")
+    private Integer ubicacionX;
+    @Column(name = "ubicacion_y")
+    private Integer ubicacionY;
+    @ManyToOne
+    @JoinColumn(name = "id_barrio")
+    private Barrio barrio;
+    @Column(name = "piso")
+    private String piso;  //TODO tal vez usar optional
+    @Column(name = "departamento")
+    private String departamento;
+
+
     public String getCalle() {
         return calle;
     }
@@ -19,19 +43,33 @@ public class Direccion {
         this.numero = numero;
     }
 
-    public Point getUbicacion() {
-        return ubicacion;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setUbicacion(Point ubicacion) {
-        this.ubicacion = ubicacion;
+    public Integer getUbicacionX() {
+        return ubicacionX;
     }
 
-    public String getBarrio() {
+    public void setUbicacionX(Integer ubicacionX) {
+        this.ubicacionX = ubicacionX;
+    }
+
+    public Integer getUbicacionY() {
+        return ubicacionY;
+    }
+
+    public void setUbicacionY(Integer ubicacionY) {
+        this.ubicacionY = ubicacionY;
+    }
+
+    public Barrio getBarrio() {
         return barrio;
     }
 
-    public void setBarrio(String barrio) {
+    public void setBarrio(Barrio barrio) {
+
         this.barrio = barrio;
     }
 
@@ -50,12 +88,5 @@ public class Direccion {
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
-
-    private String calle;
-    private Integer numero;
-    private Point ubicacion;
-    private String barrio;
-    private String piso;  //TODO tal vez usar optional
-    private String departamento;
 
 }

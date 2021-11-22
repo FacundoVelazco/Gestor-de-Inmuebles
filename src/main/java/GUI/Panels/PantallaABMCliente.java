@@ -1,5 +1,7 @@
 package GUI.Panels;
 
+import DAO.Util.ClienteDTO;
+import Services.GestorClientes;
 import Services.GestorGUI;
 import GUI.Util.Pantalla;
 
@@ -9,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PantallaABMCliente {
 
@@ -27,34 +30,26 @@ public class PantallaABMCliente {
     private JPanel panelControles;
     private JButton buttonLimpiar;
 
-    private DataModel dataModel = new DataModel(DATA, COLUMNS);
-    private static final String[] COLUMNS = {"Nombre", "Apellido","Nombre de usuario"};
-    private static final Object[][] DATA = {
-            {"Pedro", "Picapiedras", "stoner123"}, {"Agustín Ignacio", "García", "garagus_99"},
-            {"Eira Micaela","Martínez","eira12"},{"Facundo Jesualdo","Velazco","elfacu"},
-            {"Bruno","Agretti","bagretti"},{"Pablo","Leonarduzzi","pablisky95"}};
-
-    private class DataModel extends DefaultTableModel{
-        public DataModel(Object[][] data, Object[] columnNames) {
-            super(data, columnNames);
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            //all cells false
-            return false;
-        }
-    }
+    private DefaultTableModel dataModel = new DefaultTableModel(COLUMNS,0);
+    private static final String[] COLUMNS = {"Nombre de usuario","Nombre", "Apellido"};
 
     public PantallaABMCliente() {
 
         //Configuración de la tabla
-        tablaClientes.setModel(new DataModel(DATA, COLUMNS));
+        tablaClientes.setModel(dataModel);
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         tablaClientes.getTableHeader().setResizingAllowed(false);
         tablaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         sorter = new TableRowSorter<>(dataModel);
         tablaClientes.setRowSorter(sorter);
+
+        //Carga de datos en tabla
+        GestorClientes gestorClientes =  new GestorClientes();
+        ArrayList<ClienteDTO> clientes = new ArrayList<>();
+        for (ClienteDTO c : gestorClientes.listarClientes()){
+            ((DefaultTableModel) tablaClientes.getModel()).insertRow(0,new Object[]{c.getUsername(),c.getNombre(),c.getApellido(),c.getId()});
+        }
+
 
         botonNuevoCliente.addActionListener(new ActionListener() {
             @Override
@@ -106,6 +101,15 @@ public class PantallaABMCliente {
             }
         });
 
+        botonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString();
+                gestorClientes.borrarClienteByUsername(username);
+                botonesActivados(false);
+                GestorGUI.refreshCurrent();
+            }
+        });
     }
 
     /** Activa o desactiva los botones de Eliminar y Modificar */
@@ -113,6 +117,8 @@ public class PantallaABMCliente {
         botonEliminar.setEnabled(b);
         botonModificar.setEnabled(b);
     }
+
+
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;

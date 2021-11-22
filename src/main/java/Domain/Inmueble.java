@@ -3,40 +3,80 @@ package Domain;
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import Domain.Util.TipoInmueble;
-
-import java.awt.image.BufferedImage;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "inmueble")
 public class Inmueble {
-
+    @Id
+    @Column(name = "id_inmueble")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
     private EstadoInmueble estado;
+    @Column(name = "fecha_carga")
     private LocalDate fechaCarga;
+    @Column(name = "destacada")
     private Boolean propiedadDestacada;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_direccion")
     private Direccion direccion;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_inmueble")
     private TipoInmueble tipoInmueble;
+    @Column(name = "precio")
     private Float precio;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "orientacion")
     private Orientacion orientacion;
+    @Column(name = "longitud_frente")
     private Double longitudFrente;
+    @Column(name = "longitud_fondo")
     private Double longitudFondo;
+    @Column(name = "tamanio_inmueble")
     private Double tamanioInmueble;
-    private Boolean propiedadHorizontal;
+    @Column(name = "es_horizontal")
+    private Boolean esPropiedadHorizontal;
+    @Column(name = "antiguedad")
     private Integer antiguedad;
+    @Column(name = "cant_dormitorios")
     private Integer cantidadDormitorios;
+    @Column(name = "cant_banios")
     private Integer cantidadBanios;
+    @Column(name = "tiene_cochera")
     private Boolean tieneCochera;
+    @Column(name = "tiene_patio")
     private Boolean tienePatio;
+    @Column(name = "tiene_piscina")
     private Boolean tienePiscina;
+    @Column(name = "tiene_agua_corriente")
     private Boolean tieneAguaCorriente;
+    @Column(name = "tiene_cloacas")
     private Boolean tieneCloacas;
+    @Column(name = "tiene_gas_natural")
     private Boolean tieneGasNatural;
+    @Column(name = "tiene_agua_caliente")
     private Boolean tieneAguaCaliente;
+    @Column(name = "tiene_telefono")
     private Boolean tieneTelefono;
+    @Column(name = "tiene_lavadero")
     private Boolean tieneLavadero;
+    @Column(name = "tiene_pavimento")
     private Boolean tienePavimento;
-    private BufferedImage fotoPrincipal;
-    private List<BufferedImage> fotosInmueble;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_imagen")
+    private Imagen fotoPrincipal;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inmueble",fetch = FetchType.EAGER)
+    private List<Imagen> fotosInmueble = new ArrayList<>();
+    @Column(name = "observaciones")
+    private String observaciones;
+    @ManyToOne()
+    @JoinColumn(name = "id_persona")
     private Propietario propietarioInmueble;
 
     public Inmueble(Propietario pI) {
@@ -46,13 +86,12 @@ public class Inmueble {
         this.fechaCarga = LocalDate.now();
     }
 
-    //Getters and Setters
-    public Integer getId() {
-        return id;
+    public Inmueble() {
+
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public EstadoInmueble getEstado() {
@@ -77,6 +116,14 @@ public class Inmueble {
 
     public void setPropiedadDestacada(Boolean propiedadDestacada) {
         this.propiedadDestacada = propiedadDestacada;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
     public TipoInmueble getTipoInmueble() {
@@ -127,12 +174,12 @@ public class Inmueble {
         this.tamanioInmueble = tamanioInmueble;
     }
 
-    public Boolean getPropiedadHorizontal() {
-        return propiedadHorizontal;
+    public Boolean getEsPropiedadHorizontal() {
+        return esPropiedadHorizontal;
     }
 
-    public void setPropiedadHorizontal(Boolean propiedadHorizontal) {
-        this.propiedadHorizontal = propiedadHorizontal;
+    public void setEsPropiedadHorizontal(Boolean esPropiedadHorizontal) {
+        this.esPropiedadHorizontal = esPropiedadHorizontal;
     }
 
     public Integer getAntiguedad() {
@@ -239,20 +286,28 @@ public class Inmueble {
         this.tienePavimento = tienePavimento;
     }
 
-    public BufferedImage getFotoPrincipal() {
+    public Imagen getFotoPrincipal() {
         return fotoPrincipal;
     }
 
-    public void setFotoPrincipal(BufferedImage fotoPrincipal) {
+    public void setFotoPrincipal(Imagen fotoPrincipal) {
         this.fotoPrincipal = fotoPrincipal;
     }
 
-    public List<BufferedImage> getFotosInmueble() {
+    public List<Imagen> getFotosInmueble() {
         return fotosInmueble;
     }
 
-    public void setFotosInmueble(List<BufferedImage> fotosInmueble) {
+    public void setFotosInmueble(List<Imagen> fotosInmueble) {
         this.fotosInmueble = fotosInmueble;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public Propietario getPropietarioInmueble() {
