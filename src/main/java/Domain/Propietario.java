@@ -19,9 +19,27 @@ public class Propietario extends Persona{
     private String Dni;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_direccion")
-    private Direccion direccion;
+    private Direccion direccion; // En nuestra GUI no tenemos tantas opciones para agregar todos los atributos que estan en la clase Direccion
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
+    @OneToOne
+    @JoinColumn(name = "id_localidad")
+    private Localidad localidad;
+    @OneToOne
+    @JoinColumn(name = "id_provincia")
+    private Provincia provincia;
+    @Column(name = "email")
+    private String email;
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+
 //    @ManyToOne()
 //    @JoinColumn(name = "id_persona_vendedor")     VER el tema de Vendedor -> va a tener uno asociado?
 //    private Vendedor vendedor;

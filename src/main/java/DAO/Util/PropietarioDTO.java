@@ -1,9 +1,7 @@
 package DAO.Util;
 
-import Domain.Direccion;
-import Domain.Inmueble;
+import Domain.*;
 import Domain.Util.TipoDNI;
-import Domain.Vendedor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,21 +9,48 @@ import java.util.List;
 public class PropietarioDTO {
 
 
-    private TipoDNI tipoDNI;
+    private TipoDNI tipoDocumento;
     private String Dni;
-    private Direccion direccion;
+    private String direccion;
     private List<InmuebleDTO> inmuebles;
-    private VendedorDTO vendedor;
+    //private VendedorDTO vendedor;
+    private String localidad;
+    private String provincia;
+    private String email;
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public PropietarioDTO(){
     }
 
     public TipoDNI getTipoDNI() {
-        return tipoDNI;
+        return tipoDocumento;
     }
 
     public void setTipoDNI(TipoDNI tipoDNI) {
-        this.tipoDNI = tipoDNI;
+        this.tipoDocumento = tipoDNI;
     }
 
     public String getDni() {
@@ -36,11 +61,11 @@ public class PropietarioDTO {
         Dni = dni;
     }
 
-    public Direccion getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(Direccion direccion) {
+    public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 

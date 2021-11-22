@@ -11,10 +11,6 @@ public class GestorPropietario {
         return null;
     }
 
-    public PropietarioDTO modificarPropietario(PropietarioDTO pDTO){
-        return null;
-    }
-
     public Integer borrarPropietario(PropietarioDTO pDTO){
         return null;
     }

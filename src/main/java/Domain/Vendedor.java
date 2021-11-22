@@ -12,8 +12,6 @@ public class Vendedor extends Persona{
     @Column(name = "dni")
     private Integer dni;
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_dni")
-    private TipoDNI tipoDni;
     @Column(name = "nro_legajo")
     private Integer nroLegajo;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "vendedor")
@@ -31,14 +29,6 @@ public class Vendedor extends Persona{
 
     public void setDni(Integer dni) {
         this.dni = dni;
-    }
-
-    public TipoDNI getTipoDni() {
-        return tipoDni;
-    }
-
-    public void setTipoDni(TipoDNI tipoDni) {
-        this.tipoDni = tipoDni;
     }
 
     public Integer getNroLegajo() {

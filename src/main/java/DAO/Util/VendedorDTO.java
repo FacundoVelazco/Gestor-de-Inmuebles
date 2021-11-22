@@ -10,7 +10,6 @@ import java.util.List;
 public class VendedorDTO {
 
     private Integer dni;
-    private TipoDNI tipoDni;
     private Integer nroLegajo;
     private List<PropietarioDTO> propietarios;
     private Admin admin;
@@ -22,14 +21,6 @@ public class VendedorDTO {
 
     public void setDni(Integer dni) {
         this.dni = dni;
-    }
-
-    public TipoDNI getTipoDni() {
-        return tipoDni;
-    }
-
-    public void setTipoDni(TipoDNI tipoDni) {
-        this.tipoDni = tipoDni;
     }
 
     public Integer getNroLegajo() {

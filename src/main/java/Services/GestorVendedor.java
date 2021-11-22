@@ -11,10 +11,6 @@ public class GestorVendedor {
         return null;
     }
 
-    public VendedorDTO modificarVendedor(VendedorDTO vDTO){
-        return null;
-    }
-
     public Integer borrarVendedor(VendedorDTO vDTO){
         return null;
     }
