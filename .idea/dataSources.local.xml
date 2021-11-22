@@ -3,7 +3,13 @@
   <component name="dataSourceStorageLocal" created-in="IU-212.5457.46">
     <data-source name="postgres@localhost" uuid="370fa96e-0970-4a27-9843-fbf57230f679">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
-      <schema-mapping />
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="TP-MA">
+            <node kind="schema" negative="1" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
   </component>
 </project>

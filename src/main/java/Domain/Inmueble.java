@@ -3,66 +3,91 @@ package Domain;
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import Domain.Util.TipoInmueble;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "inmueble")
 public class Inmueble {
-
+    @Id
+    @Column(name = "id_inmueble")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
     private EstadoInmueble estado;
+    @Column(name = "fecha_carga")
     private LocalDate fechaCarga;
+    @Column(name = "destacada")
     private Boolean propiedadDestacada;
-    private String provincia;
-    private String localidad;
-    private String calle;
-    private Integer numeroCalle;
-    private Double longitud;
-    private Double latitud;
-    private String piso;
-    private String departamento;
-    private String barrio;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_direccion")
+    private Direccion direccion;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_inmueble")
     private TipoInmueble tipoInmueble;
+    @Column(name = "precio")
     private Float precio;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "orientacion")
     private Orientacion orientacion;
+    @Column(name = "longitud_frente")
     private Double longitudFrente;
+    @Column(name = "longitud_fondo")
     private Double longitudFondo;
+    @Column(name = "tamanio_inmueble")
     private Double tamanioInmueble;
+    @Column(name = "es_horizontal")
     private Boolean esPropiedadHorizontal;
+    @Column(name = "antiguedad")
     private Integer antiguedad;
+    @Column(name = "cant_dormitorios")
     private Integer cantidadDormitorios;
+    @Column(name = "cant_banios")
     private Integer cantidadBanios;
+    @Column(name = "tiene_cochera")
     private Boolean tieneCochera;
+    @Column(name = "tiene_patio")
     private Boolean tienePatio;
+    @Column(name = "tiene_piscina")
     private Boolean tienePiscina;
+    @Column(name = "tiene_agua_corriente")
     private Boolean tieneAguaCorriente;
+    @Column(name = "tiene_cloacas")
     private Boolean tieneCloacas;
+    @Column(name = "tiene_gas_natural")
     private Boolean tieneGasNatural;
+    @Column(name = "tiene_agua_caliente")
     private Boolean tieneAguaCaliente;
+    @Column(name = "tiene_telefono")
     private Boolean tieneTelefono;
+    @Column(name = "tiene_lavadero")
     private Boolean tieneLavadero;
+    @Column(name = "tiene_pavimento")
     private Boolean tienePavimento;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_imagen")
     private Imagen fotoPrincipal;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inmueble",fetch = FetchType.EAGER)
     private List<Imagen> fotosInmueble = new ArrayList<>();
+    @Column(name = "observaciones")
     private String observaciones;
+    @ManyToOne()
+    @JoinColumn(name = "id_persona")
     private Propietario propietarioInmueble;
 
     public Inmueble(Propietario pI) {
         this.estado = EstadoInmueble.ALTA;
-        this.provincia = "Santa Fe";
+        //this.provincia = "Santa Fe";
         this.propietarioInmueble = pI;
         this.propiedadDestacada = false;
         this.fechaCarga = LocalDate.now();
     }
 
-    //Getters and Setters
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public EstadoInmueble getEstado() {
@@ -89,76 +114,12 @@ public class Inmueble {
         this.propiedadDestacada = propiedadDestacada;
     }
 
-    public String getProvincia() {
-        return provincia;
+    public Direccion getDireccion() {
+        return direccion;
     }
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public Integer getNumeroCalle() {
-        return numeroCalle;
-    }
-
-    public void setNumeroCalle(Integer numeroCalle) {
-        this.numeroCalle = numeroCalle;
-    }
-
-    public Double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
-    }
-
-    public Double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(Double latitud) {
-        this.latitud = latitud;
-    }
-
-    public String getPiso() {
-        return piso;
-    }
-
-    public void setPiso(String piso) {
-        this.piso = piso;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
     public TipoInmueble getTipoInmueble() {
@@ -337,19 +298,19 @@ public class Inmueble {
         this.fotosInmueble = fotosInmueble;
     }
 
-    public Propietario getPropietarioInmueble() {
-        return propietarioInmueble;
-    }
-
-    public void setPropietarioInmueble(Propietario propietarioInmueble) {
-        this.propietarioInmueble = propietarioInmueble;
-    }
-
     public String getObservaciones() {
         return observaciones;
     }
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Propietario getPropietarioInmueble() {
+        return propietarioInmueble;
+    }
+
+    public void setPropietarioInmueble(Propietario propietarioInmueble) {
+        this.propietarioInmueble = propietarioInmueble;
     }
 }
