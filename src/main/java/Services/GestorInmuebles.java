@@ -40,6 +40,8 @@ public class GestorInmuebles {
         InmuebleDTO i4 = new InmuebleDTO();
         InmuebleDTO i5 = new InmuebleDTO();
         InmuebleDTO i6 = new InmuebleDTO();
+        InmuebleDTO i7 = new InmuebleDTO();
+        InmuebleDTO i8 = new InmuebleDTO();
 
         i1 = new InmuebleDTO();
         i1.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/test1.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
@@ -83,15 +85,21 @@ public class GestorInmuebles {
         i6.setCalle("aliateaas");
         i6.setNumeroCalle(4566598);
 
+
         lista.add(i1);
         lista.add(i2);
         lista.add(i3);
         lista.add(i4);
         lista.add(i5);
         lista.add(i6);
+        lista.add(i4);
+        lista.add(i5);
         
 
-        return lista;
+        if( lista.size() < fin - 1){
+            fin = lista.size();
+        }
+        return lista.subList(inicio - 1, fin);
     }
 
 }

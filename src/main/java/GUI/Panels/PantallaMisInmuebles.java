@@ -5,6 +5,8 @@ import Services.GestorInmuebles;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PantallaMisInmuebles {
@@ -68,10 +70,12 @@ public class PantallaMisInmuebles {
     private JButton buttonEliminarProp3;
     private JButton buttonEliminarProp4;
     private JButton buttonEliminarProp5;
+    private JLabel numeroDePaginaLabel;
     private GestorInmuebles gestorInmuebles;
     private ArrayList<InmuebleDTO> inmueblesActuales;
     private InmuebleDTO inmueblePorDefecto;
     private Integer idPropietario;
+    private Integer paginaActual;
 
 
     public PantallaMisInmuebles() {
@@ -81,12 +85,80 @@ public class PantallaMisInmuebles {
         //Defino el gestor
         gestorInmuebles = new GestorInmuebles();
 
+        //Definimos que es la primer pagina
+        paginaActual = 1;
+
+
         //Obtengo los primeros 6 inmuebles del propietario (el ultimo solo para determinar si se habilita o no el boton de siguiente)
         inmueblesActuales = new ArrayList<>();
         inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(idPropietario,1,6));
 
         actualizarTablitaInmuebles(inmueblesActuales);
+        actualizarBotones();
 
+        siguienteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                //Calculamos los inmuebles a mostrar segun el numero de pagina
+                Integer inicio = paginaActual * 5 + 2;
+                //Sumamos 4 porque siempre nos sobra 1 inmueble de la primer solicitud a la base
+                Integer fin = inicio + 4;
+                paginaActual ++;
+
+                //Si aun no pedimos estos inmuebles a la base de datos, los pedimos
+                if(inmueblesActuales.size() <= (inicio-1)){
+                    inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(idPropietario,  inicio ,fin));
+                }
+
+                //Una vez tenemos todos los inmuebles, nos fijamos el tamanio de la lista, de no ser lo suficientemente grande como para ocupar los 5
+                //lugares de inmuebles, achicamos el margen a mostrar
+                if(inmueblesActuales.size() < fin - 1){
+                    fin = inmueblesActuales.size() + 1;
+                }
+
+                //Actualizamos la lista de inmuebles
+                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
+                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio-2,fin-1));
+
+                actualizarTablitaInmuebles(inmueblesAMostrar);
+                actualizarBotones();
+                numeroDePaginaLabel.setText(paginaActual.toString());
+            }
+        });
+
+        anteriorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                paginaActual--;
+                Integer fin = paginaActual * 5;
+                Integer inicio = fin - 5;
+
+                //Actualizamos la lista de inmuebles
+                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
+                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio,fin));
+                actualizarTablitaInmuebles(inmueblesAMostrar);
+                actualizarBotones();
+                numeroDePaginaLabel.setText(paginaActual.toString());
+
+            }
+        });
+
+    }
+
+    private void actualizarBotones() {
+        if(inmueblesActuales.size() < paginaActual * 5 + 1){
+            siguienteButton.setEnabled(false);
+        }else{
+            siguienteButton.setEnabled(true);
+        }
+
+        if(paginaActual == 1){
+            anteriorButton.setEnabled(false);
+        }else{
+            anteriorButton.setEnabled(true);
+        }
     }
 
     private void crearInmueblePorDefecto() {
@@ -117,8 +189,8 @@ public class PantallaMisInmuebles {
 
         for(int i = totalImagenes + 1 ; i<= 5 ; i++){
             mostrarInmueble(inmueblePorDefecto,i);
-
         }
+
     }
 
     private void mostrarInmueble(InmuebleDTO inmuebleDTO, int i) {
@@ -144,6 +216,15 @@ public class PantallaMisInmuebles {
                 localidadProp1Label.setText(localidad);
                 pvDireccionProp1Label.setText(pvDireccion);
                 svDireccionProp1Label.setText(svDireccion);
+
+                //Seteo en true por defecto
+                buttonModificarProp1.setEnabled(true);
+                buttonEliminarProp1.setEnabled(true);
+                //Si es el inmueble por defecto (es decir, no hay inmueble) desactivo los botones
+                if(inmuebleDTO.getId().equals(-1)){
+                    buttonModificarProp1.setEnabled(false);
+                    buttonEliminarProp1.setEnabled(false);
+                }
                 break;
             case 2:
                 imagenProp2Label.setIcon(foto);
@@ -151,6 +232,16 @@ public class PantallaMisInmuebles {
                 localidadProp2Label.setText(localidad);
                 pvDireccionProp2Label.setText(pvDireccion);
                 svDireccionProp2Label.setText(svDireccion);
+
+                //Seteo en true por defecto
+                buttonModificarProp2.setEnabled(true);
+                buttonEliminarProp2.setEnabled(true);
+                //Si es el inmueble por defecto (es decir, no hay inmueble) desactivo los botones
+                if(inmuebleDTO.getId().equals(-1)){
+                    buttonModificarProp2.setEnabled(false);
+                    buttonEliminarProp2.setEnabled(false);
+                }
+
                 break;
             case 3:
                 imagenProp3Label.setIcon(foto);
@@ -158,6 +249,14 @@ public class PantallaMisInmuebles {
                 localidadProp3Label.setText(localidad);
                 pvDireccionProp3Label.setText(pvDireccion);
                 svDireccionProp3Label.setText(svDireccion);
+                //Seteo en true por defecto
+                buttonModificarProp3.setEnabled(true);
+                buttonEliminarProp3.setEnabled(true);
+                //Si es el inmueble por defecto (es decir, no hay inmueble) desactivo los botones
+                if(inmuebleDTO.getId().equals(-1)){
+                    buttonModificarProp3.setEnabled(false);
+                    buttonEliminarProp3.setEnabled(false);
+                }
                 break;
             case 4:
                 imagenProp4Label.setIcon(foto);
@@ -165,6 +264,14 @@ public class PantallaMisInmuebles {
                 localidadProp4Label.setText(localidad);
                 pvDireccionProp4Label.setText(pvDireccion);
                 svDireccionProp4Label.setText(svDireccion);
+                //Seteo en true por defecto
+                buttonModificarProp4.setEnabled(true);
+                buttonEliminarProp4.setEnabled(true);
+                //Si es el inmueble por defecto (es decir, no hay inmueble) desactivo los botones
+                if(inmuebleDTO.getId().equals(-1)){
+                    buttonModificarProp4.setEnabled(false);
+                    buttonEliminarProp4.setEnabled(false);
+                }
                 break;
             case 5:
                 imagenProp5Label.setIcon(foto);
@@ -172,6 +279,14 @@ public class PantallaMisInmuebles {
                 localidadProp5Label.setText(localidad);
                 pvDireccionProp5Label.setText(pvDireccion);
                 svDireccionProp5Label.setText(svDireccion);
+                //Seteo en true por defecto
+                buttonModificarProp5.setEnabled(true);
+                buttonEliminarProp5.setEnabled(true);
+                //Si es el inmueble por defecto (es decir, no hay inmueble) desactivo los botones
+                if(inmuebleDTO.getId().equals(-1)){
+                    buttonModificarProp5.setEnabled(false);
+                    buttonEliminarProp5.setEnabled(false);
+                }
                 break;
         }
 
