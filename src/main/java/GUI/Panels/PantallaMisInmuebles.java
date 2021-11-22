@@ -1,12 +1,15 @@
 package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
+import GUI.Util.Pantalla;
+import Services.GestorGUI;
 import Services.GestorInmuebles;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PantallaMisInmuebles {
@@ -144,6 +147,127 @@ public class PantallaMisInmuebles {
 
             }
         });
+
+        crearInmuebleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.push(Pantalla.AM_INMUEBLE);
+            }
+        });
+
+        //Logica botones modificar
+        cargarLogicaBotonesModificar();
+
+        //Logica botones eliminar
+        cargarLogicaBotonesEliminar();
+
+
+    }
+
+    private void cargarLogicaBotonesEliminar() {
+
+
+        buttonEliminarProp1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 + 1).getId());
+                idto.setEstado("BAJA");
+                gestorInmuebles.guardarInmueble(idto);
+            }
+        });
+
+    }
+
+    private void cargarLogicaBotonesModificar() {
+
+        buttonModificarProp1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //TODO MODIFICAR POR USO PARA PRUEBAS
+                gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+
+                InmuebleDTO idto = new InmuebleDTO();
+                idto.setId(123);
+                idto.setEstado("ALTA");
+                idto.setFechaCarga(LocalDate.now());
+                idto.setLocalidad("Toba");
+                idto.setBarrio("Los hornos");
+//                idto.setCalle("Urquiza");
+//                idto.setNumeroCalle(5952);
+                idto.setLatitud(5664.45);
+                idto.setLongitud(654.2);
+
+                idto.setTipoInmueble("Local-Oficina");
+                idto.setOrientacion("Sur");
+                idto.setLongitudFrente(565.0);
+                idto.setLongitudFondo(5646.12);
+                idto.setTamanioInmueble(64556.2);
+                idto.setAntiguedad(6);
+                idto.setCantidadDormitorios(41);
+                idto.setCantidadBanios(263);
+                idto.setPrecio(654.24f);
+                idto.setEsPropiedadHorizontal(true);
+
+                idto.setTieneLavadero(true);
+                idto.setTieneTelefono(true);
+                idto.setTienePavimento(false);
+                idto.setTieneCochera(true);
+                idto.setTienePatio(true);
+                idto.setTienePiscina(false);
+                idto.setTieneAguaCaliente(false);
+                idto.setTieneAguaCorriente(true);
+                idto.setTieneCloacas(false);
+                idto.setTieneGasNatural(true);
+
+                idto.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/test1.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+                idto.setNombreArchivoFotoPrincipal("Fotito principal.png");
+
+                ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
+                ArrayList<String> nombresArchivos = new ArrayList<>();
+
+//                listaImagenes.add(new ImageIcon(new ImageIcon("src/main/java/Materials/test2.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+//                nombresArchivos.add("Pepito.jpg");
+
+                idto.setFotosInmueble(listaImagenes);
+                idto.setNombresArchivosFotos(nombresArchivos);
+
+                GestorGUI.pushModificar(Pantalla.AM_INMUEBLE,idto);
+            }
+        });
+
+        buttonModificarProp2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 + 1).getId());
+                GestorGUI.pushModificar(Pantalla.AM_INMUEBLE,idto);
+            }
+        });
+
+        buttonModificarProp3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 + 2).getId());
+                GestorGUI.pushModificar(Pantalla.AM_INMUEBLE,idto);
+            }
+        });
+
+        buttonModificarProp4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 + 3).getId());
+                GestorGUI.pushModificar(Pantalla.AM_INMUEBLE,idto);
+            }
+        });
+
+        buttonModificarProp5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 + 4).getId());
+                GestorGUI.pushModificar(Pantalla.AM_INMUEBLE,idto);
+            }
+        });
+
 
     }
 
