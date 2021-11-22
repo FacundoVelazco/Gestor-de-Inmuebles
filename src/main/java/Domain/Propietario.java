@@ -44,10 +44,7 @@ public class Propietario extends Persona{
 //    @JoinColumn(name = "id_persona_vendedor")     VER el tema de Vendedor -> va a tener uno asociado?
 //    private Vendedor vendedor;
 
-    public Propietario(TipoDNI tipoDNI, String Dni, Direccion direccion){
-            this.tipoDNI = tipoDNI;
-            this.Dni = Dni;
-            this.direccion = direccion;
+    public Propietario(){
             this.inmuebles = new ArrayList<Inmueble>();
     }
 
@@ -81,5 +78,22 @@ public class Propietario extends Persona{
 
     public void setInmuebles(List<Inmueble> inmuebles) {
         this.inmuebles = inmuebles;
+    }
+
+
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
