@@ -1,29 +1,20 @@
-package Domain;
+package DAO.Util;
 
+import Domain.Admin;
+import Domain.Propietario;
 import Domain.Util.TipoDNI;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "vendedor")
-@PrimaryKeyJoinColumn(name="id_persona")
-public class Vendedor extends Persona{
-    @Column(name = "dni")
+public class VendedorDTO {
+
     private Integer dni;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_dni")
     private TipoDNI tipoDni;
-    @Column(name = "nro_legajo")
     private Integer nroLegajo;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "vendedor")
-    private List<Propietario> propietarios;
-    @ManyToOne()
-    @JoinColumn(name = "id_persona_admin")
+    private List<PropietarioDTO> propietarios;
     private Admin admin;
 
-    public Vendedor(){
-    }
 
     public Integer getDni() {
         return dni;
@@ -49,11 +40,11 @@ public class Vendedor extends Persona{
         this.nroLegajo = nroLegajo;
     }
 
-    public List<Propietario> getPropietarios() {
+    public List<PropietarioDTO> getPropietarios() {
         return propietarios;
     }
 
-    public void setPropietarios(List<Propietario> propietarios) {
+    public void setPropietarios(List<PropietarioDTO> propietarios) {
         this.propietarios = propietarios;
     }
 
@@ -64,7 +55,5 @@ public class Vendedor extends Persona{
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-
-
 
 }

@@ -24,6 +24,15 @@ public class Propietario extends Persona{
     @ManyToOne()
     @JoinColumn(name = "id_persona_vendedor")
     private Vendedor vendedor;
+
+    public Propietario(Vendedor v,TipoDNI tipoDNI, String Dni, Direccion direccion, List<Inmueble> inmuebles){ // Se le tiene que pasar como parametro una lista con todos los Inmuebles?
+            this.tipoDNI = tipoDNI;
+            this.Dni = Dni;
+            this.direccion = direccion;
+            this.inmuebles = inmuebles;
+            this.vendedor = v; // el Vendedor lo podria tener guardada la GUI al iniciar sesion?
+    }
+
     public TipoDNI getTipoDNI() {
         return tipoDNI;
     }
