@@ -14,7 +14,6 @@ public class Main {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager manager;
-        GestorGUI.init(Pantalla.C_INMUEBLE);
-
+        GestorGUI.init(Pantalla.MIS_INMUEBLES);
     }
 }

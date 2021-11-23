@@ -15,6 +15,7 @@ import java.awt.*;
 @Table(name = "imagen")
 public class Imagen {
 
+
     @Id
     @Column(name = "id_imagen")
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -39,6 +40,7 @@ public class Imagen {
         return bi;
     }
 
+
     public ImageIcon getImagen() {
         return new ImageIcon(imagen);
     }
@@ -58,4 +60,5 @@ public class Imagen {
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
     }
+
 }
