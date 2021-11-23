@@ -45,7 +45,6 @@ public class PantallaABMCliente {
 
         //Carga de datos en tabla
         GestorClientes gestorClientes =  new GestorClientes();
-        ArrayList<ClienteDTO> clientes = new ArrayList<>();
         for (ClienteDTO c : gestorClientes.listarClientes()){
             ((DefaultTableModel) tablaClientes.getModel()).insertRow(0,new Object[]{c.getUsername(),c.getNombre(),c.getApellido(),c.getId()});
         }
@@ -94,6 +93,7 @@ public class PantallaABMCliente {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaClientes.getSelectedRow()>-1 && e.getValueIsAdjusting()){
+                    //TODO debug sysout
                     System.out.println("Cliente seleccionado: " +
                             dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0));
                     botonesActivados(true);
@@ -103,16 +103,22 @@ public class PantallaABMCliente {
         botonEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString();
-                gestorClientes.borrarClienteByUsername(username);
-                botonesActivados(false);
-                GestorGUI.refreshCurrent();
+                //TODO hacer dialogo de confirmacion generico
+                Integer confirmacion = JOptionPane.showConfirmDialog(new JFrame(),"¿Está seguro que desea eliminar el cliente?","Eliminar cliente",JOptionPane.YES_NO_OPTION);
+                if(confirmacion==JOptionPane.YES_OPTION){
+                    String username = dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString();
+                    gestorClientes.borrarClienteByUsername(username);
+                    botonesActivados(false);
+                    GestorGUI.refreshCurrent(); //TODO esto es lo correcto? intenta hacer un pop de la pantalla actual cuando ya se encuentra en el tope
+                }
             }
         });
         botonModificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO crear pantalla nueva con dto de cliente a modificar
+                ClienteDTO cliente = gestorClientes.getClienteByUsername(
+                        dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString());
+                GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,cliente);
             }
         });
     }
@@ -122,7 +128,6 @@ public class PantallaABMCliente {
         botonEliminar.setEnabled(b);
         botonModificar.setEnabled(b);
     }
-
 
 
     public JPanel getPanelPrincipal() {

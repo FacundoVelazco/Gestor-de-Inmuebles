@@ -48,6 +48,8 @@ public class PantallaCrearCliente {
     private JFormattedTextField formattedTextFieldMonto;
     private static String regexNumeroTelefonoValido ="[0-9]+";
 
+    GestorClientes gestorClientes = new GestorClientes();
+
     //Datos para la tabla de características
     private static final int CHECK_COL = 1;
     private static final Object[][] DATA = {
@@ -71,9 +73,13 @@ public class PantallaCrearCliente {
     private JLabel labelErrorTelefono;
     private JLabel labelErrorContrasenia;
 
-    public PantallaCrearCliente() {
+    private ActionListener actionListenerCrear;
+    private ActionListener actionListenerModificar;
 
-        GestorClientes gestorClientes = new GestorClientes();
+    //Se setea en true cuando se entra a la pantalla en modo modificar
+    private Boolean flagModificando = false;
+
+    public PantallaCrearCliente() {
 
         //Configuración de la tabla
         tablaCaracteristicas = new JTable(dataModel);
@@ -104,7 +110,9 @@ public class PantallaCrearCliente {
                 GestorGUI.pop();
             }
         });
-        buttonCrear.addActionListener(new ActionListener() {
+
+        //innit de los action listener
+        actionListenerCrear = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(validarUsername() & validarContrasenia() & validarNombre() & validarApellido() & validarTelefono()){
@@ -112,18 +120,71 @@ public class PantallaCrearCliente {
                     PreferenciaDTO preferenciaDTO = collectDataPreferencias();
                     clienteDTO.setPreferencias(preferenciaDTO);
                     gestorClientes.guardarCliente(clienteDTO);
+
+                    System.out.println("Ejecutado boton crear"); //TODO sysout debug
+
                     GestorGUI.pop();
                 }
             }
-        });
+        };
 
-        //TODO manera coqueta de comprobar en tiempo "real" si son validos los inputs
-//        textFieldUsername.addFocusListener(new FocusAdapter() {
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//                validarUsername();
-//            }
-//        });
+        buttonCrear.addActionListener(actionListenerCrear);
+
+    }
+
+    /** Se utiliza este constructor para entrar a la pantalla en
+     * modo Modificar para modificar el cliente que se le pasa como parámetro */
+    public PantallaCrearCliente(ClienteDTO elemento) {
+        //Constructor default
+        this();
+
+        flagModificando=true;
+
+        //Relleno de campos para modificar cliente
+        textoTitulo.setText("Modificar cliente");
+        textFieldUsername.setText(elemento.getUsername());
+        textFieldUsername.setEnabled(false);
+        textFieldNombre.setText(elemento.getNombre());
+        textFieldApellido.setText(elemento.getApellido());
+        formattedTextFieldTelefono.setText(elemento.getTelefono());
+        passwordFieldContrasenia.setText(elemento.getPassword());
+
+        //Relleno de campos de las preferencias
+        comboBoxTipo.setSelectedItem(elemento.getPreferencias().getTipoInmueble());
+        //Aqui se setearía la localidad
+        textFieldBarrio.setText(elemento.getPreferencias().getBarrio());
+        if(elemento.getPreferencias().getMontoDisponible()!=null) formattedTextFieldMonto.setText(elemento.getPreferencias().getMontoDisponible().toString());
+        dataModel.setValueAt(elemento.getPreferencias().getTieneCochera(),0,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTienePatio(),1,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTienePiscina(),2,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTieneAguaCorriente(),3,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTieneCloacas(),4,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTieneGasNatural(),5,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTieneAguaCaliente(),6,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTieneTelefono(),7,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTieneLavadero(),8,1);
+        dataModel.setValueAt(elemento.getPreferencias().getTienePavimento(),9,1);
+
+        //Botón "crear" ahora es "modificar"
+        buttonCrear.setText("Modificar");
+        //Se le cambia el action listener, ahora utiliza otro metodo del gestor
+        buttonCrear.removeActionListener(actionListenerCrear);
+        actionListenerModificar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(validarUsername() & validarContrasenia() & validarNombre() & validarApellido() & validarTelefono()){
+                    ClienteDTO clienteDTO = collectDataCliente();
+                    PreferenciaDTO preferenciaDTO = collectDataPreferencias();
+                    clienteDTO.setPreferencias(preferenciaDTO);
+                    gestorClientes.guardarCliente(clienteDTO);
+
+                    System.out.println("Ejecutado boton modificar"); //TODO sysout debug
+
+                    GestorGUI.pop();
+                }
+            }
+        };
+        buttonCrear.addActionListener(actionListenerModificar);
     }
 
     private PreferenciaDTO collectDataPreferencias() {
@@ -136,7 +197,7 @@ public class PantallaCrearCliente {
         preferencias.setMontoDisponible(Float.parseFloat(formattedTextFieldMonto.getText().replaceAll("[^0-9]", "")));
     }
 
-    preferencias.setBarrio(labelNombreBarrio.getText());
+    preferencias.setBarrio(textFieldBarrio.getText());
     preferencias.setTieneCochera((Boolean) dataModel.getValueAt(0,1));
     preferencias.setTienePatio((Boolean) dataModel.getValueAt(1,1));
     preferencias.setTienePiscina((Boolean) dataModel.getValueAt(2,1));
@@ -155,7 +216,7 @@ public class PantallaCrearCliente {
 
         ClienteDTO cliente = new ClienteDTO();
         cliente.setUsername(textFieldUsername.getText());
-        cliente.setPassword(passwordFieldContrasenia.getPassword().toString());
+        cliente.setPassword(passwordFieldContrasenia.getText());
         cliente.setNombre(textFieldNombre.getText());
         cliente.setApellido(textFieldApellido.getText());
         cliente.setTelefono(formattedTextFieldTelefono.getText().replaceAll("[^0-9.]", ""));
@@ -175,6 +236,11 @@ public class PantallaCrearCliente {
         }
         if (textFieldUsername.getText().contains(" ")){
             labelErrorUsername.setText("No debe contener espacios");
+            labelErrorUsername.setVisible(true);
+            return false;
+        }
+        if(!flagModificando && gestorClientes.existeCliente(textFieldUsername.getText())){
+            labelErrorUsername.setText("El nombre de usuario ya existe");
             labelErrorUsername.setVisible(true);
             return false;
         }

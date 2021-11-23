@@ -1,5 +1,6 @@
 package Services;
 
+import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import GUI.Panels.PantallaABMCliente;
 import GUI.Panels.PantallaAMInmueble;
@@ -24,9 +25,17 @@ public class GestorGUI {
             case ABM_CLIENTE:
                 framePrincipal.setContentPane(new PantallaABMCliente().getPanelPrincipal());
                 break;
+
             case CREAR_CLIENTE:
-                framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
+                PantallaCrearCliente pantallaCrearCliente;
+                if(elemento == null){
+                    pantallaCrearCliente = new PantallaCrearCliente();
+                }else{
+                    pantallaCrearCliente = new PantallaCrearCliente((ClienteDTO) elemento);
+                }
+                framePrincipal.setContentPane(pantallaCrearCliente.getPanelPrincipal());
                 break;
+
             case AM_INMUEBLE:
                 PantallaAMInmueble p;
                 if (elemento == null){

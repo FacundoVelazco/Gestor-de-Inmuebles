@@ -41,7 +41,7 @@ public class Inmueble {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_imagen")
     private Imagen fotoPrincipal;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inmueble",fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inmuebleAsociado",fetch = FetchType.EAGER)
     private List<Imagen> fotosInmueble = new ArrayList<>();
     @Column(name = "observaciones")
     private String observaciones;

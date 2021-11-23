@@ -26,13 +26,11 @@ public class Imagen {
     private byte[] imagen;
 
     @Column(name = "descripcion")
-  
     private String nombreArchivo;
-    private Inmueble inmuebleAsociado;
 
     @ManyToOne()
     @JoinColumn(name = "id_inmueble")
-    private Inmueble inmueble;
+    private Inmueble inmuebleAsociado;
 
     private BufferedImage toBufferedImage(Image im){
         BufferedImage bi = new BufferedImage(im.getWidth(null),im.getHeight(null),BufferedImage.TYPE_INT_RGB);

@@ -50,9 +50,10 @@ public class GestorClientes {
         clienteAGuardar.setNombre(cliente.getNombre());
         clienteAGuardar.setTelefono(cliente.getTelefono());
         clienteAGuardar.setApellido(cliente.getApellido());
+        clienteAGuardar.setPassword(cliente.getPassword());
 
         DAOBdCliente clienteDao = new DAOBdCliente();
-        clienteDao.save(clienteAGuardar);
+        clienteDao.update(clienteAGuardar);
     }
 
     public ClienteDTO getClienteByUsername(String username){
@@ -84,6 +85,11 @@ public class GestorClientes {
 
 
         return clienteDTO;
+    }
+
+    public Boolean existeCliente(String username){
+        DAOBdCliente clienteDao = new DAOBdCliente();
+        return clienteDao.existsUsername(username);
     }
 
 }

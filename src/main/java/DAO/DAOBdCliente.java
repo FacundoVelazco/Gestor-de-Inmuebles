@@ -16,13 +16,40 @@ public class DAOBdCliente implements ClienteDAO{
 
 
         manager.getTransaction().begin();
-
         manager.persist(cliente);
-
         manager.getTransaction().commit();
         manager.close();
 
     }
+
+    @Override
+    public void update(Cliente cliente) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+
+        String username = cliente.getUsername();
+        manager.getTransaction().begin();
+        Query query = manager.createQuery("from Cliente c where c.username = :username");
+        query.setParameter("username",username);
+        if(!query.getResultList().isEmpty()){
+            Query query2 = manager.createQuery("delete from Cliente c where c.username = :username");
+            query2.setParameter("username",username).executeUpdate();
+        }
+        manager.persist(cliente);
+        manager.getTransaction().commit();
+        manager.close();
+    }
+
+    @Override
+    public Boolean existsUsername(String username) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        Query query = manager.createQuery("from Cliente c where c.username = :username");
+        query.setParameter("username",username);
+        if(!query.getResultList().isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public List<Cliente> listAll() {

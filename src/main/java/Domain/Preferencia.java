@@ -74,6 +74,22 @@ public class Preferencia {
         this.tipoInmueble = tipoInmueble;
     }
 
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
     public Float getMontoDisponible() {
         return montoDisponible;
     }
