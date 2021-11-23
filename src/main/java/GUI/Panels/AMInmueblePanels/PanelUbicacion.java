@@ -41,8 +41,10 @@ public class PanelUbicacion {
     private JLabel errorSVDireccionLabel;
     private TipoPanelAMInmueble tipo;
     private InmuebleDTO inmuebleDTO;
-
-
+    private String calleSeteada="";
+    private String numeroSeteado="";
+    private String latitudSeteada="";
+    private String longitudSeteada="";
 
     public PanelUbicacion() {
 
@@ -130,8 +132,23 @@ public class PanelUbicacion {
     }
 
     private void limpiarCamposDireccion(){
-        textFieldPVDireccion.setText("");
-        textFieldSVDireccion.setText("");
+
+        if(checkBoxActivador.isSelected()){
+            calleSeteada = textFieldPVDireccion.getText();
+            numeroSeteado = textFieldSVDireccion.getText();
+
+            textFieldPVDireccion.setText(latitudSeteada);
+            textFieldSVDireccion.setText(longitudSeteada);
+
+        }else{
+            latitudSeteada = textFieldPVDireccion.getText();
+            longitudSeteada = textFieldSVDireccion.getText();
+
+            textFieldPVDireccion.setText(calleSeteada);
+            textFieldSVDireccion.setText(numeroSeteado);
+        }
+
+
     }
 
     //Solo ingreso al obtener datos si previamente valide los mismos
@@ -168,6 +185,24 @@ public class PanelUbicacion {
 
         return inmuebleDTO;
     }
+
+    public void setDatos(InmuebleDTO idto) {
+        comboBoxLocalidad.setSelectedItem(idto.getLocalidad());
+        textFieldBarrio.setText(idto.getBarrio());
+        if(idto.getLatitud() == null){
+            textFieldPVDireccion.setText(idto.getCalle());
+            textFieldSVDireccion.setText(idto.getNumeroCalle().toString());
+        }else{
+            textFieldPVDireccion.setText(idto.getLatitud().toString());
+            textFieldSVDireccion.setText(idto.getLongitud().toString());
+            tituloPVDireccionLabel.setText("Latitud:");
+            tituloSVDireccionLabel.setText("Longitud:");
+            checkBoxActivador.setSelected(true);
+        }
+        textFieldPiso.setText(idto.getPiso());
+        textFieldDepartamento.setText(idto.getDepartamento());
+    }
+
 
 
     private static final String[] LOCALIDADES = {"Aarón Castellanos(Est. Castellanos)",
@@ -555,6 +590,7 @@ public class PanelUbicacion {
             "Zavalla",
             "Zenón Pereyra"
     };
+
 
 
 }

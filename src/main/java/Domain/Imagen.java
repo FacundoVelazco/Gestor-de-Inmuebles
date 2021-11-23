@@ -1,26 +1,63 @@
 package Domain;
 
-import javax.swing.*;
 
+
+import javax.persistence.*;
+import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.awt.*;
+
+
+
+@Entity
+@Table(name = "imagen")
 public class Imagen {
 
 
+    @Id
+    @Column(name = "id_imagen")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-    private ImageIcon imagen;
+
+    @Lob
+    @Column(name = "imagen")
+    private byte[] imagen;
+
+    @Column(name = "descripcion")
+  
     private String nombreArchivo;
     private Inmueble inmuebleAsociado;
 
-    public ImageIcon getImagen() {
-        return imagen;
+    @ManyToOne()
+    @JoinColumn(name = "id_inmueble")
+    private Inmueble inmueble;
+
+    private BufferedImage toBufferedImage(Image im){
+        BufferedImage bi = new BufferedImage(im.getWidth(null),im.getHeight(null),BufferedImage.TYPE_INT_RGB);
+        Graphics bg = bi.getGraphics();
+        bg.drawImage(im, 0, 0, null);
+        bg.dispose();
+        return bi;
     }
 
-    public void setImagen(ImageIcon imagen) {
-        this.imagen = imagen;
+
+    public ImageIcon getImagen() {
+        return new ImageIcon(imagen);
+    }
+
+    public void setImagen(ImageIcon imagen) throws Exception { //TODO anda a saber si esto anda XD
+        BufferedImage buffered = toBufferedImage(imagen.getImage());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(buffered, "jpg", baos);
+        this.imagen = baos.toByteArray();
     }
 
     public String getNombreArchivo() {
         return nombreArchivo;
     }
+
 
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
@@ -41,4 +78,5 @@ public class Imagen {
     public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
         this.inmuebleAsociado = inmuebleAsociado;
     }
+
 }
