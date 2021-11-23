@@ -1,7 +1,7 @@
 package Domain;
 
 import javax.persistence.*;
-import java.awt.*;
+
 @Entity
 @Table(name = "direccion")
 public class Direccion {
@@ -13,13 +13,13 @@ public class Direccion {
     private String calle;
     @Column(name = "numero")
     private Integer numero;
-    @Column(name = "ubicacion_x")
-    private Integer ubicacionX;
-    @Column(name = "ubicacion_y")
-    private Integer ubicacionY;
-    @ManyToOne
-    @JoinColumn(name = "id_barrio")
-    private Barrio barrio;
+    @Column(name = "latitud")
+    private Double latitud;
+    @Column(name = "longitud")
+    private Double longitud;
+
+    @Column(name = "barrio")
+    private String barrio;
     @Column(name = "piso")
     private String piso;  //TODO tal vez usar optional
     @Column(name = "departamento")
@@ -45,27 +45,27 @@ public class Direccion {
         return id;
     }
 
-    public Integer getUbicacionX() {
-        return ubicacionX;
+    public Double getLatitud() {
+        return latitud;
     }
 
-    public void setUbicacionX(Integer ubicacionX) {
-        this.ubicacionX = ubicacionX;
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
     }
 
-    public Integer getUbicacionY() {
-        return ubicacionY;
+    public Double getLongitud() {
+        return longitud;
     }
 
-    public void setUbicacionY(Integer ubicacionY) {
-        this.ubicacionY = ubicacionY;
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 
-    public Barrio getBarrio() {
+    public String getBarrio() {
         return barrio;
     }
 
-    public void setBarrio(Barrio barrio) {
+    public void setBarrio(String barrio) {
         this.barrio = barrio;
     }
 

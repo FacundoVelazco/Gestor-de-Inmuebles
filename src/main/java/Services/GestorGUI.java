@@ -75,6 +75,7 @@ public class GestorGUI {
 
     public static void pushModificar(Pantalla pantalla, Object elemento){
         setPantalla(pantalla, elemento);
+        historia.push(pantalla);
     }
 
     public static void pop() {

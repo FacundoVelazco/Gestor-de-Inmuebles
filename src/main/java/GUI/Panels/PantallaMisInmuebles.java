@@ -185,7 +185,7 @@ public class PantallaMisInmuebles {
             public void actionPerformed(ActionEvent e) {
 
                 //TODO MODIFICAR POR USO PARA PRUEBAS
-                gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                //gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
 
                 InmuebleDTO idto = new InmuebleDTO();
                 idto.setId(123);
