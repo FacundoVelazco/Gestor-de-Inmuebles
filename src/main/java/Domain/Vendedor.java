@@ -24,6 +24,15 @@ public class Vendedor extends Persona{
     @ManyToOne()
     @JoinColumn(name = "id_persona_admin")
     private Admin admin;
+    @OneToOne
+    @JoinColumn(name = "id_localidad")
+    private Localidad localidad;
+    @OneToOne
+    @JoinColumn(name = "id_provincia")
+    private Provincia provincia;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_direccion")
+    private Direccion direccion;
 
     public Vendedor(){
     }
@@ -70,6 +79,27 @@ public class Vendedor extends Persona{
         this.admin = admin;
     }
 
+    public Localidad getLocalidad() {
+        return localidad;
+    }
 
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
 
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
 }

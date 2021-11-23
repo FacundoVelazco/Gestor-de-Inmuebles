@@ -11,13 +11,13 @@ public class DAOBdVendedor implements VendedorDAO{
     }
 
     @Override
-    public void save(Vendedor p) {
-
+    public Integer save(Vendedor p) {
+        return null;
     }
 
     @Override
-    public void delete(Integer idVendedor) {
-
+    public Integer delete(Integer idVendedor) {
+        return idVendedor;
     }
 
     @Override
