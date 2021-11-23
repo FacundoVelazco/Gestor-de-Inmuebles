@@ -9,6 +9,11 @@ import java.util.List;
 @Table(name = "vendedor")
 @PrimaryKeyJoinColumn(name="id_persona")
 public class Vendedor extends Persona{
+
+    @Id
+    @Column(name = "id_vendedor")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     @Column(name = "dni")
     private Integer dni;
     @Enumerated(EnumType.STRING)
@@ -21,6 +26,16 @@ public class Vendedor extends Persona{
     private Admin admin;
 
     public Vendedor(){
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getDni() {

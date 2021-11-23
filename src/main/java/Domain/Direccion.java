@@ -45,6 +45,8 @@ public class Direccion {
         return id;
     }
 
+    public void setId(Integer id) {this.id = id;}
+
     public Integer getUbicacionX() {
         return ubicacionX;
     }

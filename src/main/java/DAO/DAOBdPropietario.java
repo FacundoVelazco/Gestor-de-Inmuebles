@@ -12,13 +12,14 @@ public class DAOBdPropietario implements PropietarioDAO{
     }
 
     @Override
-    public void save(Propietario p) {
-
+    public Integer save(Propietario p) {
+        return null;
     }
 
     @Override
-    public void delete(Integer idPropietario) {
+    public Integer delete(Integer idPropietario) {
 
+        return idPropietario;
     }
 
     @Override

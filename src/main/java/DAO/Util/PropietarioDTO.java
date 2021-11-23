@@ -1,14 +1,12 @@
 package DAO.Util;
 
-import Domain.*;
 import Domain.Util.TipoDNI;
 
-import javax.persistence.*;
 import java.util.List;
 
 public class PropietarioDTO {
 
-
+    private Integer Id;
     private TipoDNI tipoDocumento;
     private String Dni;
     private String direccion;
@@ -21,6 +19,15 @@ public class PropietarioDTO {
     private String nombre;
     private String username;
     private String password;
+    private Integer idLocalidad;
+    private Integer idProvincia;
+    private Integer idDireccion;
+    private String calle;
+    private Integer numeroDeCalle;
+    private String barrio;
+
+    public PropietarioDTO(){
+    }
 
     public TipoDNI getTipoDocumento() {
         return tipoDocumento;
@@ -86,9 +93,6 @@ public class PropietarioDTO {
         this.email = email;
     }
 
-    public PropietarioDTO(){
-    }
-
     public TipoDNI getTipoDNI() {
         return tipoDocumento;
     }
@@ -119,4 +123,55 @@ public class PropietarioDTO {
         this.inmuebles = inmuebles;
     }
 
+    public Integer getIdLocalidad() {
+        return idLocalidad;
+    }
+
+    public void setIdLocalidad(Integer idLocalidad) {
+        this.idLocalidad = idLocalidad;
+    }
+
+    public Integer getIdProvincia() {
+        return idProvincia;
+    }
+
+    public void setIdProvincia(Integer idProvincia) {
+        this.idProvincia = idProvincia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public Integer getNumeroDeCalle() {
+        return numeroDeCalle;
+    }
+
+    public void setNumeroDeCalle(Integer numeroDeCalle) {
+        this.numeroDeCalle = numeroDeCalle;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
+    public Integer getIdDireccion() {
+        return idDireccion;
+    }
+
+    public void setIdDireccion(Integer idDireccion) {
+        this.idDireccion = idDireccion;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
 }

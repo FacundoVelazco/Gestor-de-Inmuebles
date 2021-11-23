@@ -12,6 +12,10 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name="id_persona")
 public class Propietario extends Persona{
 
+    @Id
+    @Column(name = "id_propietario")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_dni")
     private TipoDNI tipoDNI;

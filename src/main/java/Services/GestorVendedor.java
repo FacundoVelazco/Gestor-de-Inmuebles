@@ -1,5 +1,6 @@
 package Services;
 
+import DAO.Util.PropietarioDTO;
 import DAO.Util.VendedorDTO;
 
 public class GestorVendedor {
@@ -14,5 +15,10 @@ public class GestorVendedor {
     public Integer borrarVendedor(VendedorDTO vDTO){
         return null;
     }
+
+    public Integer cargarVendedor(VendedorDTO vDTO){
+        return null;
+    }
+
 
 }
