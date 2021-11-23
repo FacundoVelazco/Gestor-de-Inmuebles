@@ -5,6 +5,7 @@ import DAO.ProvinciaSqlDAO;
 import DAO.Util.ProvinciaDTO;
 import Domain.Provincia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestorProvincias {
@@ -33,10 +34,18 @@ public class GestorProvincias {
         return provinciaDTO;
     }
 
-    public List listarProvincias() {
+    public List<Provincia> listarProvincias() {
         ProvinciaDAO dao = new ProvinciaSqlDAO();
-        List list = dao.list();
+        List<Provincia> list = dao.list();
         dao.close();
         return list;
+    }
+    public List<ProvinciaDTO> listarProvinciaDTO(){
+        List<Provincia> list = listarProvincias();
+        List<ProvinciaDTO> dtoList = new ArrayList<>();
+        for(Provincia provincia: list){
+            dtoList.add(new ProvinciaDTO(provincia.getId(),provincia.getNombre(),Provincia.class));
+        }
+        return dtoList;
     }
 }

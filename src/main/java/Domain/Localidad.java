@@ -17,12 +17,12 @@ public class Localidad {
     @Column(name = "id_localidad")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
     @ManyToOne
     @JoinColumn(name = "id_provincia")
     private Provincia provincia;
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "localidad",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "localidad",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     private List<Barrio> barrios;
 

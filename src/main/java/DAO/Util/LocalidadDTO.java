@@ -2,6 +2,7 @@ package DAO.Util;
 
 import Domain.Localidad;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalidadDTO {
@@ -20,7 +21,7 @@ public class LocalidadDTO {
         this.id = id;
         this.nombre = nombre;
         this.provinciaId = provinciaId;
-        this.barrios = barrios;
+        this.barrios = new ArrayList<>();
         this.localidadClass = localidadClass;
     }
 
@@ -54,5 +55,10 @@ public class LocalidadDTO {
 
     public void setLocalidadClass(Class localidadClass) {
         this.localidadClass = localidadClass;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 }

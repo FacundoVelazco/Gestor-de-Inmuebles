@@ -25,4 +25,9 @@ public class ProvinciaDTO {
         this.localidades = localidades;
         this.provinciaClass = provinciaClass;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

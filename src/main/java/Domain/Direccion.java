@@ -24,6 +24,8 @@ public class Direccion {
     private String piso;  //TODO tal vez usar optional
     @Column(name = "departamento")
     private String departamento;
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "direccion",fetch = FetchType.EAGER)
+    private Inmueble inmueble;
 
     public String getCalle() {
         return calle;
@@ -83,5 +85,13 @@ public class Direccion {
 
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
+    }
+
+    public Inmueble getInmueble() {
+        return inmueble;
+    }
+
+    public void setInmueble(Inmueble inmueble) {
+        this.inmueble = inmueble;
     }
 }

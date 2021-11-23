@@ -11,14 +11,14 @@ import java.util.List;
 
 @Entity
 @Table(name = "provincia")
-public class Provincia {
+public class    Provincia {
     @Id
     @Column(name = "id_provincia")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-    @Column(name = "nombre")
+    @Column(name = "nombre",nullable = false,unique = true)
     private String nombre;
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "provincia",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "provincia",fetch = FetchType.EAGER)
     private List<Localidad> localidades;
 
     public Provincia() {

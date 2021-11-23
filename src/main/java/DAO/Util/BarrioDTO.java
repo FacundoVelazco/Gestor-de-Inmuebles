@@ -14,4 +14,9 @@ public class BarrioDTO {
         this.localidadId = localidadId;
         this.barrioClass = barrioClass;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

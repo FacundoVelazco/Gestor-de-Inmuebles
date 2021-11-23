@@ -17,7 +17,7 @@ public class Barrio {
     @Column(name = "id_barrio")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name = "nombre")
+    @Column(name = "nombre",nullable = false,unique = true)
     private String nombre;
     @ManyToOne
     @JoinColumn(name = "id_localidad")
@@ -26,6 +26,12 @@ public class Barrio {
     public Barrio(){
 
     }
+
+    public Barrio(String nombre, Localidad localidad) {
+        this.nombre = nombre;
+        this.localidad = localidad;
+    }
+
     public Barrio(BarrioDTO barrioDTO){
         this.id = barrioDTO.id;
         this.nombre = barrioDTO.nombre;

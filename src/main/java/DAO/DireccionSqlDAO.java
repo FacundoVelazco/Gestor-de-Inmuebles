@@ -1,50 +1,44 @@
 package DAO;
 
-import Domain.Provincia;
+import Domain.Barrio;
+import Domain.Direccion;
+import Domain.Inmueble;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
 
-public class ProvinciaSqlDAO implements ProvinciaDAO{
+public class DireccionSqlDAO implements DireccionDAO{
     EntityManagerFactory entityManagerFactory;
     EntityManager manager;
 
-    public ProvinciaSqlDAO(){
+    public DireccionSqlDAO(){
         entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         manager = entityManagerFactory.createEntityManager();
     }
     @Override
-    public void persist(Provincia provincia) {
+    public void persist(Direccion direccion) {
         manager.getTransaction().begin();
-        manager.persist(provincia);
+        manager.persist(direccion);
         manager.getTransaction().commit();
     }
 
     @Override
-    public Provincia getByName(String name) {
-        Query query = manager.createQuery("SELECT p FROM Provincia p where :nombre = (p.nombre)",Provincia.class);
-        query.setParameter("nombre",name);
-        return (Provincia) query.getSingleResult();
-
-    }
-
-    @Override
-    public Provincia getById(Integer id) {
-        return manager.find(Provincia.class,id);
-
+    public Direccion getById(Integer id) {
+        return manager.find(Direccion.class,id);
     }
 
     @Override
     public List list() {
-        Query query = manager.createQuery("FROM Provincia",Provincia.class);
+        Query query = manager.createQuery("FROM Direccion",Direccion.class);
         return query.getResultList();
     }
 
     @Override
-    public void merge(Provincia provincia) {
-        manager.merge(provincia);
+    public void merge(Direccion direccion) {
+        manager.merge(direccion);
     }
 
     @Override

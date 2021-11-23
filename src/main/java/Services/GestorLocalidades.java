@@ -5,9 +5,11 @@ import DAO.LocalidadSqlDAO;
 import DAO.ProvinciaDAO;
 import DAO.ProvinciaSqlDAO;
 import DAO.Util.LocalidadDTO;
+import DAO.Util.ProvinciaDTO;
 import Domain.Localidad;
 import Domain.Provincia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestorLocalidades {
@@ -48,5 +50,17 @@ public class GestorLocalidades {
         List list = dao.list();
         dao.close();
         return list;
+    }
+    public List listarLocalidadesDTO(ProvinciaDTO provinciaDto) {
+        ProvinciaDAO dao = new ProvinciaSqlDAO();
+        Provincia provincia = dao.getById(provinciaDto.id);
+        dao.merge(provincia);
+        List<Localidad> list = provincia.getLocalidades();
+        List<LocalidadDTO> dtoList = new ArrayList<>();
+        dao.close();
+        for(Localidad localidad : list){
+            dtoList.add(new LocalidadDTO(localidad.getId(),localidad.getNombre(),localidad.getProvincia().getId(),Localidad.class));
+        }
+        return dtoList;
     }
 }
