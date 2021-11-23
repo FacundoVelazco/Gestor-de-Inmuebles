@@ -100,7 +100,6 @@ public class PantallaABMCliente {
                 }
             }
         });
-
         botonEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,6 +107,12 @@ public class PantallaABMCliente {
                 gestorClientes.borrarClienteByUsername(username);
                 botonesActivados(false);
                 GestorGUI.refreshCurrent();
+            }
+        });
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO crear pantalla nueva con dto de cliente a modificar
             }
         });
     }

@@ -2,6 +2,7 @@ package Services;
 
 import DAO.DAOBdCliente;
 import DAO.Util.ClienteDTO;
+import DAO.Util.PreferenciaDTO;
 import Domain.Cliente;
 import Domain.Preferencia;
 
@@ -52,6 +53,37 @@ public class GestorClientes {
 
         DAOBdCliente clienteDao = new DAOBdCliente();
         clienteDao.save(clienteAGuardar);
+    }
+
+    public ClienteDTO getClienteByUsername(String username){
+        DAOBdCliente clienteDao = new DAOBdCliente();
+        Cliente cliente = clienteDao.getByUsername(username);
+        PreferenciaDTO preferenciaDTO = new PreferenciaDTO();
+        preferenciaDTO.setTieneCochera(cliente.getPreferencia().getTieneCochera());
+        preferenciaDTO.setTienePatio(cliente.getPreferencia().getTienePatio());
+        preferenciaDTO.setTienePiscina(cliente.getPreferencia().getTienePiscina());
+        preferenciaDTO.setTieneAguaCorriente(cliente.getPreferencia().getTieneAguaCorriente());
+        preferenciaDTO.setTieneCloacas(cliente.getPreferencia().getTieneCloacas());
+        preferenciaDTO.setTieneGasNatural(cliente.getPreferencia().getTieneGasNatural());
+        preferenciaDTO.setTieneAguaCaliente(cliente.getPreferencia().getTieneAguaCaliente());
+        preferenciaDTO.setTieneTelefono(cliente.getPreferencia().getTieneTelefono());
+        preferenciaDTO.setTieneLavadero(cliente.getPreferencia().getTieneLavadero());
+        preferenciaDTO.setTienePavimento(cliente.getPreferencia().getTienePavimento());
+        preferenciaDTO.setTipoInmueble(cliente.getPreferencia().getTipoInmueble());
+        preferenciaDTO.setBarrio(cliente.getPreferencia().getBarrio());
+        preferenciaDTO.setMontoDisponible(cliente.getPreferencia().getMontoDisponible());
+        preferenciaDTO.setLocalidad(cliente.getPreferencia().getLocalidad());
+
+        ClienteDTO clienteDTO = new ClienteDTO();
+        clienteDTO.setPreferencias(preferenciaDTO);
+        clienteDTO.setUsername(cliente.getUsername());
+        clienteDTO.setNombre(cliente.getNombre());
+        clienteDTO.setTelefono(cliente.getTelefono());
+        clienteDTO.setApellido(cliente.getApellido());
+        clienteDTO.setPassword(cliente.getPassword());
+
+
+        return clienteDTO;
     }
 
 }

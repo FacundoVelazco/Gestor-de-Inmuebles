@@ -1,10 +1,15 @@
 package Domain.Util;
 
 public enum TipoInmueble {
-    LOCAL_OFICINA,
+    OFICINA_O_LOCAL,
     CASA,
     DEPARTAMENTO,
     TERRENO,
     QUINTA,
-    GALPON
+    GALPON;
+
+    @Override
+    public String toString(){
+        return name().substring(0,1) + name().substring(1).toLowerCase().replaceAll("_"," ") ;
+    }
 }

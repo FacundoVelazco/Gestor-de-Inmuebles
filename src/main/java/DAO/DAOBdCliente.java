@@ -1,9 +1,8 @@
 package DAO;
 
-import DAO.Util.ClienteDTO;
+
 import DAO.Util.Conexion;
 import Domain.Cliente;
-import Domain.Preferencia;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -47,7 +46,14 @@ public class DAOBdCliente implements ClienteDAO{
         manager.close();
     }
 
-
+    @Override
+    public Cliente getByUsername(String username) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        Query query = manager.createQuery("from Cliente c where c.username = :username");
+        Cliente cliente = (Cliente) query.setParameter("username",username).getSingleResult();
+        manager.close();
+        return cliente;
+    }
 
 
 }

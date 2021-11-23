@@ -10,10 +10,18 @@ import Services.GestorGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.text.NumberFormat;
 import java.util.Collections;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PantallaCrearCliente {
     private JPanel panelTitulo;
@@ -38,10 +46,10 @@ public class PantallaCrearCliente {
     private JComboBox comboBoxTipo;
     private JComboBox comboBoxLocalidad;
     private JFormattedTextField formattedTextFieldMonto;
+    private static String regexNumeroTelefonoValido ="[0-9]+";
 
+    //Datos para la tabla de características
     private static final int CHECK_COL = 1;
-
-    //TODO Datos de ejemplo
     private static final Object[][] DATA = {
             {"Cochera", Boolean.FALSE},{"Patio", Boolean.FALSE},
             {"Piscina", Boolean.FALSE},{"Agua corriente", Boolean.FALSE},
@@ -49,14 +57,19 @@ public class PantallaCrearCliente {
             {"Agua caliente", Boolean.FALSE},{"Teléfono", Boolean.FALSE},
             {"Lavadero", Boolean.FALSE},{"Pavimento", Boolean.FALSE}
     };
-
     private static final String[] COLUMNS = {"Característica", "Presente"};
+
     private DataModel dataModel = new DataModel(DATA, COLUMNS);
     private DefaultListSelectionModel selectionModel;
     private JTable tablaCaracteristicas = new JTable(dataModel);
     private JScrollPane scrollPaneCaracteristicas;
     private JTextField textFieldBarrio;
     private JLabel labelNombreBarrio;
+    private JLabel labelErrorUsername;
+    private JLabel labelErrorNombre;
+    private JLabel labelErrorApellido;
+    private JLabel labelErrorTelefono;
+    private JLabel labelErrorContrasenia;
 
     public PantallaCrearCliente() {
 
@@ -71,6 +84,7 @@ public class PantallaCrearCliente {
         tablaCaracteristicas.getTableHeader().setResizingAllowed(false);
         tablaCaracteristicas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectionModel = (DefaultListSelectionModel) tablaCaracteristicas.getSelectionModel();
+
 
         //Autocompletado de los comboboxes
         AutoCompletion.enable(comboBoxTipo);
@@ -93,23 +107,36 @@ public class PantallaCrearCliente {
         buttonCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClienteDTO clienteDTO = collectDataCliente();
-                PreferenciaDTO preferenciaDTO = collectDataPreferencias();
-                clienteDTO.setPreferencias(preferenciaDTO);
-
-                gestorClientes.guardarCliente(clienteDTO);
-                GestorGUI.pop();
+                if(validarUsername() & validarContrasenia() & validarNombre() & validarApellido() & validarTelefono()){
+                    ClienteDTO clienteDTO = collectDataCliente();
+                    PreferenciaDTO preferenciaDTO = collectDataPreferencias();
+                    clienteDTO.setPreferencias(preferenciaDTO);
+                    gestorClientes.guardarCliente(clienteDTO);
+                    GestorGUI.pop();
+                }
             }
         });
+
+        //TODO manera coqueta de comprobar en tiempo "real" si son validos los inputs
+//        textFieldUsername.addFocusListener(new FocusAdapter() {
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                validarUsername();
+//            }
+//        });
     }
 
     private PreferenciaDTO collectDataPreferencias() {
     PreferenciaDTO preferencias = new PreferenciaDTO();
     preferencias.setTipoInmueble((TipoInmueble) comboBoxTipo.getSelectedItem());
     preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
-    preferencias.setMontoDisponible(Float.parseFloat(formattedTextFieldMonto.getText()));
-    preferencias.setBarrio(labelNombreBarrio.getText());
 
+    //nos fijamos que ingresen numeros
+    if (formattedTextFieldMonto.getText().replaceAll("[^0-9]", "").length()>0) {
+        preferencias.setMontoDisponible(Float.parseFloat(formattedTextFieldMonto.getText().replaceAll("[^0-9]", "")));
+    }
+
+    preferencias.setBarrio(labelNombreBarrio.getText());
     preferencias.setTieneCochera((Boolean) dataModel.getValueAt(0,1));
     preferencias.setTienePatio((Boolean) dataModel.getValueAt(1,1));
     preferencias.setTienePiscina((Boolean) dataModel.getValueAt(2,1));
@@ -131,6 +158,7 @@ public class PantallaCrearCliente {
         cliente.setPassword(passwordFieldContrasenia.getPassword().toString());
         cliente.setNombre(textFieldNombre.getText());
         cliente.setApellido(textFieldApellido.getText());
+        cliente.setTelefono(formattedTextFieldTelefono.getText().replaceAll("[^0-9.]", ""));
         return cliente;
 
     }
@@ -138,6 +166,74 @@ public class PantallaCrearCliente {
     private void validarCampos(){
 
     }
+
+    private Boolean validarUsername(){
+        if(textFieldUsername.getText().length()<8 || textFieldUsername.getText().length()>25){
+            labelErrorUsername.setText("Debe contener entre 8 y 25 caracteres");
+            labelErrorUsername.setVisible(true);
+            return false;
+        }
+        if (textFieldUsername.getText().contains(" ")){
+            labelErrorUsername.setText("No debe contener espacios");
+            labelErrorUsername.setVisible(true);
+            return false;
+        }
+        labelErrorUsername.setVisible(false);
+        return true;
+    }
+
+    private Boolean validarContrasenia(){
+        if(passwordFieldContrasenia.getText().length()<8 || passwordFieldContrasenia.getText().length()>25){
+            labelErrorContrasenia.setText("Debe contener entre 8 y 25 caracteres");
+            labelErrorContrasenia.setVisible(true);
+            return false;
+        }
+        if (passwordFieldContrasenia.getText().contains(" ")){
+            labelErrorContrasenia.setText("No debe contener espacios");
+            labelErrorContrasenia.setVisible(true);
+            return false;
+        }
+        labelErrorContrasenia.setVisible(false);
+        return true;
+    }
+
+    private Boolean validarNombre(){
+        if(textFieldNombre.getText().length()<1){
+            labelErrorNombre.setText("Campo obligatorio");
+            labelErrorNombre.setVisible(true);
+            return false;
+        }
+        labelErrorNombre.setVisible(false);
+        return true;
+    }
+
+    private Boolean validarApellido(){
+        if(textFieldApellido.getText().length()<1){
+            labelErrorApellido.setText("Campo obligatorio");
+            labelErrorApellido.setVisible(true);
+            return false;
+        }
+        labelErrorApellido.setVisible(false);
+        return true;
+    }
+
+    private Boolean validarTelefono(){
+        Pattern pattern = Pattern.compile(regexNumeroTelefonoValido);
+        Matcher matcher = pattern.matcher(formattedTextFieldTelefono.getText());
+        if(formattedTextFieldTelefono.getText().length()<1){
+            labelErrorTelefono.setText("Campo obligatorio");
+            labelErrorTelefono.setVisible(true);
+            return false;
+        }
+        if(!matcher.matches()){
+            labelErrorTelefono.setText("Numero de teléfono inválido");
+            labelErrorTelefono.setVisible(true);
+            return false;
+        }
+        labelErrorTelefono.setVisible(false);
+        return true;
+    }
+
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
