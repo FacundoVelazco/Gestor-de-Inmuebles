@@ -3,6 +3,7 @@ package Services;
 import DAO.Util.InmuebleDTO;
 import GUI.Panels.PantallaABMCliente;
 import GUI.Panels.PantallaAMInmueble;
+import GUI.Panels.PantallaCInmueble;
 import GUI.Panels.PantallaCrearCliente;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Panels.PantallaMisInmuebles;
@@ -26,7 +27,6 @@ public class GestorGUI {
             case CREAR_CLIENTE:
                 framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
                 break;
-
             case AM_INMUEBLE:
                 PantallaAMInmueble p;
                 if (elemento == null){
@@ -36,11 +36,14 @@ public class GestorGUI {
                 }
                 framePrincipal.setContentPane(p.getPanelPrincipal());
                 break;
-
+            
             case MIS_INMUEBLES:
                 framePrincipal.setContentPane(new PantallaMisInmuebles().getPanelPrincipal());
                 break;
 
+            case C_INMUEBLE:
+                framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
+                break;
 
             //TODO insertar creación de pantallas en cada case
             case panelTest1:

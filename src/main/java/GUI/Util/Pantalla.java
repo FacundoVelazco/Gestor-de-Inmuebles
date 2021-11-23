@@ -8,4 +8,5 @@ public enum Pantalla {
     panelTest3,
     AM_INMUEBLE,
     MIS_INMUEBLES;
+    C_INMUEBLE;
 }
