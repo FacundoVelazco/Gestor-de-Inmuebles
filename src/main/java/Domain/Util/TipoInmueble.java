@@ -19,4 +19,23 @@ public enum TipoInmueble {
         }
         return GALPON;
     }
+
+    public static String obtenerStringParaComboBox(TipoInmueble t){
+        switch (t){
+            case LOCAL_OFICINA:
+                return "Local-Oficina";
+            case CASA:
+                return "Casa";
+            case DEPARTAMENTO:
+                return "Departamento";
+            case TERRENO:
+                return "Terreno";
+            case QUINTA:
+                return "Quinta";
+        }
+        return "Galpón";
+    }
+
+
+
 }

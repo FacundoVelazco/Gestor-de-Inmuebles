@@ -44,15 +44,42 @@ public class GestorInmuebles {
 
     public InmuebleDTO cargarInmueble(Integer id) {
 
-        //TODO hacerXD
-        return null;
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        Inmueble inmueble = daoInmueble.getById(id);
+        InmuebleDTO idto = generarDTODesdeInmueble(inmueble);
+
+        return idto;
     }
 
-    public List<InmuebleDTO> listarInmuebles(Integer idPropietario) {
 
-        //TODO hacerXD
-        return null;
+    public List<InmuebleDTO> listarInmueblesPorPropietario(Integer idPropietario) {
+        ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
+        listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario));
+
+        for(Inmueble i : listaInmueblesDominio){
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            listaInmueblesDTO.add(idto);
+        }
+
+        return listaInmueblesDTO;
     }
+
+    public List<InmuebleDTO> listarInmueblesPorPropietario(Integer idPropietario, Integer inicio, Integer fin) {
+        ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
+        listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario,inicio,fin));
+
+        for(Inmueble i : listaInmueblesDominio){
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            listaInmueblesDTO.add(idto);
+        }
+
+        return listaInmueblesDTO;
+    }
+
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO){
         Inmueble inmueble = new Inmueble();
@@ -126,4 +153,56 @@ public class GestorInmuebles {
         return inmueble;
     }
 
+    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble) {
+        InmuebleDTO idto = new InmuebleDTO();
+        idto.setId(inmueble.getId());
+        idto.setEstado(inmueble.getEstado().toString());
+        idto.setFechaCarga(inmueble.getFechaCarga());
+        idto.setPropiedadDestacada(inmueble.getPropiedadDestacada());
+        idto.setProvincia(inmueble.getProvincia());
+        idto.setLocalidad(inmueble.getLocalidad());
+        idto.setCalle(inmueble.getCalle());
+        idto.setNumeroCalle(inmueble.getNumeroCalle());
+        idto.setLongitud(inmueble.getLongitud());
+        idto.setLatitud(inmueble.getLatitud());
+        idto.setPiso(inmueble.getPiso());
+        idto.setDepartamento(inmueble.getDepartamento());
+        idto.setBarrio(inmueble.getBarrio());
+        idto.setTipoInmueble(TipoInmueble.obtenerStringParaComboBox(inmueble.getTipoInmueble()));
+        idto.setPrecio(inmueble.getPrecio());
+        idto.setOrientacion(Orientacion.obtenerStringParaComboBox(inmueble.getOrientacion()));
+        idto.setTienePavimento(inmueble.getTienePavimento());
+        idto.setTieneLavadero(inmueble.getTieneLavadero());
+        idto.setTieneTelefono(inmueble.getTieneTelefono());
+        idto.setTieneAguaCaliente(inmueble.getTieneAguaCaliente());
+        idto.setTieneGasNatural(inmueble.getTieneGasNatural());
+        idto.setTieneCloacas(inmueble.getTieneCloacas());
+        idto.setTieneAguaCorriente(inmueble.getTieneAguaCorriente());
+        idto.setTienePiscina(inmueble.getTienePiscina());
+        idto.setTienePatio(inmueble.getTienePatio());
+        idto.setTieneCochera(inmueble.getTieneCochera());
+        idto.setCantidadBanios(inmueble.getCantidadBanios());
+        idto.setCantidadDormitorios(inmueble.getCantidadDormitorios());
+        idto.setAntiguedad(inmueble.getAntiguedad());
+        idto.setEsPropiedadHorizontal(inmueble.getEsPropiedadHorizontal());
+        idto.setTamanioInmueble(inmueble.getTamanioInmueble());
+        idto.setLongitudFondo(inmueble.getLongitudFondo());
+        idto.setLongitudFrente(inmueble.getLongitudFrente());
+
+        idto.setFotoPrincipal(inmueble.getFotoPrincipal().getImagen());
+        idto.setNombreArchivoFotoPrincipal(inmueble.getFotoPrincipal().getNombreArchivo());
+
+        ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
+        ArrayList<String> listaNombreArchivos = new ArrayList<>();
+
+        for(Imagen i : inmueble.getFotosInmueble()){
+            listaImagenes.add(i.getImagen());
+            listaNombreArchivos.add(i.getNombreArchivo());
+        }
+
+        idto.setFotosInmueble(listaImagenes);
+        idto.setNombresArchivosFotos(listaNombreArchivos);
+
+        return idto;
+    }
 }

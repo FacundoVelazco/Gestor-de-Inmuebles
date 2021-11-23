@@ -22,4 +22,25 @@ public enum Orientacion {
         }
         return SUROESTE;
     }
+
+    public static String obtenerStringParaComboBox(Orientacion o){
+        switch (o){
+            case NORTE:
+                return "Norte";
+            case SUR:
+                return "Sur";
+            case ESTE:
+                return "Este";
+            case OESTE:
+                return "Oeste";
+            case NORESTE:
+                return "Noreste";
+            case NOROESTE:
+                return "Noroeste";
+            case SURESTE:
+                return "Sureste";
+        }
+        return "Suroeste";
+    }
+
 }
