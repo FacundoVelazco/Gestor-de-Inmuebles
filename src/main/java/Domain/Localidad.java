@@ -15,10 +15,36 @@ public class Localidad {
     private Integer id;
     @Column(name = "nombre")
     private String nombre;
-    @ManyToOne
-    @JoinColumn(name = "id_provincia")
-    private Provincia provincia;
-    @Column(name = "barrio")
-    private String barrio;
+
+    @Column(name = "id_provincia")
+    private String provincia;
+
+    public Localidad() {
+        provincia = "Santa Fe";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 
 }

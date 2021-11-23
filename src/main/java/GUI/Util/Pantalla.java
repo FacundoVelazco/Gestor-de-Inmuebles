@@ -7,5 +7,6 @@ public enum Pantalla {
     panelTest2,
     panelTest3,
     AM_INMUEBLE,
+    MIS_INMUEBLES,
     C_INMUEBLE;
 }

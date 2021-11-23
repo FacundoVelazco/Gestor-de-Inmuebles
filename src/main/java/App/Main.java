@@ -13,7 +13,7 @@ public class Main {
     public static void main(String args[]) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
-        GestorGUI.init(Pantalla.ABM_CLIENTE);
+        GestorGUI.init(Pantalla.MIS_INMUEBLES);
 
     }
 }

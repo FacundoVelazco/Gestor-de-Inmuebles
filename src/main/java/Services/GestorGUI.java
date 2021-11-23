@@ -1,10 +1,12 @@
 package Services;
 
+import DAO.Util.InmuebleDTO;
 import GUI.Panels.PantallaABMCliente;
 import GUI.Panels.PantallaAMInmueble;
 import GUI.Panels.PantallaCInmueble;
 import GUI.Panels.PantallaCrearCliente;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
+import GUI.Panels.PantallaMisInmuebles;
 import GUI.Util.Pantalla;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
@@ -16,7 +18,7 @@ public class GestorGUI {
     static JFrame framePrincipal = new JFrame();
     static Stack<Pantalla> historia = new Stack<>();
 
-    private static void setPantalla(Pantalla pantalla){
+    private static void setPantalla(Pantalla pantalla, Object elemento){
         switch (pantalla){
 
             case ABM_CLIENTE:
@@ -26,11 +28,23 @@ public class GestorGUI {
                 framePrincipal.setContentPane(new PantallaCrearCliente().getPanelPrincipal());
                 break;
             case AM_INMUEBLE:
-                framePrincipal.setContentPane(new PantallaAMInmueble().getPanelPrincipal());
+                PantallaAMInmueble p;
+                if (elemento == null){
+                     p = new PantallaAMInmueble();
+                }else{
+                    p = new PantallaAMInmueble((InmuebleDTO) elemento);
+                }
+                framePrincipal.setContentPane(p.getPanelPrincipal());
                 break;
+            
+            case MIS_INMUEBLES:
+                framePrincipal.setContentPane(new PantallaMisInmuebles().getPanelPrincipal());
+                break;
+
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 break;
+
             //TODO insertar creación de pantallas en cada case
             case panelTest1:
                 framePrincipal.setContentPane(new PanelImagen().getPanelPrincipal()); //TODO remover paneles de testeo
@@ -55,14 +69,19 @@ public class GestorGUI {
     }
 
     public static void push(Pantalla pantalla) {
-        setPantalla(pantalla);
+        setPantalla(pantalla, null);
+        historia.push(pantalla);
+    }
+
+    public static void pushModificar(Pantalla pantalla, Object elemento){
+        setPantalla(pantalla, elemento);
         historia.push(pantalla);
     }
 
     public static void pop() {
         if (historia.size() > 1) {
             historia.pop();
-            setPantalla(historia.lastElement());
+            setPantalla(historia.lastElement(), null);
         } else {
             System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
         }

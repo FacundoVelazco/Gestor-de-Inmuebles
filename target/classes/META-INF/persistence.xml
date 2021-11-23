@@ -5,7 +5,6 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
     <persistence-unit name="Persistence">
-        <class>Domain.Provincia</class><class>Domain.Localidad</class><class>Domain.Barrio</class>
         <class>Domain.Direccion</class><class>Domain.Inmueble</class><class>Domain.Imagen</class>
         <class>Domain.Propietario</class>
         <class>Domain.Cliente</class><class>Domain.Preferencia</class>

@@ -86,23 +86,6 @@ public class Preferencia {
         return orientacion;
     }
 
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
-    }
-
-    public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
-    }
-
     public void setOrientacion(Orientacion orientacion) {
         this.orientacion = orientacion;
     }
