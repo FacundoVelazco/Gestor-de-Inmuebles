@@ -78,10 +78,15 @@ public class Inmueble {
     @JoinColumn(name = "id_persona")
     private Propietario propietarioInmueble;
 
-    public Inmueble(Propietario pI) {
+    public Inmueble() {
         this.estado = EstadoInmueble.ALTA;
+
+      //TODO
+        this.provincia = "Santa Fe";
+
         //this.provincia = "Santa Fe";
         this.propietarioInmueble = pI;
+
         this.propiedadDestacada = false;
         this.fechaCarga = LocalDate.now();
     }

@@ -26,7 +26,9 @@ public class Imagen {
     private byte[] imagen;
 
     @Column(name = "descripcion")
+  
     private String nombreArchivo;
+    private Inmueble inmuebleAsociado;
 
     @ManyToOne()
     @JoinColumn(name = "id_inmueble")
@@ -59,6 +61,22 @@ public class Imagen {
 
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Inmueble getInmuebleAsociado() {
+        return inmuebleAsociado;
+    }
+
+    public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
+        this.inmuebleAsociado = inmuebleAsociado;
     }
 
 }
