@@ -1,11 +1,10 @@
 package Services;
 
 import DAO.DAOBdInmueble;
+import DAO.DAOBdLocalidad;
 import DAO.DAOBdPropietario;
 import DAO.Util.InmuebleDTO;
-import Domain.Imagen;
-import Domain.Inmueble;
-import Domain.Propietario;
+import Domain.*;
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import Domain.Util.TipoInmueble;
@@ -28,11 +27,16 @@ public class GestorInmuebles {
         //Defino los DAOS a utilizar
         DAOBdInmueble inmuebleDAO = new DAOBdInmueble();
         DAOBdPropietario propietarioDAO = new DAOBdPropietario();
+        Inmueble inmueble = new Inmueble();
+        try {
+            inmueble = generarInmuebleDesdeDTO(iDTO);
+        }catch (Exception e){
+            //TODO MOSTRAR MENSAJE ERROR
+        }
 
-        Inmueble inmueble = generarInmuebleDesdeDTO(iDTO);
 
         //Si la competencia es recien creada (aun no tiene ID asignado)
-        if(iDTO.getId()==null){
+        if (iDTO.getId() == null) {
             //Obtengo de la BD el propietario
             //Propietario propietarioInmueble = propietarioDAO.getById(iDTO.getPropietarioInmuebleID());
             //TODO SACAR, ES SOLO PARA PRUEBA
@@ -40,7 +44,7 @@ public class GestorInmuebles {
             //Se lo asigno al inmueble
             inmueble.setPropietarioInmueble(propietarioInmueble);
         }
-        
+
         //Devuelvo el ID generado
         return inmuebleDAO.save(inmueble);
     }
@@ -61,7 +65,7 @@ public class GestorInmuebles {
         ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario));
 
-        for(Inmueble i : listaInmueblesDominio){
+        for (Inmueble i : listaInmueblesDominio) {
             InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
         }
@@ -73,9 +77,9 @@ public class GestorInmuebles {
         ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
-        listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario,inicio,fin));
+        listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario, inicio, fin));
 
-        for(Inmueble i : listaInmueblesDominio){
+        for (Inmueble i : listaInmueblesDominio) {
             InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
         }
@@ -84,57 +88,69 @@ public class GestorInmuebles {
     }
 
 
-    private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO){
+    private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
         Inmueble inmueble = new Inmueble();
 
         inmueble.setId(iDTO.getId());
 
         //Si estamos modificando el inmueble, seteamos el valor de estado actual
-        if(iDTO.getEstado()!=null){
+        if (iDTO.getEstado() != null) {
             EstadoInmueble.valueOf(iDTO.getEstado());
         }
 
         //Si estamos modificando el inmueble, seteamos el valor de fecha de carga que ya tenia el inmueble
-        if(iDTO.getFechaCarga()!=null){
+        if (iDTO.getFechaCarga() != null) {
             inmueble.setFechaCarga(iDTO.getFechaCarga());
         }
 
         //Si estamos modificando el inmueble, seteamos el valor de prop destacada que ya tenia el inmueble
-        if(iDTO.getPropiedadDestacada()!=null){
+        if (iDTO.getPropiedadDestacada() != null) {
             inmueble.setPropiedadDestacada(iDTO.getPropiedadDestacada());
         }
 
         //LA PROVINCIA POR EL MOMENTO ES INNECESARIO
         //inmueble.setProvincia(iDTO.getProvincia());
 
-        inmueble.setLocalidad(iDTO.getLocalidad());
-        inmueble.setCalle(iDTO.getCalle());
-        inmueble.setNumeroCalle(iDTO.getNumeroCalle());
-        inmueble.setLongitud(iDTO.getLongitud());
-        inmueble.setLatitud(iDTO.getLatitud());
-        inmueble.setPiso(iDTO.getPiso());
-        inmueble.setDepartamento(iDTO.getDepartamento());
-        inmueble.setBarrio(iDTO.getBarrio());
-        inmueble.setTipoInmueble(TipoInmueble.obtenerByString(iDTO.getTipoInmueble()));
+        DAOBdLocalidad daoLocalidad = new DAOBdLocalidad();
+        Localidad localidad = daoLocalidad.getByName(iDTO.getLocalidad());
+        inmueble.setLocalidad(localidad);
+
+        Direccion direccion = new Direccion();
+
+        direccion.setCalle(iDTO.getCalle());
+        direccion.setNumero(iDTO.getNumeroCalle());
+        direccion.setLongitud(iDTO.getLongitud());
+        direccion.setLatitud(iDTO.getLatitud());
+        direccion.setPiso(iDTO.getPiso());
+        direccion.setDepartamento(iDTO.getDepartamento());
+        direccion.setBarrio(iDTO.getBarrio());
+
+        inmueble.setDireccion(direccion);
+
+        Preferencia datosInmueble = new Preferencia();
+
+        datosInmueble.setTipoInmueble(TipoInmueble.obtenerByString(iDTO.getTipoInmueble()));
+
+        datosInmueble.setOrientacion(Orientacion.obtenerByString(iDTO.getOrientacion()));
+        datosInmueble.setLongitudFrente(iDTO.getLongitudFrente());
+        datosInmueble.setLongitudFondo(iDTO.getLongitudFondo());
+        datosInmueble.setTamanioInmueble(iDTO.getTamanioInmueble());
+        datosInmueble.setPropiedadHorizontal(iDTO.getEsPropiedadHorizontal());
+        datosInmueble.setAntiguedad(iDTO.getAntiguedad());
+        datosInmueble.setCantidadDormitorios(iDTO.getCantidadDormitorios());
+        datosInmueble.setCantidadBanios(iDTO.getCantidadBanios());
+        datosInmueble.setTieneCochera(iDTO.getTieneCochera());
+        datosInmueble.setTienePatio(iDTO.getTienePatio());
+        datosInmueble.setTienePiscina(iDTO.getTienePiscina());
+        datosInmueble.setTieneAguaCaliente(iDTO.getTieneAguaCaliente());
+        datosInmueble.setTieneCloacas(iDTO.getTieneCloacas());
+        datosInmueble.setTieneGasNatural(iDTO.getTieneGasNatural());
+        datosInmueble.setTieneAguaCaliente(iDTO.getTieneAguaCaliente());
+        datosInmueble.setTieneTelefono(iDTO.getTieneTelefono());
+        datosInmueble.setTieneLavadero(iDTO.getTieneLavadero());
+        datosInmueble.setTienePavimento(iDTO.getTienePavimento());
+
         inmueble.setPrecio(iDTO.getPrecio());
-        inmueble.setOrientacion(Orientacion.obtenerByString(iDTO.getOrientacion()));
-        inmueble.setLongitudFrente(iDTO.getLongitudFrente());
-        inmueble.setLongitudFondo(iDTO.getLongitudFondo());
-        inmueble.setTamanioInmueble(iDTO.getTamanioInmueble());
-        inmueble.setEsPropiedadHorizontal(iDTO.getEsPropiedadHorizontal());
-        inmueble.setAntiguedad(iDTO.getAntiguedad());
-        inmueble.setCantidadDormitorios(iDTO.getCantidadDormitorios());
-        inmueble.setCantidadBanios(iDTO.getCantidadBanios());
-        inmueble.setTieneCochera(iDTO.getTieneCochera());
-        inmueble.setTienePatio(iDTO.getTienePatio());
-        inmueble.setTienePiscina(iDTO.getTienePiscina());
-        inmueble.setTieneAguaCaliente(iDTO.getTieneAguaCaliente());
-        inmueble.setTieneCloacas(iDTO.getTieneCloacas());
-        inmueble.setTieneGasNatural(iDTO.getTieneGasNatural());
-        inmueble.setTieneAguaCaliente(iDTO.getTieneAguaCaliente());
-        inmueble.setTieneTelefono(iDTO.getTieneTelefono());
-        inmueble.setTieneLavadero(iDTO.getTieneLavadero());
-        inmueble.setTienePavimento(iDTO.getTienePavimento());
 
         Imagen fotoPrincipal = new Imagen();
         fotoPrincipal.setImagen(iDTO.getFotoPrincipal());
@@ -143,7 +159,7 @@ public class GestorInmuebles {
         inmueble.setFotoPrincipal(fotoPrincipal);
 
         ArrayList<Imagen> listaFotos = new ArrayList<>();
-        for(int i = 0; i < iDTO.getFotosInmueble().size() ; i++){
+        for (int i = 0; i < iDTO.getFotosInmueble().size(); i++) {
             Imagen aux = new Imagen();
             aux.setImagen(iDTO.getFotosInmueble().get(i));
             aux.setNombreArchivo(iDTO.getNombresArchivosFotos().get(i));
@@ -163,35 +179,41 @@ public class GestorInmuebles {
         idto.setEstado(inmueble.getEstado().toString());
         idto.setFechaCarga(inmueble.getFechaCarga());
         idto.setPropiedadDestacada(inmueble.getPropiedadDestacada());
-        idto.setProvincia(inmueble.getProvincia());
-        idto.setLocalidad(inmueble.getLocalidad());
-        idto.setCalle(inmueble.getCalle());
-        idto.setNumeroCalle(inmueble.getNumeroCalle());
-        idto.setLongitud(inmueble.getLongitud());
-        idto.setLatitud(inmueble.getLatitud());
-        idto.setPiso(inmueble.getPiso());
-        idto.setDepartamento(inmueble.getDepartamento());
-        idto.setBarrio(inmueble.getBarrio());
-        idto.setTipoInmueble(TipoInmueble.obtenerStringParaComboBox(inmueble.getTipoInmueble()));
+        idto.setProvincia(inmueble.getLocalidad().getProvincia());
+        idto.setLocalidad(inmueble.getLocalidad().getNombre());
+
+        Direccion direccion = inmueble.getDireccion();
+        idto.setCalle(direccion.getCalle());
+        idto.setNumeroCalle(direccion.getNumero());
+        idto.setLongitud(direccion.getLongitud());
+        idto.setLatitud(direccion.getLatitud());
+        idto.setPiso(direccion.getPiso());
+        idto.setDepartamento(direccion.getDepartamento());
+        idto.setBarrio(direccion.getBarrio());
+
+        Preferencia caracteristicas = inmueble.getCaracteristicasInmueble();
+        idto.setTipoInmueble(TipoInmueble.obtenerStringParaComboBox(caracteristicas.getTipoInmueble()));
+
+        idto.setOrientacion(Orientacion.obtenerStringParaComboBox(caracteristicas.getOrientacion()));
+        idto.setTienePavimento(caracteristicas.getTienePavimento());
+        idto.setTieneLavadero(caracteristicas.getTieneLavadero());
+        idto.setTieneTelefono(caracteristicas.getTieneTelefono());
+        idto.setTieneAguaCaliente(caracteristicas.getTieneAguaCaliente());
+        idto.setTieneGasNatural(caracteristicas.getTieneGasNatural());
+        idto.setTieneCloacas(caracteristicas.getTieneCloacas());
+        idto.setTieneAguaCorriente(caracteristicas.getTieneAguaCorriente());
+        idto.setTienePiscina(caracteristicas.getTienePiscina());
+        idto.setTienePatio(caracteristicas.getTienePatio());
+        idto.setTieneCochera(caracteristicas.getTieneCochera());
+        idto.setCantidadBanios(caracteristicas.getCantidadBanios());
+        idto.setCantidadDormitorios(caracteristicas.getCantidadDormitorios());
+        idto.setAntiguedad(caracteristicas.getAntiguedad());
+        idto.setEsPropiedadHorizontal(caracteristicas.getPropiedadHorizontal());
+        idto.setTamanioInmueble(caracteristicas.getTamanioInmueble());
+        idto.setLongitudFondo(caracteristicas.getLongitudFondo());
+        idto.setLongitudFrente(caracteristicas.getLongitudFrente());
+
         idto.setPrecio(inmueble.getPrecio());
-        idto.setOrientacion(Orientacion.obtenerStringParaComboBox(inmueble.getOrientacion()));
-        idto.setTienePavimento(inmueble.getTienePavimento());
-        idto.setTieneLavadero(inmueble.getTieneLavadero());
-        idto.setTieneTelefono(inmueble.getTieneTelefono());
-        idto.setTieneAguaCaliente(inmueble.getTieneAguaCaliente());
-        idto.setTieneGasNatural(inmueble.getTieneGasNatural());
-        idto.setTieneCloacas(inmueble.getTieneCloacas());
-        idto.setTieneAguaCorriente(inmueble.getTieneAguaCorriente());
-        idto.setTienePiscina(inmueble.getTienePiscina());
-        idto.setTienePatio(inmueble.getTienePatio());
-        idto.setTieneCochera(inmueble.getTieneCochera());
-        idto.setCantidadBanios(inmueble.getCantidadBanios());
-        idto.setCantidadDormitorios(inmueble.getCantidadDormitorios());
-        idto.setAntiguedad(inmueble.getAntiguedad());
-        idto.setEsPropiedadHorizontal(inmueble.getEsPropiedadHorizontal());
-        idto.setTamanioInmueble(inmueble.getTamanioInmueble());
-        idto.setLongitudFondo(inmueble.getLongitudFondo());
-        idto.setLongitudFrente(inmueble.getLongitudFrente());
 
         idto.setFotoPrincipal(inmueble.getFotoPrincipal().getImagen());
         idto.setNombreArchivoFotoPrincipal(inmueble.getFotoPrincipal().getNombreArchivo());
@@ -199,7 +221,18 @@ public class GestorInmuebles {
         ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
         ArrayList<String> listaNombreArchivos = new ArrayList<>();
 
-    public List<InmuebleDTO> listarInmuebles(Integer idPropietario, Integer inicio, Integer fin) {
+        for (Imagen i : inmueble.getFotosInmueble()) {
+            listaImagenes.add(i.getImagen());
+            listaNombreArchivos.add(i.getNombreArchivo());
+        }
+
+        idto.setFotosInmueble(listaImagenes);
+        idto.setNombresArchivosFotos(listaNombreArchivos);
+
+        return idto;
+    }
+
+    public List<InmuebleDTO> listarInmuebles(Integer idPropietario, Integer inicio, Integer fin){
         //TODO RECORDAR QUITAR INMUEBLES DE PRUEBA
         ArrayList<InmuebleDTO> lista = new ArrayList<>();
 
@@ -209,8 +242,6 @@ public class GestorInmuebles {
         InmuebleDTO i4 = new InmuebleDTO();
         InmuebleDTO i5 = new InmuebleDTO();
         InmuebleDTO i6 = new InmuebleDTO();
-        InmuebleDTO i7 = new InmuebleDTO();
-        InmuebleDTO i8 = new InmuebleDTO();
 
         i1 = new InmuebleDTO();
         i1.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/test1.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
@@ -263,22 +294,11 @@ public class GestorInmuebles {
         lista.add(i6);
         lista.add(i4);
         lista.add(i5);
-        
 
-        if( lista.size() < fin - 1){
+
+        if (lista.size() < fin - 1) {
             fin = lista.size();
         }
         return lista.subList(inicio - 1, fin);
-    }
-
-        for(Imagen i : inmueble.getFotosInmueble()){
-            listaImagenes.add(i.getImagen());
-            listaNombreArchivos.add(i.getNombreArchivo());
-        }
-
-        idto.setFotosInmueble(listaImagenes);
-        idto.setNombresArchivosFotos(listaNombreArchivos);
-
-        return idto;
     }
 }

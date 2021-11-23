@@ -53,4 +53,172 @@ public class Preferencia {
     private Boolean tieneLavadero;
     @Column(name = "tiene_pavimento")
     private Boolean tienePavimento;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TipoInmueble getTipoInmueble() {
+        return tipoInmueble;
+    }
+
+    public void setTipoInmueble(TipoInmueble tipoInmueble) {
+        this.tipoInmueble = tipoInmueble;
+    }
+
+    public Float getMontoDisponible() {
+        return montoDisponible;
+    }
+
+    public void setMontoDisponible(Float montoDisponible) {
+        this.montoDisponible = montoDisponible;
+    }
+
+    public Orientacion getOrientacion() {
+        return orientacion;
+    }
+
+    public void setOrientacion(Orientacion orientacion) {
+        this.orientacion = orientacion;
+    }
+
+    public Double getLongitudFrente() {
+        return longitudFrente;
+    }
+
+    public void setLongitudFrente(Double longitudFrente) {
+        this.longitudFrente = longitudFrente;
+    }
+
+    public Double getLongitudFondo() {
+        return longitudFondo;
+    }
+
+    public void setLongitudFondo(Double longitudFondo) {
+        this.longitudFondo = longitudFondo;
+    }
+
+    public Double getTamanioInmueble() {
+        return tamanioInmueble;
+    }
+
+    public void setTamanioInmueble(Double tamanioInmueble) {
+        this.tamanioInmueble = tamanioInmueble;
+    }
+
+    public Boolean getPropiedadHorizontal() {
+        return propiedadHorizontal;
+    }
+
+    public void setPropiedadHorizontal(Boolean propiedadHorizontal) {
+        this.propiedadHorizontal = propiedadHorizontal;
+    }
+
+    public Integer getAntiguedad() {
+        return antiguedad;
+    }
+
+    public void setAntiguedad(Integer antiguedad) {
+        this.antiguedad = antiguedad;
+    }
+
+    public Integer getCantidadDormitorios() {
+        return cantidadDormitorios;
+    }
+
+    public void setCantidadDormitorios(Integer cantidadDormitorios) {
+        this.cantidadDormitorios = cantidadDormitorios;
+    }
+
+    public Integer getCantidadBanios() {
+        return cantidadBanios;
+    }
+
+    public void setCantidadBanios(Integer cantidadBanios) {
+        this.cantidadBanios = cantidadBanios;
+    }
+
+    public Boolean getTieneCochera() {
+        return tieneCochera;
+    }
+
+    public void setTieneCochera(Boolean tieneCochera) {
+        this.tieneCochera = tieneCochera;
+    }
+
+    public Boolean getTienePatio() {
+        return tienePatio;
+    }
+
+    public void setTienePatio(Boolean tienePatio) {
+        this.tienePatio = tienePatio;
+    }
+
+    public Boolean getTienePiscina() {
+        return tienePiscina;
+    }
+
+    public void setTienePiscina(Boolean tienePiscina) {
+        this.tienePiscina = tienePiscina;
+    }
+
+    public Boolean getTieneAguaCorriente() {
+        return tieneAguaCorriente;
+    }
+
+    public void setTieneAguaCorriente(Boolean tieneAguaCorriente) {
+        this.tieneAguaCorriente = tieneAguaCorriente;
+    }
+
+    public Boolean getTieneCloacas() {
+        return tieneCloacas;
+    }
+
+    public void setTieneCloacas(Boolean tieneCloacas) {
+        this.tieneCloacas = tieneCloacas;
+    }
+
+    public Boolean getTieneGasNatural() {
+        return tieneGasNatural;
+    }
+
+    public void setTieneGasNatural(Boolean tieneGasNatural) {
+        this.tieneGasNatural = tieneGasNatural;
+    }
+
+    public Boolean getTieneAguaCaliente() {
+        return tieneAguaCaliente;
+    }
+
+    public void setTieneAguaCaliente(Boolean tieneAguaCaliente) {
+        this.tieneAguaCaliente = tieneAguaCaliente;
+    }
+
+    public Boolean getTieneTelefono() {
+        return tieneTelefono;
+    }
+
+    public void setTieneTelefono(Boolean tieneTelefono) {
+        this.tieneTelefono = tieneTelefono;
+    }
+
+    public Boolean getTieneLavadero() {
+        return tieneLavadero;
+    }
+
+    public void setTieneLavadero(Boolean tieneLavadero) {
+        this.tieneLavadero = tieneLavadero;
+    }
+
+    public Boolean getTienePavimento() {
+        return tienePavimento;
+    }
+
+    public void setTienePavimento(Boolean tienePavimento) {
+        this.tienePavimento = tienePavimento;
+    }
 }
