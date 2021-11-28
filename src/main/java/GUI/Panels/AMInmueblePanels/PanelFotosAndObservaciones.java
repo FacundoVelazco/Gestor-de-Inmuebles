@@ -292,6 +292,7 @@ public class PanelFotosAndObservaciones{
         auxListaNombres.remove(imagenSeleccionadaParaPortada);
         inmuebleDTO.setNombresArchivosFotos(auxListaNombres);
 
+
         String observaciones = textAreaObservaciones.getText();
 
         if(!observaciones.equals("")){

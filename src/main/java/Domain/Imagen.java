@@ -28,7 +28,7 @@ public class Imagen {
     @Column(name = "descripcion")
     private String nombreArchivo;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_inmueble")
     private Inmueble inmuebleAsociado;
 
