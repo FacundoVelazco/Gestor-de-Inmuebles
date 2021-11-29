@@ -28,7 +28,7 @@ public class Imagen {
     @Column(name = "descripcion")
     private String nombreArchivo;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_inmueble")
     private Inmueble inmuebleAsociado;
 
@@ -75,6 +75,15 @@ public class Imagen {
 
     public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
         this.inmuebleAsociado = inmuebleAsociado;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Imagen){
+            return ((Imagen) obj).getNombreArchivo() == this.nombreArchivo;
+        }
+
+        return super.equals(obj);
     }
 
 }

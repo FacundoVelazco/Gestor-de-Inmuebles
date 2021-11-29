@@ -106,6 +106,7 @@ public class PantallaAMInmueble {
         codigoLabel.setText("Código: " + idto.getId().toString());
         estadoLabel.setText("Estado: " + idto.getEstado());
         fechaDeCargaLabel.setText("Fecha de carga: " + idto.getFechaCarga().toString());
+        inmuebleDTO = idto;
         cargarDatosPaneles(idto);
     }
 
@@ -171,7 +172,7 @@ public class PantallaAMInmueble {
                     obtenerDatosPanel(panelActual);
                     gestorInmuebles.guardarInmueble(inmuebleDTO);
                     GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
-                    //TODO GestorGUI.push();
+                    GestorGUI.pop();
                 }
                 break;
         }

@@ -26,6 +26,12 @@ public class Direccion {
     @Column(name = "departamento")
     private String departamento;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inmueble")
+    private Inmueble inmuebleAsociado;
+
+
+
 
     public String getCalle() {
         return calle;
@@ -89,4 +95,11 @@ public class Direccion {
         this.departamento = departamento;
     }
 
+    public Inmueble getInmuebleAsociado() {
+        return inmuebleAsociado;
+    }
+
+    public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
+        this.inmuebleAsociado = inmuebleAsociado;
+    }
 }

@@ -1,6 +1,8 @@
 package Domain;
 
 import Domain.Util.EstadoInmueble;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -39,12 +41,14 @@ public class Inmueble {
     private Float precio;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_imagen")
+    @JoinColumn(name = "id_imagen_principal")
     private Imagen fotoPrincipal;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inmuebleAsociado",fetch = FetchType.EAGER)
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inmuebleAsociado", fetch = FetchType.LAZY)
     private List<Imagen> fotosInmueble = new ArrayList<>();
     @Column(name = "observaciones")
     private String observaciones;
+
     @ManyToOne()
     @JoinColumn(name = "id_persona")
     private Propietario propietarioInmueble;
