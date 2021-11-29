@@ -1,13 +1,8 @@
 package Domain;
 
-import DAO.Util.BarrioDTO;
 import DAO.Util.LocalidadDTO;
-import Services.GestorProvincias;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,30 +14,29 @@ public class Localidad {
     private Integer id;
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
-    @ManyToOne
-    @JoinColumn(name = "id_provincia")
-    private Provincia provincia;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "localidad",fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    private List<Barrio> barrios;
-
-    public Localidad() {
-    }
+    @Column(name = "id_provincia")
+    private String provincia;
 
     public Localidad(String nombre) {
         this.nombre = nombre;
     }
+
     public Localidad(LocalidadDTO localidadDTO){
         this.id = localidadDTO.id;
         this.nombre = localidadDTO.nombre;
-        this.provincia = (new GestorProvincias().getProvincia(localidadDTO.provinciaId));
-        this.barrios = new ArrayList<>();
-        for(BarrioDTO barrioDTO: localidadDTO.barrios){
-            this.barrios.add(new Barrio(barrioDTO));
-        }
+        this.provincia = "SANTA FE";
     }
-    public Integer getId(){
+    public Integer getId() {
         return this.id;
+    }
+
+    public Localidad() {
+        provincia = "SANTA FE";
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+
     }
 
     public String getNombre() {
@@ -53,19 +47,12 @@ public class Localidad {
         this.nombre = nombre;
     }
 
-    public Provincia getProvincia() {
+    public String getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(Provincia provincia) {
+    public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
-    public List<Barrio> getBarrios() {
-        return barrios;
-    }
-
-    public void setBarrios(List<Barrio> barrios) {
-        this.barrios = barrios;
-    }
 }

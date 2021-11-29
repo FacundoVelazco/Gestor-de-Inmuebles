@@ -8,21 +8,12 @@ import java.util.List;
 public class LocalidadDTO {
     public Integer id;
     public String nombre;
-    public Integer provinciaId;
-    public List<BarrioDTO> barrios;
-    public Class localidadClass = Localidad.class;
+    public String nombreProvincia;
 
-    public LocalidadDTO(Integer id, Class localidadClass) {
-        this.id = id;
-        this.localidadClass = localidadClass;
-    }
-
-    public LocalidadDTO(Integer id, String nombre, Integer provinciaId, Class localidadClass) {
+    public LocalidadDTO(Integer id, String nombre,String provinciaNombre) {
         this.id = id;
         this.nombre = nombre;
-        this.provinciaId = provinciaId;
-        this.barrios = new ArrayList<>();
-        this.localidadClass = localidadClass;
+        this.nombreProvincia = provinciaNombre;
     }
 
     public Integer getId() {
@@ -39,22 +30,6 @@ public class LocalidadDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public List<BarrioDTO> getBarrios() {
-        return barrios;
-    }
-
-    public void setBarrios(List<BarrioDTO> barrios) {
-        this.barrios = barrios;
-    }
-
-    public Class getLocalidadClass() {
-        return localidadClass;
-    }
-
-    public void setLocalidadClass(Class localidadClass) {
-        this.localidadClass = localidadClass;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package DAO;
 
 import Domain.Localidad;
-
 import java.util.List;
 
 public interface LocalidadDAO {

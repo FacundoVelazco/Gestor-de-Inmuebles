@@ -1,8 +1,6 @@
 package DAO;
 
-import Domain.Barrio;
 import Domain.Direccion;
-import Domain.Inmueble;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

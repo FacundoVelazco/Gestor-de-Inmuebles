@@ -2,14 +2,33 @@ package Domain;
 
 import Domain.Util.TipoDNI;
 
+
 import javax.persistence.*;
 import javax.swing.*;
 import java.util.List;
 
 @Entity
 @Table(name = "propietario")
-@PrimaryKeyJoinColumn(name="id_persona")
-public class Propietario extends Persona{
+public class Propietario {
+    @Id
+    @Column(name = "id_propietario")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "username")
+    protected String username;
+
+    @Column(name = "password")
+    protected String password; //TODO implementar
+
+    @Column(name = "nombre")
+    protected String nombre;
+
+    @Column(name = "apellido")
+    protected String apellido;
+
+    @Column(name = "telefono")
+    protected String telefono;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_dni")
@@ -55,4 +74,5 @@ public class Propietario extends Persona{
     public void setInmuebles(List<Inmueble> inmuebles) {
         this.inmuebles = inmuebles;
     }
+
 }

@@ -34,7 +34,7 @@ public class PanelCaracteristicas {
     private JLabel tituloLongFondoLabel;
     private JLabel tituloTamanioLabel;
     private JLabel tituloPropiedadHorizontalLabel;
-    private JCheckBox CheckBoxPropiedadHorizontal;
+    private JCheckBox checkBoxPropiedadHorizontal;
     private JLabel tituloAntiguedadLabel;
     private JLabel tittuloPrecioLabel;
     private JLabel errorLongFrenteLabel;
@@ -180,7 +180,7 @@ public class PanelCaracteristicas {
         inmuebleDTO.setCantidadDormitorios(Integer.parseInt(cantDormitorios));
         inmuebleDTO.setAntiguedad(Integer.parseInt(antiguedad));
 
-        inmuebleDTO.setEsPropiedadHorizontal(CheckBoxPropiedadHorizontal.isSelected());
+        inmuebleDTO.setEsPropiedadHorizontal(checkBoxPropiedadHorizontal.isSelected());
 
         return inmuebleDTO;
     }
@@ -189,4 +189,16 @@ public class PanelCaracteristicas {
     private static final String[] ORIENTACION = {"Norte", "Sur", "Este", "Oeste", "Noreste", "Noroeste", "Sureste", "Suroeste"};
 
 
+    public void setDatos(InmuebleDTO idto) {
+        comboBoxTipoInmueble.setSelectedItem(idto.getTipoInmueble());
+        comboBoxOrientacion.setSelectedItem(idto.getOrientacion());
+        textFieldLongFrente.setText(idto.getLongitudFrente().toString());
+        textFieldLongFondo.setText(idto.getLongitudFondo().toString());
+        textFieldTamanio.setText(idto.getTamanioInmueble().toString());
+        textFieldAntiguedad.setText(idto.getAntiguedad().toString());
+        textFieldCantidadDormitorios.setText(idto.getCantidadDormitorios().toString());
+        textFieldCantidadBanios.setText(idto.getCantidadBanios().toString());
+        checkBoxPropiedadHorizontal.setSelected(idto.getEsPropiedadHorizontal());
+        textFieldPrecioDeVenta.setText(idto.getPrecio().toString());
+    }
 }

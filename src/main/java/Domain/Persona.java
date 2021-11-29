@@ -9,7 +9,7 @@ public class Persona {
     @Id
     @Column(name = "id_persona")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    protected Integer id;
+    private Long id;
 
     @Column(name = "username")
     protected String username;
@@ -26,11 +26,12 @@ public class Persona {
     @Column(name = "telefono")
     protected String telefono;
 
-    public Integer getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,7 +1,6 @@
 package DAO;
 
 import Domain.Localidad;
-import Domain.Provincia;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

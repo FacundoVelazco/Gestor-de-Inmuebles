@@ -53,48 +53,6 @@ public class InmuebleDTO {
 
     }
 
-    public InmuebleDTO(Inmueble inmueble) {
-        this.id = inmueble.getId();
-        this.estado = inmueble.getEstado().toString();
-        this.fechaCarga = inmueble.getFechaCarga();
-        this.propiedadDestacada = inmueble.getPropiedadDestacada();
-        this.provincia = inmueble.getDireccion().getBarrio().getLocalidad().getProvincia().toString();
-        this.localidad = localidad;
-        this.calle = calle;
-        this.numeroCalle = numeroCalle;
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.piso = piso;
-        this.departamento = departamento;
-        this.barrio = barrio;
-        this.tipoInmueble = tipoInmueble;
-        this.precio = precio;
-        this.orientacion = orientacion;
-        this.longitudFrente = longitudFrente;
-        this.longitudFondo = longitudFondo;
-        this.tamanioInmueble = tamanioInmueble;
-        this.esPropiedadHorizontal = esPropiedadHorizontal;
-        this.antiguedad = antiguedad;
-        this.cantidadDormitorios = cantidadDormitorios;
-        this.cantidadBanios = cantidadBanios;
-        this.tieneCochera = tieneCochera;
-        this.tienePatio = tienePatio;
-        this.tienePiscina = tienePiscina;
-        this.tieneAguaCorriente = tieneAguaCorriente;
-        this.tieneCloacas = tieneCloacas;
-        this.tieneGasNatural = tieneGasNatural;
-        this.tieneAguaCaliente = tieneAguaCaliente;
-        this.tieneTelefono = tieneTelefono;
-        this.tieneLavadero = tieneLavadero;
-        this.tienePavimento = tienePavimento;
-        this.fotoPrincipal = fotoPrincipal;
-        this.nombreArchivoFotoPrincipal = nombreArchivoFotoPrincipal;
-        this.fotosInmueble = fotosInmueble;
-        this.nombresArchivosFotos = nombresArchivosFotos;
-        this.observaciones = observaciones;
-        this.propietarioInmuebleID = propietarioInmuebleID;
-    }
-
     public Integer getId() {
         return id;
     }

@@ -2,26 +2,12 @@ package DAO;
 
 import Domain.Inmueble;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.util.List;
 
-public class InmuebleSqlDAO implements InmuebleDAO{
-    EntityManagerFactory entityManagerFactory;
-    EntityManager manager;
-
-    public InmuebleSqlDAO(){
-        entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
-        manager = entityManagerFactory.createEntityManager();
-    }
+public class DAOBdInmueble implements InmuebleDAO{
     @Override
     public Integer persist(Inmueble inmueble) {
-        manager.getTransaction().begin();
-        manager.persist(inmueble);
-        manager.getTransaction().commit();
-        return inmueble.getId();
+        return null;
     }
 
     @Override
@@ -31,23 +17,22 @@ public class InmuebleSqlDAO implements InmuebleDAO{
 
     @Override
     public Inmueble getById(Integer id) {
-        return manager.find(Inmueble.class,id);
+        return null;
     }
 
     @Override
     public List list() {
-        Query query = manager.createQuery("FROM Inmueble",Inmueble.class);
-        return query.getResultList();
+        return null;
     }
 
     @Override
     public void merge(Inmueble inmueble) {
-        manager.merge(inmueble);
+
     }
 
     @Override
     public void close() {
-       manager.close();
+
     }
 
     @Override
