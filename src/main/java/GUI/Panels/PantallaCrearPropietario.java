@@ -90,6 +90,17 @@ public class PantallaCrearPropietario {
         AutoCompletion.enable(comboBoxLocalidad);
         AutoCompletion.enable(comboBoxProvincia);
 
+        comboBoxProvincia.addItem("Santa Fe");
+
+        comboBoxLocalidad.addItem("Santa Fe");
+        comboBoxLocalidad.addItem("Santo Tome");
+        comboBoxLocalidad.addItem("Sauce viejo");
+        comboBoxLocalidad.addItem("Rincon");
+        comboBoxLocalidad.addItem("Colastine Norte");
+        comboBoxLocalidad.addItem("Colastine Sur");
+
+        // Santa Fe, Santo Tome, Sauce viejo, Rincon, Colastine Norte, Colastine Sur
+
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
