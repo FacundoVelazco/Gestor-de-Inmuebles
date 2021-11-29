@@ -1,11 +1,15 @@
 package DAO;
 
 import DAO.Util.Conexion;
+import Domain.Imagen;
 import Domain.Inmueble;
 import Domain.Localidad;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class DAOBdInmueble implements InmuebleDAO{
     @Override
@@ -36,8 +40,8 @@ public class DAOBdInmueble implements InmuebleDAO{
     public Inmueble getById(int id) {
         EntityManager manager = Conexion.emf.createEntityManager();
         Inmueble i = manager.find(Inmueble.class, id);
-        i.getFotosInmueble();
-        System.out.println(i.getFotosInmueble());
+        //Por alguna razon se toma la imagen principal como parte de la lista de fotos entonces la elimino
+        i.getFotosInmueble().remove(0);
         manager.close();
         return i;
     }
@@ -59,4 +63,8 @@ public class DAOBdInmueble implements InmuebleDAO{
         manager.close();
         return lista;
     }
+
+
+
+
 }

@@ -284,12 +284,12 @@ public class PanelFotosAndObservaciones{
 
         ArrayList<ImageIcon> auxListaImagenes = new ArrayList<>();
         auxListaImagenes.addAll(fotosSeleccionadas);
-        auxListaImagenes.remove(imagenSeleccionadaParaPortada);
+        auxListaImagenes.remove(inmuebleDTO.getFotoPrincipal());
         inmuebleDTO.setFotosInmueble(auxListaImagenes);
 
         List<String> auxListaNombres = new ArrayList<>();
         auxListaNombres.addAll(nombresArchivosFotos);
-        auxListaNombres.remove(imagenSeleccionadaParaPortada);
+        auxListaNombres.remove(inmuebleDTO.getNombreArchivoFotoPrincipal());
         inmuebleDTO.setNombresArchivosFotos(auxListaNombres);
 
 

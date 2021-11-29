@@ -92,17 +92,24 @@ public class GestorInmuebles {
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
         Inmueble inmueble = new Inmueble();
 
+
+        //TODO FALTA LOGICA DE LEVANTAR PROP DE LA BD
+        Propietario p = new Propietario();
+        p.setId(1l);
+        inmueble.setPropietarioInmueble(p);
+        //TODO QUITAR
+
         if(iDTO.getId()!=null) {
             inmueble.setId(iDTO.getId());
         }
 
         if(iDTO.getEstado()!=null){
-            EstadoInmueble.valueOf(iDTO.getEstado());
+            inmueble.setEstado(EstadoInmueble.valueOf(iDTO.getEstado()));
         }
-
         if(iDTO.getFechaCarga()!=null) {
             inmueble.setFechaCarga(iDTO.getFechaCarga());
         }
+
 
         inmueble.setPropiedadDestacada(iDTO.getPropiedadDestacada());
 
@@ -177,6 +184,7 @@ public class GestorInmuebles {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
         idto.setEstado(inmueble.getEstado().toString());
+        idto.setPropietarioInmuebleID(inmueble.getPropietarioInmueble().getId());
 
         idto.setFechaCarga(inmueble.getFechaCarga());
         idto.setPropiedadDestacada(inmueble.getPropiedadDestacada());

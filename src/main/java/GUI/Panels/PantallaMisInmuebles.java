@@ -173,9 +173,12 @@ public class PantallaMisInmuebles {
         buttonEliminarProp1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+//                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5);
                 idto.setEstado("BAJA");
                 gestorInmuebles.guardarInmueble(idto);
+                GestorGUI.refreshCurrent();
+                GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
             }
         });
 

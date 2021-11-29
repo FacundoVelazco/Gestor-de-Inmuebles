@@ -77,4 +77,13 @@ public class Imagen {
         this.inmuebleAsociado = inmuebleAsociado;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Imagen){
+            return ((Imagen) obj).getNombreArchivo() == this.nombreArchivo;
+        }
+
+        return super.equals(obj);
+    }
+
 }
