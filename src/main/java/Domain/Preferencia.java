@@ -58,6 +58,11 @@ public class Preferencia {
     @Column(name = "tiene_pavimento")
     private Boolean tienePavimento;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inmueble_asociado")
+    private Inmueble inmuebleAsociado;
+
+
     public Integer getId() {
         return id;
     }
@@ -240,5 +245,14 @@ public class Preferencia {
 
     public void setTienePavimento(Boolean tienePavimento) {
         this.tienePavimento = tienePavimento;
+    }
+
+
+    public Inmueble getInmuebleAsociado() {
+        return inmuebleAsociado;
+    }
+
+    public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
+        this.inmuebleAsociado = inmuebleAsociado;
     }
 }
