@@ -29,6 +29,7 @@ public class PantallaABMCliente {
     private JPanel panelTitulo;
     private JPanel panelControles;
     private JButton buttonLimpiar;
+    private JButton volverButton;
 
     private DefaultTableModel dataModel = new DefaultTableModel(COLUMNS,0);
     private static final String[] COLUMNS = {"Nombre de usuario","Nombre", "Apellido"};
@@ -119,6 +120,12 @@ public class PantallaABMCliente {
                 ClienteDTO cliente = gestorClientes.getClienteByUsername(
                         dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString());
                 GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,cliente);
+            }
+        });
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.pop();
             }
         });
     }

@@ -2,16 +2,13 @@ package Services;
 
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
-import GUI.Panels.PantallaABMCliente;
-import GUI.Panels.PantallaAMInmueble;
-import GUI.Panels.PantallaCInmueble;
-import GUI.Panels.PantallaCrearCliente;
+import GUI.Panels.*;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
-import GUI.Panels.PantallaMisInmuebles;
 import GUI.Util.Pantalla;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 import java.util.Stack;
 
 public class GestorGUI {
@@ -21,6 +18,10 @@ public class GestorGUI {
 
     private static void setPantalla(Pantalla pantalla, Object elemento){
         switch (pantalla){
+
+            case MENU_PRINCIPAL:
+                framePrincipal.setContentPane(new PantallaMenuPrincipal().getPanelPrincipal());
+                break;
 
             case ABM_CLIENTE:
                 framePrincipal.setContentPane(new PantallaABMCliente().getPanelPrincipal());
@@ -66,6 +67,7 @@ public class GestorGUI {
                 break;
         }
         framePrincipal.revalidate();
+        framePrincipal.pack();
     }
 
     public static void init(Pantalla pantalla) {
@@ -119,6 +121,10 @@ public class GestorGUI {
 
     public static void popUpExito(String titulo, String mensaje){
         JOptionPane.showMessageDialog(framePrincipal,mensaje,titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void exit(){
+        framePrincipal.dispatchEvent(new WindowEvent(framePrincipal, WindowEvent.WINDOW_CLOSING));
     }
 
 }
