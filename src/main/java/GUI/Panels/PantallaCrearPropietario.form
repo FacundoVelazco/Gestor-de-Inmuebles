@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panelPrincipal" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="5" left="5" bottom="5" right="5"/>
     <constraints>
-      <xy x="20" y="20" width="808" height="701"/>
+      <xy x="20" y="20" width="850" height="701"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -93,7 +93,7 @@
             <properties>
               <font size="10"/>
               <foreground color="-4520704"/>
-              <text value="El nombre de usuario debe ser de 20 caracteres como maximo."/>
+              <text value="El nombre de usuario debe tener entre 5 y 20 caracteres"/>
               <visible value="false"/>
             </properties>
           </component>
@@ -204,7 +204,7 @@
             <properties>
               <font size="10"/>
               <foreground color="-4521983"/>
-              <text value="El nombre no puede tener una longitud mayor a 20 caracteres."/>
+              <text value="El nombre debe tener entre 3 y 20 caracteres"/>
               <visible value="false"/>
             </properties>
           </component>
@@ -215,7 +215,7 @@
             <properties>
               <font size="10"/>
               <foreground color="-4520192"/>
-              <text value="El apellido no puede tener mas de 20 caracteres"/>
+              <text value="El apellido debe tener entre 2 y 20 caracteres"/>
               <visible value="false"/>
             </properties>
           </component>
@@ -318,7 +318,7 @@
             <properties>
               <font size="10"/>
               <foreground color="-4520704"/>
-              <text value="Este campo no puede tener mas de 40 caracteres"/>
+              <text value="Este campo debe tener entre 5 y 40 caracteres"/>
               <visible value="false"/>
             </properties>
           </component>
@@ -387,7 +387,7 @@
             <properties>
               <font size="10"/>
               <foreground color="-4520704"/>
-              <text value="El email no puede tener mas de 60 caracteres"/>
+              <text value="El email ingresado no es correcto o tiene mas de 60 caracteres"/>
               <visible value="false"/>
             </properties>
           </component>

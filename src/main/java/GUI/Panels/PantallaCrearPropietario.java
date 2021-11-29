@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PantallaCrearPropietario {
     private JPanel panelTitulo;
@@ -68,6 +70,18 @@ public class PantallaCrearPropietario {
         }
         return true;
     }
+    private  boolean emailValido(String email) {
+
+        boolean valido = false;
+
+        Pattern patronEmail = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+        Matcher mEmail = patronEmail.matcher(email.toLowerCase());
+        if (mEmail.matches()){
+            valido = true;
+        }
+        return valido;
+    }
 
     public PantallaCrearPropietario() {
 
@@ -88,45 +102,55 @@ public class PantallaCrearPropietario {
 
                 boolean bandera = true;
 
-                if (textFieldNombreUsuario.getText().length() > 20){
+                if (textFieldNombreUsuario.getText().length() > 20 || textFieldNombreUsuario.getText().length() < 5){
                     labelErrorUsuario.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorUsuario.setVisible(false);
 
                 if ((textFieldContraseña.getText().length() < 6) || (textFieldContraseña.getText().length() > 20)){
                     labelErrorContraseña.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorContraseña.setVisible(false);
 
-                if (textFieldNombre.getText().length() > 20){
+                if (textFieldNombre.getText().length() > 20 || textFieldNombre.getText().length() < 3){
                     labelErrorNombre.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorNombre.setVisible(false);
 
-                if (textFieldApellido.getText().length() > 20){
+                if (textFieldApellido.getText().length() > 20 || textFieldApellido.getText().length() < 2){
                     labelErrorApellido.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorApellido.setVisible(false);
 
                 if (!(isInteger(textFieldNumeroDocumento.getText()))){
                     labelErrorDocumento.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorDocumento.setVisible(false);
 
-                if (textFieldCalleNumero.getText().length() > 40){
+
+                if (textFieldCalleNumero.getText().length() > 40 || (textFieldApellido.getText().length() < 2)){
                     labelErrorCalleNumero.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorCalleNumero.setVisible(false);
 
-                if (!(isInteger(textFieldTelefono.getText()))){
+                if (!(isInteger(textFieldTelefono.getText()))) {
                     labelErrorTelefono.setVisible(true);
                     bandera = false;
                 }
+                else labelErrorTelefono.setVisible(false);
 
-                if (textFieldEmail.getText().length() > 60){
+                if ((textFieldEmail.getText().length() > 60) || !(emailValido(textFieldEmail.getText()))){
                     labelErrorEmail.setVisible(true);
+
                     bandera = false;
                 }
+                else labelErrorEmail.setVisible(false);
 
                 if (bandera) {
                     GestorGUI.pop();

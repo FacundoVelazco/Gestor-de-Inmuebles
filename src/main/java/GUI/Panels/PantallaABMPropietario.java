@@ -21,7 +21,7 @@ public class PantallaABMPropietario {
     private TableRowSorter sorter;
     private JButton botonEliminar;
     private JButton botonModificar;
-    private JButton botonNuevoCliente;
+    private JButton botonNuevoPropietario;
     private JScrollPane scrollPane;
     private JPanel panelBusqueda;
     private JTextField textFieldBuscar;
@@ -65,7 +65,7 @@ public class PantallaABMPropietario {
         sorter = new TableRowSorter<>(dataModel);
         tablaClientes.setRowSorter(sorter);
 
-        botonNuevoCliente.addActionListener(new ActionListener() {
+        botonNuevoPropietario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.push(Pantalla.CREAR_PROPIETARIO);

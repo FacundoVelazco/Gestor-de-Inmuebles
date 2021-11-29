@@ -57,6 +57,7 @@ public class GestorGUI {
         framePrincipal.setVisible(true);
     }
 
+
     public static void push(Pantalla pantalla) {
         setPantalla(pantalla);
         historia.push(pantalla);
