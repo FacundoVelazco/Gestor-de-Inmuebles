@@ -40,6 +40,7 @@ public class Propietario {
     private Direccion direccion;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
+
     @ManyToOne()
     @JoinColumn(name = "id_persona_vendedor")
     private Vendedor vendedor;
@@ -75,4 +76,11 @@ public class Propietario {
         this.inmuebles = inmuebles;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

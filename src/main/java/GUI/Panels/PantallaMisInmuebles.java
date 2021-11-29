@@ -85,6 +85,9 @@ public class PantallaMisInmuebles {
         //Seteamos parámetros del inmueble por defecto
         crearInmueblePorDefecto();
 
+        //TODO REMOVER
+        idPropietario = 1;
+
         //Defino el gestor
         gestorInmuebles = new GestorInmuebles();
 
@@ -94,7 +97,7 @@ public class PantallaMisInmuebles {
 
         //Obtengo los primeros 6 inmuebles del propietario (el ultimo solo para determinar si se habilita o no el boton de siguiente)
         inmueblesActuales = new ArrayList<>();
-        inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(idPropietario,1,6));
+        inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,1,6));
 
         actualizarTablitaInmuebles(inmueblesActuales);
         actualizarBotones();
@@ -112,7 +115,7 @@ public class PantallaMisInmuebles {
 
                 //Si aun no pedimos estos inmuebles a la base de datos, los pedimos
                 if(inmueblesActuales.size() <= (inicio-1)){
-                    inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(idPropietario,  inicio ,fin));
+                    inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,  inicio ,fin));
                 }
 
                 //Una vez tenemos todos los inmuebles, nos fijamos el tamanio de la lista, de no ser lo suficientemente grande como para ocupar los 5
@@ -176,9 +179,12 @@ public class PantallaMisInmuebles {
         buttonEliminarProp1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 + 1).getId());
+//                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5);
                 idto.setEstado("BAJA");
                 gestorInmuebles.guardarInmueble(idto);
+                GestorGUI.refreshCurrent();
+                GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
             }
         });
 
@@ -189,54 +195,52 @@ public class PantallaMisInmuebles {
         buttonModificarProp1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
 
-                //TODO MODIFICAR POR USO PARA PRUEBAS
-                //gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
-
-                InmuebleDTO idto = new InmuebleDTO();
-                idto.setId(123);
-                idto.setEstado("ALTA");
-                idto.setFechaCarga(LocalDate.now());
-                idto.setLocalidad("Toba");
-                idto.setBarrio("Los hornos");
-//                idto.setCalle("Urquiza");
-//                idto.setNumeroCalle(5952);
-                idto.setLatitud(5664.45);
-                idto.setLongitud(654.2);
-
-                idto.setTipoInmueble("Local-Oficina");
-                idto.setOrientacion("Sur");
-                idto.setLongitudFrente(565.0);
-                idto.setLongitudFondo(5646.12);
-                idto.setTamanioInmueble(64556.2);
-                idto.setAntiguedad(6);
-                idto.setCantidadDormitorios(41);
-                idto.setCantidadBanios(263);
-                idto.setPrecio(654.24f);
-                idto.setEsPropiedadHorizontal(true);
-
-                idto.setTieneLavadero(true);
-                idto.setTieneTelefono(true);
-                idto.setTienePavimento(false);
-                idto.setTieneCochera(true);
-                idto.setTienePatio(true);
-                idto.setTienePiscina(false);
-                idto.setTieneAguaCaliente(false);
-                idto.setTieneAguaCorriente(true);
-                idto.setTieneCloacas(false);
-                idto.setTieneGasNatural(true);
-
-                idto.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/test1.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
-                idto.setNombreArchivoFotoPrincipal("Fotito principal.png");
-
-                ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
-                ArrayList<String> nombresArchivos = new ArrayList<>();
-
-//                listaImagenes.add(new ImageIcon(new ImageIcon("src/main/java/Materials/test2.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
-//                nombresArchivos.add("Pepito.jpg");
-
-                idto.setFotosInmueble(listaImagenes);
-                idto.setNombresArchivosFotos(nombresArchivos);
+//                InmuebleDTO idto = new InmuebleDTO();
+//                idto.setId(123);
+//                idto.setEstado("ALTA");
+//                idto.setFechaCarga(LocalDate.now());
+//                idto.setLocalidad("Toba");
+//                idto.setBarrio("Los hornos");
+////                idto.setCalle("Urquiza");
+////                idto.setNumeroCalle(5952);
+//                idto.setLatitud(5664.45);
+//                idto.setLongitud(654.2);
+//
+//                idto.setTipoInmueble("Local-Oficina");
+//                idto.setOrientacion("Sur");
+//                idto.setLongitudFrente(565.0);
+//                idto.setLongitudFondo(5646.12);
+//                idto.setTamanioInmueble(64556.2);
+//                idto.setAntiguedad(6);
+//                idto.setCantidadDormitorios(41);
+//                idto.setCantidadBanios(263);
+//                idto.setPrecio(654.24f);
+//                idto.setEsPropiedadHorizontal(true);
+//
+//                idto.setTieneLavadero(true);
+//                idto.setTieneTelefono(true);
+//                idto.setTienePavimento(false);
+//                idto.setTieneCochera(true);
+//                idto.setTienePatio(true);
+//                idto.setTienePiscina(false);
+//                idto.setTieneAguaCaliente(false);
+//                idto.setTieneAguaCorriente(true);
+//                idto.setTieneCloacas(false);
+//                idto.setTieneGasNatural(true);
+//
+//                idto.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/test1.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+//                idto.setNombreArchivoFotoPrincipal("Fotito principal.png");
+//
+//                ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
+//                ArrayList<String> nombresArchivos = new ArrayList<>();
+//
+////                listaImagenes.add(new ImageIcon(new ImageIcon("src/main/java/Materials/test2.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+////                nombresArchivos.add("Pepito.jpg");
+//
+//                idto.setFotosInmueble(listaImagenes);
+//                idto.setNombresArchivosFotos(nombresArchivos);
 
                 GestorGUI.pushModificar(Pantalla.AM_INMUEBLE,idto);
             }

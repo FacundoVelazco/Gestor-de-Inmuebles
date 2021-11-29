@@ -31,7 +31,7 @@ public class GestorInmuebles {
         try {
             inmueble = generarInmuebleDesdeDTO(iDTO);
         }catch (Exception e){
-            //TODO MOSTRAR MENSAJE ERROR
+            e.printStackTrace();
         }
 
 
@@ -41,6 +41,7 @@ public class GestorInmuebles {
             //Propietario propietarioInmueble = propietarioDAO.getById(iDTO.getPropietarioInmuebleID());
             //TODO SACAR, ES SOLO PARA PRUEBA
             Propietario propietarioInmueble = new Propietario();
+            propietarioInmueble.setId(1l);
             //Se lo asigno al inmueble
             inmueble.setPropietarioInmueble(propietarioInmueble);
         }
@@ -53,7 +54,7 @@ public class GestorInmuebles {
 
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         Inmueble inmueble = daoInmueble.getById(id);
-        InmuebleDTO idto = generarDTODesdeInmueble(inmueble);
+        InmuebleDTO idto = generarDTODesdeInmueble(inmueble,false);
 
         return idto;
     }
@@ -66,7 +67,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            InmuebleDTO idto = generarDTODesdeInmueble(i,true);
             listaInmueblesDTO.add(idto);
         }
 
@@ -80,7 +81,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario, inicio, fin));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            InmuebleDTO idto = generarDTODesdeInmueble(i,true);
             listaInmueblesDTO.add(idto);
         }
 
@@ -91,28 +92,30 @@ public class GestorInmuebles {
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
         Inmueble inmueble = new Inmueble();
 
-        inmueble.setId(iDTO.getId());
 
-        //Si estamos modificando el inmueble, seteamos el valor de estado actual
-        if (iDTO.getEstado() != null) {
-            EstadoInmueble.valueOf(iDTO.getEstado());
+        //TODO FALTA LOGICA DE LEVANTAR PROP DE LA BD
+        Propietario p = new Propietario();
+        p.setId(1l);
+        inmueble.setPropietarioInmueble(p);
+        //TODO QUITAR
+
+        if(iDTO.getId()!=null) {
+            inmueble.setId(iDTO.getId());
         }
 
-        //Si estamos modificando el inmueble, seteamos el valor de fecha de carga que ya tenia el inmueble
-        if (iDTO.getFechaCarga() != null) {
+        if(iDTO.getEstado()!=null){
+            inmueble.setEstado(EstadoInmueble.valueOf(iDTO.getEstado()));
+        }
+        if(iDTO.getFechaCarga()!=null) {
             inmueble.setFechaCarga(iDTO.getFechaCarga());
         }
 
-        //Si estamos modificando el inmueble, seteamos el valor de prop destacada que ya tenia el inmueble
-        if (iDTO.getPropiedadDestacada() != null) {
-            inmueble.setPropiedadDestacada(iDTO.getPropiedadDestacada());
-        }
 
-        //LA PROVINCIA POR EL MOMENTO ES INNECESARIO
-        //inmueble.setProvincia(iDTO.getProvincia());
+        inmueble.setPropiedadDestacada(iDTO.getPropiedadDestacada());
 
         DAOBdLocalidad daoLocalidad = new DAOBdLocalidad();
         Localidad localidad = daoLocalidad.getByName(iDTO.getLocalidad());
+        System.out.println(iDTO.getLocalidad());
         inmueble.setLocalidad(localidad);
 
         Direccion direccion = new Direccion();
@@ -124,6 +127,7 @@ public class GestorInmuebles {
         direccion.setPiso(iDTO.getPiso());
         direccion.setDepartamento(iDTO.getDepartamento());
         direccion.setBarrio(iDTO.getBarrio());
+        direccion.setInmuebleAsociado(inmueble);
 
         inmueble.setDireccion(direccion);
 
@@ -145,10 +149,13 @@ public class GestorInmuebles {
         datosInmueble.setTieneAguaCaliente(iDTO.getTieneAguaCaliente());
         datosInmueble.setTieneCloacas(iDTO.getTieneCloacas());
         datosInmueble.setTieneGasNatural(iDTO.getTieneGasNatural());
-        datosInmueble.setTieneAguaCaliente(iDTO.getTieneAguaCaliente());
+        datosInmueble.setTieneAguaCorriente(iDTO.getTieneAguaCaliente());
         datosInmueble.setTieneTelefono(iDTO.getTieneTelefono());
         datosInmueble.setTieneLavadero(iDTO.getTieneLavadero());
         datosInmueble.setTienePavimento(iDTO.getTienePavimento());
+
+        datosInmueble.setInmuebleAsociado(inmueble);
+        inmueble.setCaracteristicasInmueble(datosInmueble);
 
         inmueble.setPrecio(iDTO.getPrecio());
 
@@ -173,10 +180,12 @@ public class GestorInmuebles {
     }
 
 
-    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble) {
+    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble, Boolean esLista) {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
         idto.setEstado(inmueble.getEstado().toString());
+        idto.setPropietarioInmuebleID(inmueble.getPropietarioInmueble().getId());
+
         idto.setFechaCarga(inmueble.getFechaCarga());
         idto.setPropiedadDestacada(inmueble.getPropiedadDestacada());
         idto.setProvincia(inmueble.getLocalidad().getProvincia());
@@ -221,18 +230,19 @@ public class GestorInmuebles {
         ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
         ArrayList<String> listaNombreArchivos = new ArrayList<>();
 
-        for (Imagen i : inmueble.getFotosInmueble()) {
-            listaImagenes.add(i.getImagen());
-            listaNombreArchivos.add(i.getNombreArchivo());
+        if(!esLista) {
+            for (Imagen i : inmueble.getFotosInmueble()) {
+                listaImagenes.add(i.getImagen());
+                listaNombreArchivos.add(i.getNombreArchivo());
+            }
         }
-
         idto.setFotosInmueble(listaImagenes);
         idto.setNombresArchivosFotos(listaNombreArchivos);
 
         return idto;
     }
 
-    public List<InmuebleDTO> listarInmuebles(Integer idPropietario, Integer inicio, Integer fin){
+    public List<InmuebleDTO> listarInmueblesPrueba(Integer idPropietario, Integer inicio, Integer fin){
         //TODO RECORDAR QUITAR INMUEBLES DE PRUEBA
         ArrayList<InmuebleDTO> lista = new ArrayList<>();
 
