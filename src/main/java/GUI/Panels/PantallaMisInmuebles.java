@@ -162,6 +162,12 @@ public class PantallaMisInmuebles {
         cargarLogicaBotonesEliminar();
 
 
+        atrasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.pop();
+            }
+        });
     }
 
     private void cargarLogicaBotonesEliminar() {
