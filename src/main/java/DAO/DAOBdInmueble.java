@@ -13,6 +13,36 @@ import java.util.Set;
 
 public class DAOBdInmueble implements InmuebleDAO{
     @Override
+    public Integer persist(Inmueble inmueble) {
+        return null;
+    }
+
+    @Override
+    public Inmueble getByName(String name) {
+        return null;
+    }
+
+    @Override
+    public Inmueble getById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public List list() {
+        return null;
+    }
+
+    @Override
+    public void merge(Inmueble inmueble) {
+
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    @Override
     public Integer save(Inmueble i) {
         EntityManager manager = Conexion.emf.createEntityManager();
         Integer id;

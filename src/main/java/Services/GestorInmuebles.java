@@ -1,19 +1,17 @@
 package Services;
 
-import DAO.DAOBdInmueble;
-import DAO.DAOBdLocalidad;
-import DAO.DAOBdPropietario;
+import DAO.*;
 import DAO.Util.InmuebleDTO;
+import DAO.Util.LocalidadDTO;
+import Domain.Direccion;
+import Domain.Inmueble;
+import Domain.Localidad;
+import Domain.Util.TipoInmueble;
 import Domain.*;
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
-import Domain.Util.TipoInmueble;
-
 import javax.swing.*;
-import java.time.LocalDate;
-
 import java.awt.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +52,7 @@ public class GestorInmuebles {
 
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         Inmueble inmueble = daoInmueble.getById(id);
-        InmuebleDTO idto = generarDTODesdeInmueble(inmueble,false);
+        InmuebleDTO idto = generarDTODesdeInmueble(inmueble);
 
         return idto;
     }
@@ -67,7 +65,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i,true);
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
         }
 
@@ -81,13 +79,12 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario, inicio, fin));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i,true);
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
         }
 
         return listaInmueblesDTO;
     }
-
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
         Inmueble inmueble = new Inmueble();
@@ -127,7 +124,7 @@ public class GestorInmuebles {
         direccion.setPiso(iDTO.getPiso());
         direccion.setDepartamento(iDTO.getDepartamento());
         direccion.setBarrio(iDTO.getBarrio());
-        direccion.setInmuebleAsociado(inmueble);
+        direccion.setInmueble(inmueble);
 
         inmueble.setDireccion(direccion);
 
@@ -179,8 +176,56 @@ public class GestorInmuebles {
         return inmueble;
     }
 
+    public List<InmuebleDTO> buscarInmueble(LocalidadDTO localidadDTO,String barrio, TipoInmueble tipo, String dormitorios, String precioMax) {
+        LocalidadDAO localidadDAO = new LocalidadSqlDAO();
+        DireccionDAO direccionDAO = new DireccionSqlDAO();
+        List<Direccion> direcciones = direccionDAO.list();
+        List<InmuebleDTO> inmueblesDTO = new ArrayList();
 
-    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble, Boolean esLista) {
+        if(!barrio.isEmpty()){
+            for (Direccion direccion: direcciones){
+                if(direccion.getBarrio().contains(barrio)){
+                    inmueblesDTO.add(generarDTODesdeInmueble(direccion.getInmueble()));
+                }
+            }
+        }else{
+            for (Direccion direccion: direcciones){
+                inmueblesDTO.add(generarDTODesdeInmueble(direccion.getInmueble()));
+            }
+        }
+
+        if(localidadDTO != null){
+            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
+                if(!localidadDTO.nombre.equals(inmuebleDTO.getLocalidad())){
+                    inmueblesDTO.remove(inmuebleDTO);
+                }
+            }
+        }
+        if(tipo != null){
+            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
+                if(!inmuebleDTO.getTipoInmueble().equals(tipo.toString())){
+                    inmueblesDTO.remove(inmuebleDTO);
+                }
+            }
+        }
+        if(dormitorios != null){
+            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
+                if(inmuebleDTO.getCantidadDormitorios() < Integer.parseInt(dormitorios)){
+                    inmueblesDTO.remove(inmuebleDTO);
+                }
+            }
+        }
+        if(precioMax != null){
+            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
+                if(inmuebleDTO.getPrecio() > Integer.parseInt(precioMax)){
+                    inmueblesDTO.remove(inmuebleDTO);
+                }
+            }
+        }
+
+        return inmueblesDTO;
+    }
+    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble) {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
         idto.setEstado(inmueble.getEstado().toString());
@@ -230,12 +275,6 @@ public class GestorInmuebles {
         ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
         ArrayList<String> listaNombreArchivos = new ArrayList<>();
 
-        if(!esLista) {
-            for (Imagen i : inmueble.getFotosInmueble()) {
-                listaImagenes.add(i.getImagen());
-                listaNombreArchivos.add(i.getNombreArchivo());
-            }
-        }
         idto.setFotosInmueble(listaImagenes);
         idto.setNombresArchivosFotos(listaNombreArchivos);
 

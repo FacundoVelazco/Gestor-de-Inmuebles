@@ -308,6 +308,10 @@ public class PantallaMisInmuebles {
         return panelPrincipal;
     }
 
+    public JLabel getTituloLabel(){return tituloLabel;}
+    public void setTituloLabel(String tituloLabel){this.tituloLabel.setText(tituloLabel);}
+    public JButton getCrearInmuebleButton(){return crearInmuebleButton;}
+
     private void actualizarTablitaInmuebles(ArrayList<InmuebleDTO> listaInmuebles){
 
         Integer totalImagenes = listaInmuebles.size();
