@@ -92,4 +92,5 @@ public class GestorGUI {
     public static Stack<Pantalla> getHistoria() {
         return historia;
     }
+    public static void updateFramePrincipal() { framePrincipal.pack(); }
 }
