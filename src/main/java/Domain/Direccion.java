@@ -27,6 +27,12 @@ public class Direccion {
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "direccion",fetch = FetchType.EAGER)
     private Inmueble inmueble;
 
+    public Direccion() {}
+
+    public Direccion(String barrio) {
+        this.barrio = barrio;
+    }
+
     public String getCalle() {
         return calle;
     }

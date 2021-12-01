@@ -40,11 +40,9 @@ public class PantallaCInmueble {
 
     public PantallaCInmueble() {
 
-        pantallaMisInmuebles = new PantallaMisInmuebles();
-        pantallaMisInmuebles.getTituloLabel().setVisible(false);
-        pantallaMisInmuebles.getCrearInmuebleButton().setVisible(false);
-        panelInmuebles.add(pantallaMisInmuebles.getPanelPrincipal());
+        pantallaMisInmuebles = new PantallaMisInmuebles(null,"",null,"","");
 
+        panelInmuebles.add(pantallaMisInmuebles.getPanelPrincipal());
 
         AutoCompletion.enable(provinciaCombo);
         AutoCompletion.enable(localidadCombo);
