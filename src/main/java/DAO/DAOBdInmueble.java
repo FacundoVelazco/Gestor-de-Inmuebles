@@ -1,6 +1,7 @@
 package DAO;
 
 import DAO.Util.Conexion;
+
 import DAO.Util.PreferenciaDTO;
 import Domain.Imagen;
 import Domain.Inmueble;
@@ -21,9 +22,15 @@ public class DAOBdInmueble implements InmuebleDAO{
 
         manager.getTransaction().begin();
         Localidad locAux = manager.merge(i.getLocalidad());
+
         i.setLocalidad(locAux);
 
         if(i.getId() != null) {
+            Direccion dirAux = manager.merge(i.getDireccion());
+            Preferencia prefAux = manager.merge(i.getCaracteristicasInmueble());
+            i.setDireccion(dirAux);
+            i.setCaracteristicasInmueble(prefAux);
+
             Inmueble aux = manager.merge(i);
             manager.persist(aux);
             id = aux.getId();
@@ -31,7 +38,6 @@ public class DAOBdInmueble implements InmuebleDAO{
             manager.persist(i);
             id = i.getId();
         }
-
         manager.getTransaction().commit();
         manager.close();
 
@@ -42,8 +48,9 @@ public class DAOBdInmueble implements InmuebleDAO{
     public Inmueble getById(int id) {
         EntityManager manager = Conexion.emf.createEntityManager();
         Inmueble i = manager.find(Inmueble.class, id);
-        //Por alguna razon se toma la imagen principal como parte de la lista de fotos entonces la elimino
-        i.getFotosInmueble().remove(0);
+        //No logro que las imagenes se muestren bien, por lo tanto solo muestro por el momento la imagen principal
+        i.getFotosInmueble().size();
+        i.getFotosInmueble().clear();
         manager.close();
         return i;
     }

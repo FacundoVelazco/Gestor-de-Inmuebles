@@ -109,6 +109,7 @@ public class PantallaMisInmuebles {
 
         siguienteButton.addActionListener(actionListenerBotonSiguiente);
 
+
         anteriorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -191,7 +192,6 @@ public class PantallaMisInmuebles {
         buttonEliminarProp1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
                 InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5);
                 idto.setEstado("BAJA");
                 gestorInmuebles.guardarInmueble(idto);
