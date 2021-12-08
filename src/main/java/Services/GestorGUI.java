@@ -132,6 +132,11 @@ public class GestorGUI {
         JOptionPane.showMessageDialog(framePrincipal,mensaje,titulo, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static Boolean popUpConfirmacion(String titulo, String mensaje){
+        Integer confirmacion = JOptionPane.showConfirmDialog(framePrincipal,mensaje,titulo,JOptionPane.YES_NO_OPTION);
+        return confirmacion==JOptionPane.YES_OPTION;
+    }
+
     public static void exit(){
         framePrincipal.dispatchEvent(new WindowEvent(framePrincipal, WindowEvent.WINDOW_CLOSING));
     }

@@ -1,9 +1,7 @@
 package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
-import DAO.Util.LocalidadDTO;
 import DAO.Util.PreferenciaDTO;
-import Domain.Util.TipoInmueble;
 import GUI.Util.Pantalla;
 import Services.GestorGUI;
 import Services.GestorInmuebles;
@@ -12,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PantallaMisInmuebles {
@@ -170,8 +167,24 @@ public class PantallaMisInmuebles {
         inmueblesActuales.clear();
         inmueblesActuales.addAll(gestorInmuebles.filtrarInmuebles(preferencias));
 
-
+        actualizarTablitaInmuebles(inmueblesActuales);
+        actualizarBotones();
+        ocultarBotonesModificarEliminar();
     }
+
+    private void ocultarBotonesModificarEliminar(){
+        buttonEliminarProp1.setVisible(false);
+        buttonEliminarProp2.setVisible(false);
+        buttonEliminarProp3.setVisible(false);
+        buttonEliminarProp4.setVisible(false);
+        buttonEliminarProp5.setVisible(false);
+        buttonModificarProp1.setVisible(false);
+        buttonModificarProp2.setVisible(false);
+        buttonModificarProp3.setVisible(false);
+        buttonModificarProp4.setVisible(false);
+        buttonModificarProp5.setVisible(false);
+    }
+
     private void cargarLogicaBotonesEliminar() {
 
 

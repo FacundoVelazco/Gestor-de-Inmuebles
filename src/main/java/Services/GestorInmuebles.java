@@ -16,6 +16,7 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GestorInmuebles {
 
@@ -113,6 +114,8 @@ public class GestorInmuebles {
             listaInmueblesDominio = aplicarFiltros(filtro, listaInmueblesDominio);
         }
 
+
+
         for (Inmueble i : listaInmueblesDominio) {
             InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
@@ -125,15 +128,31 @@ public class GestorInmuebles {
         ArrayList<Inmueble> listaAux = new ArrayList<>();
         listaAux.addAll(listaInmuebles);
 
+//        System.out.println(filtro.getLocalidad());
+//        System.out.println(filtro.getBarrio());
+//        System.out.println(filtro.getTipoInmueble());
+//        System.out.println(filtro.getMontoDisponible());
+//        System.out.println(filtro.getCantidadDormitorios());
+
+
+
         //Filtrar por localidad, barrio, tipo, precio, dormitorios
         for(Inmueble i: listaInmuebles){
-            if(filtro.getLocalidad() != null){
-                if(!i.getLocalidad().getNombre().equals(filtro.getLocalidad())){
+            if(filtro.getLocalidad() != null) {
+                if (!i.getLocalidad().getNombre().equals(filtro.getLocalidad())) {
                     listaAux.remove(i);
                 }
             }
-            if(filtro.getBarrio() != null){
-                if(!i.getDireccion().getBarrio().toLowerCase().contains(filtro.getLocalidad().toLowerCase())){
+
+
+            //Si el barrio no es ""
+            if(!filtro.getBarrio().isEmpty()){
+                // Primero chequeamos que el barrio no sea nulo
+                if(i.getDireccion().getBarrio() == null){
+                    listaAux.remove(i);
+                }
+                //Si no es nulo comparamos que existan coincidencias en los nombres de barrio
+                else if(!i.getDireccion().getBarrio().toLowerCase().contains(filtro.getBarrio().toLowerCase())){
                     listaAux.remove(i);
                 }
             }

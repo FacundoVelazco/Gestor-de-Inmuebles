@@ -98,7 +98,7 @@ public class PantallaCrearCliente {
 
         //Inicializado del combo box
         for(TipoInmueble tipo : TipoInmueble.values()){
-            comboBoxTipo.addItem(tipo);
+            comboBoxTipo.addItem(TipoInmueble.obtenerStringParaComboBox(tipo));
         }
 
         //init de combo box localidades
