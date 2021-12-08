@@ -18,20 +18,20 @@ public class Direccion {
     private Double latitud;
     @Column(name = "longitud")
     private Double longitud;
-
     @Column(name = "barrio")
     private String barrio;
     @Column(name = "piso")
     private String piso;  //TODO tal vez usar optional
     @Column(name = "departamento")
     private String departamento;
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "direccion",fetch = FetchType.EAGER)
+    private Inmueble inmueble;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inmueble")
-    private Inmueble inmuebleAsociado;
+    public Direccion() {}
 
-
-
+    public Direccion(String barrio) {
+        this.barrio = barrio;
+    }
 
     public String getCalle() {
         return calle;
@@ -95,11 +95,11 @@ public class Direccion {
         this.departamento = departamento;
     }
 
-    public Inmueble getInmuebleAsociado() {
-        return inmuebleAsociado;
+    public Inmueble getInmueble() {
+        return inmueble;
     }
 
-    public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
-        this.inmuebleAsociado = inmuebleAsociado;
+    public void setInmueble(Inmueble inmueble) {
+        this.inmueble = inmueble;
     }
 }

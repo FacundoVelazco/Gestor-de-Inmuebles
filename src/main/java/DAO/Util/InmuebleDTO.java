@@ -1,5 +1,7 @@
 package DAO.Util;
 
+import Domain.Inmueble;
+
 import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -46,6 +48,10 @@ public class InmuebleDTO {
     private List<String> nombresArchivosFotos;
     private String observaciones;
     private Long propietarioInmuebleID;
+
+    public InmuebleDTO(){
+
+    }
 
     public Integer getId() {
         return id;

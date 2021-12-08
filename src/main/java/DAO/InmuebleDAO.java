@@ -1,10 +1,13 @@
 package DAO;
 
+import DAO.Util.PreferenciaDTO;
 import Domain.Inmueble;
 
 import java.util.List;
 
 public interface InmuebleDAO {
+
+
 
     public Integer save (Inmueble i);
 
@@ -13,4 +16,9 @@ public interface InmuebleDAO {
     public List<Inmueble> listAllByPropietario(int idPropietario);
 
     public List<Inmueble> listAllByPropietario(int idPropietario, int inicio, int fin);
+
+    public List<Inmueble> listAll();
+
+    public List<Inmueble> listAll(int inicio, int fin);
+
 }

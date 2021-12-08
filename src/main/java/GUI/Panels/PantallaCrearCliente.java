@@ -98,7 +98,7 @@ public class PantallaCrearCliente {
 
         //Inicializado del combo box
         for(TipoInmueble tipo : TipoInmueble.values()){
-            comboBoxTipo.addItem(tipo);
+            comboBoxTipo.addItem(TipoInmueble.obtenerStringParaComboBox(tipo));
         }
 
         //init de combo box localidades
@@ -178,7 +178,6 @@ public class PantallaCrearCliente {
                     clienteDTO.setPreferencias(preferenciaDTO);
                     gestorClientes.guardarCliente(clienteDTO);
 
-                    System.out.println("Ejecutado boton modificar"); //TODO sysout debug
 
                     GestorGUI.pop();
                 }
@@ -189,7 +188,7 @@ public class PantallaCrearCliente {
 
     private PreferenciaDTO collectDataPreferencias() {
     PreferenciaDTO preferencias = new PreferenciaDTO();
-    preferencias.setTipoInmueble((TipoInmueble) comboBoxTipo.getSelectedItem());
+    preferencias.setTipoInmueble(comboBoxTipo.getSelectedItem().toString());
     preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
 
     //nos fijamos que ingresen numeros

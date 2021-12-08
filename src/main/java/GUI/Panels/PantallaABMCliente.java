@@ -29,6 +29,7 @@ public class PantallaABMCliente {
     private JPanel panelTitulo;
     private JPanel panelControles;
     private JButton buttonLimpiar;
+    private JButton volverButton;
 
     private DefaultTableModel dataModel = new DefaultTableModel(COLUMNS,0);
     private static final String[] COLUMNS = {"Nombre de usuario","Nombre", "Apellido"};
@@ -93,9 +94,6 @@ public class PantallaABMCliente {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaClientes.getSelectedRow()>-1 && e.getValueIsAdjusting()){
-                    //TODO debug sysout
-                    System.out.println("Cliente seleccionado: " +
-                            dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0));
                     botonesActivados(true);
                 }
             }
@@ -103,13 +101,11 @@ public class PantallaABMCliente {
         botonEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO hacer dialogo de confirmacion generico
-                Integer confirmacion = JOptionPane.showConfirmDialog(new JFrame(),"¿Está seguro que desea eliminar el cliente?","Eliminar cliente",JOptionPane.YES_NO_OPTION);
-                if(confirmacion==JOptionPane.YES_OPTION){
+                if(GestorGUI.popUpConfirmacion("Eliminar cliente","¿Está seguro que desea eliminar el cliente?")){
                     String username = dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString();
                     gestorClientes.borrarClienteByUsername(username);
                     botonesActivados(false);
-                    GestorGUI.refreshCurrent(); //TODO esto es lo correcto? intenta hacer un pop de la pantalla actual cuando ya se encuentra en el tope
+                    GestorGUI.refreshCurrent();
                 }
             }
         });
@@ -119,6 +115,12 @@ public class PantallaABMCliente {
                 ClienteDTO cliente = gestorClientes.getClienteByUsername(
                         dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0).toString());
                 GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,cliente);
+            }
+        });
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.pop();
             }
         });
     }

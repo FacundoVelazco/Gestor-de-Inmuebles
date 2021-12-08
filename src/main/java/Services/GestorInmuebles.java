@@ -1,21 +1,22 @@
 package Services;
 
-import DAO.DAOBdInmueble;
-import DAO.DAOBdLocalidad;
-import DAO.DAOBdPropietario;
+import DAO.*;
 import DAO.Util.InmuebleDTO;
+import DAO.Util.LocalidadDTO;
+import DAO.Util.PreferenciaDTO;
+import Domain.Direccion;
+import Domain.Inmueble;
+import Domain.Localidad;
+import Domain.Util.TipoInmueble;
 import Domain.*;
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
-import Domain.Util.TipoInmueble;
-
 import javax.swing.*;
-import java.time.LocalDate;
-
 import java.awt.*;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GestorInmuebles {
 
@@ -54,7 +55,7 @@ public class GestorInmuebles {
 
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         Inmueble inmueble = daoInmueble.getById(id);
-        InmuebleDTO idto = generarDTODesdeInmueble(inmueble,false);
+        InmuebleDTO idto = generarDTODesdeInmueble(inmueble);
 
         return idto;
     }
@@ -67,7 +68,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i,true);
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
         }
 
@@ -81,13 +82,101 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario, inicio, fin));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i,true);
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
             listaInmueblesDTO.add(idto);
         }
 
         return listaInmueblesDTO;
     }
 
+    public List<InmuebleDTO> listarInmuebles(Integer inicio, Integer fin) {
+        ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
+        listaInmueblesDominio.addAll(daoInmueble.listAll(inicio, fin));
+
+        for (Inmueble i : listaInmueblesDominio) {
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            listaInmueblesDTO.add(idto);
+        }
+
+        return listaInmueblesDTO;
+    }
+
+    public List<InmuebleDTO> filtrarInmuebles(PreferenciaDTO filtro) {
+
+        ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
+        listaInmueblesDominio.addAll(daoInmueble.listAll());
+
+        if(filtro!=null){
+            listaInmueblesDominio = aplicarFiltros(filtro, listaInmueblesDominio);
+        }
+
+
+
+        for (Inmueble i : listaInmueblesDominio) {
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            listaInmueblesDTO.add(idto);
+        }
+        return listaInmueblesDTO;
+    }
+
+    private ArrayList<Inmueble> aplicarFiltros(PreferenciaDTO filtro, ArrayList<Inmueble> listaInmuebles){
+
+        ArrayList<Inmueble> listaAux = new ArrayList<>();
+        listaAux.addAll(listaInmuebles);
+
+//        System.out.println(filtro.getLocalidad());
+//        System.out.println(filtro.getBarrio());
+//        System.out.println(filtro.getTipoInmueble());
+//        System.out.println(filtro.getMontoDisponible());
+//        System.out.println(filtro.getCantidadDormitorios());
+
+
+
+        //Filtrar por localidad, barrio, tipo, precio, dormitorios
+        for(Inmueble i: listaInmuebles){
+            if(filtro.getLocalidad() != null) {
+                if (!i.getLocalidad().getNombre().equals(filtro.getLocalidad())) {
+                    listaAux.remove(i);
+                }
+            }
+
+
+            //Si el barrio no es ""
+            if(!filtro.getBarrio().isEmpty()){
+                // Primero chequeamos que el barrio no sea nulo
+                if(i.getDireccion().getBarrio() == null){
+                    listaAux.remove(i);
+                }
+                //Si no es nulo comparamos que existan coincidencias en los nombres de barrio
+                else if(!i.getDireccion().getBarrio().toLowerCase().contains(filtro.getBarrio().toLowerCase())){
+                    listaAux.remove(i);
+                }
+            }
+            if(filtro.getTipoInmueble() != null){
+                if(!i.getCaracteristicasInmueble().getTipoInmueble().equals(TipoInmueble.obtenerByString(filtro.getTipoInmueble()))){
+                    listaAux.remove(i);
+                }
+            }
+            if(filtro.getMontoDisponible() != null){
+                if(!(i.getPrecio()<=filtro.getMontoDisponible())){
+                    listaAux.remove(i);
+                }
+            }
+            if(filtro.getCantidadDormitorios() != null){
+                if(!(i.getCaracteristicasInmueble().getCantidadDormitorios()>=filtro.getCantidadDormitorios())){
+                    listaAux.remove(i);
+                }
+            }
+
+        }
+
+
+        return listaAux;
+    }
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
         Inmueble inmueble = new Inmueble();
@@ -127,7 +216,7 @@ public class GestorInmuebles {
         direccion.setPiso(iDTO.getPiso());
         direccion.setDepartamento(iDTO.getDepartamento());
         direccion.setBarrio(iDTO.getBarrio());
-        direccion.setInmuebleAsociado(inmueble);
+        direccion.setInmueble(inmueble);
 
         inmueble.setDireccion(direccion);
 
@@ -179,8 +268,7 @@ public class GestorInmuebles {
         return inmueble;
     }
 
-
-    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble, Boolean esLista) {
+    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble) {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
         idto.setEstado(inmueble.getEstado().toString());
@@ -230,12 +318,6 @@ public class GestorInmuebles {
         ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
         ArrayList<String> listaNombreArchivos = new ArrayList<>();
 
-        if(!esLista) {
-            for (Imagen i : inmueble.getFotosInmueble()) {
-                listaImagenes.add(i.getImagen());
-                listaNombreArchivos.add(i.getNombreArchivo());
-            }
-        }
         idto.setFotosInmueble(listaImagenes);
         idto.setNombresArchivosFotos(listaNombreArchivos);
 

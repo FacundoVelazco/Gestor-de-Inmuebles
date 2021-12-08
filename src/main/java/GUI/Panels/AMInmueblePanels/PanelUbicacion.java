@@ -205,7 +205,7 @@ public class PanelUbicacion {
 
 
 
-    private static final String[] LOCALIDADES = {"Aarón Castellanos(Est. Castellanos)",
+    private static final String[] LOCALIDADES = {
             "Acebal",
             "Aguará Grande",
             "Albarellos",

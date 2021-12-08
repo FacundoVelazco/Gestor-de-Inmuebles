@@ -9,12 +9,6 @@ public enum TipoInmueble {
     QUINTA,
     GALPON;
 
-    @Override
-    public String toString(){
-        return name().substring(0,1) + name().substring(1).toLowerCase().replaceAll("_"," ") ;
-    }
-
-
     //Para obtener el tipo segun la opcion seleccionada por el usuario
     public static TipoInmueble obtenerByString(String s){
         switch (s){
