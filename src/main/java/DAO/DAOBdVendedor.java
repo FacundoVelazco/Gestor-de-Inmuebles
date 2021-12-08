@@ -22,8 +22,6 @@ public class DAOBdVendedor implements VendedorDAO{
     @Override
     public void save(Vendedor v) {
         EntityManager manager = Conexion.emf.createEntityManager();
-
-
         manager.getTransaction().begin();
         manager.persist(v);
         manager.getTransaction().commit();

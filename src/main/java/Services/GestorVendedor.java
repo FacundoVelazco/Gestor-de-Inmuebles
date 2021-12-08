@@ -1,7 +1,9 @@
 package Services;
 
+import DAO.DAOBdCliente;
 import DAO.DAOBdPropietario;
 import DAO.DAOBdVendedor;
+import DAO.Util.ClienteDTO;
 import DAO.Util.PropietarioDTO;
 import DAO.Util.VendedorDTO;
 import Domain.*;
@@ -14,7 +16,7 @@ public class GestorVendedor {
     public GestorVendedor(){
     }
 
-    public Integer guardarVendedor(VendedorDTO vDTO){
+    public void guardarVendedor(VendedorDTO vDTO){
 
         DAOBdVendedor vDao = new DAOBdVendedor();
 
@@ -46,22 +48,31 @@ public class GestorVendedor {
         v.setDireccion(direccion);
 
 
-        return vDao.save(v);
+        vDao.update(v);
     }
 
-    public Integer borrarVendedor(VendedorDTO vDTO){
+    public void borrarVendedorByUsername(String username){
         DAOBdVendedor vDao = new DAOBdVendedor();
-        return vDao.delete(vDTO.getId());
+        vDao.deleteByUsername(username);
     }
 
     public Integer cargarVendedor(VendedorDTO vDTO){
         return null;
     }
 
-    public Integer listarVendedores(){
+    public List<VendedorDTO> listarVendedores(){
         DAOBdVendedor vDao = new DAOBdVendedor();
-        //   vDao.listAll();
-        return null;
+        ArrayList<VendedorDTO> listaDto=new ArrayList<>();
+        for(Vendedor v : vDao.listAll()){
+            VendedorDTO vDTO = new VendedorDTO();
+            vDTO.setId(v.getId());
+            vDTO.setUsername(v.getUsername());
+            vDTO.setNombre(v.getNombre());
+            vDTO.setApellido(v.getApellido());
+            listaDto.add(vDTO);
+        }
+
+        return listaDto;
     }
 
 

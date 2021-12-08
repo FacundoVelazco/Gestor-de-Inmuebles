@@ -16,8 +16,8 @@ public interface InmuebleDAO {
 
     public Inmueble getById(int id);
 
-    public List<Inmueble> listAllByPropietario(int idPropietario);
+    public List<Inmueble> listAllByPropietario(Long idPropietario);
 
-    public List<Inmueble> listAllByPropietario(int idPropietario, int inicio, int fin);
+    public List<Inmueble> listAllByPropietario(Long idPropietario, int inicio, int fin);
 
 }

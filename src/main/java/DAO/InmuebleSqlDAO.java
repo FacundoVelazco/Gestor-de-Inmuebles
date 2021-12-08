@@ -61,12 +61,12 @@ public class InmuebleSqlDAO implements InmuebleDAO{
     }
 
     @Override
-    public List<Inmueble> listAllByPropietario(int idPropietario) {
+    public List<Inmueble> listAllByPropietario(Long idPropietario) {
         return null;
     }
 
     @Override
-    public List<Inmueble> listAllByPropietario(int idPropietario, int inicio, int fin) {
+    public List<Inmueble> listAllByPropietario(Long idPropietario, int inicio, int fin) {
         return null;
     }
 }

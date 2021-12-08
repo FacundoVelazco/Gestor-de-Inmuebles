@@ -9,7 +9,7 @@ import java.util.List;
 
 public class VendedorDTO {
 
-    private Integer id;
+    private Long id;
     private Integer dni;
     private Integer nroLegajo;
     private List<PropietarioDTO> propietarios;
@@ -145,7 +145,11 @@ public class VendedorDTO {
         this.idDireccion = idDireccion;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -14,7 +14,7 @@ public class Vendedor extends Persona{
     @Id
     @Column(name = "id_vendedor")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(name = "dni")
     private Integer dni;
     @Enumerated(EnumType.STRING)
@@ -38,13 +38,12 @@ public class Vendedor extends Persona{
     public Vendedor(){
     }
 
-    @Override
-    public Integer getId() {
+
+    public Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

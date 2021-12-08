@@ -1,18 +1,18 @@
 package DAO.Util;
 
-<<<<<<< HEAD
+
 import Domain.Util.TipoDNI;
 
 import java.util.List;
 
 public class PropietarioDTO {
 
-    private Integer Id;
+    private Long Id;
     private TipoDNI tipoDocumento;
     private String Dni;
     private String direccion;
     private List<InmuebleDTO> inmuebles;
-    //private VendedorDTO vendedor;
+    private VendedorDTO vendedor;
     private String localidad;
     private String provincia;
     private String email;
@@ -27,7 +27,13 @@ public class PropietarioDTO {
     private Integer numeroDeCalle;
     private String barrio;
 
+
+
     public PropietarioDTO(){
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public TipoDNI getTipoDocumento() {
@@ -172,10 +178,16 @@ public class PropietarioDTO {
         this.idDireccion = idDireccion;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return Id;
     }
-=======
-public class PropietarioDTO {
->>>>>>> 2de552d8c14144958004b593e0747775e856607f
+
+    public VendedorDTO getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(VendedorDTO vendedor) {
+        this.vendedor = vendedor;
+    }
+
 }

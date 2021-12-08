@@ -58,7 +58,7 @@ public class GestorInmuebles {
     }
 
 
-    public List<InmuebleDTO> listarInmueblesPorPropietario(Integer idPropietario) {
+    public List<InmuebleDTO> listarInmueblesPorPropietario(Long idPropietario) {
         ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
@@ -72,7 +72,7 @@ public class GestorInmuebles {
         return listaInmueblesDTO;
     }
 
-    public List<InmuebleDTO> listarInmueblesPorPropietario(Integer idPropietario, Integer inicio, Integer fin) {
+    public List<InmuebleDTO> listarInmueblesPorPropietario(Long idPropietario, Integer inicio, Integer fin) {
         ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();

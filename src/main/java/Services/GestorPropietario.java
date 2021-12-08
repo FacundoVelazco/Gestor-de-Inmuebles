@@ -1,7 +1,9 @@
 package Services;
 
+import DAO.DAOBdCliente;
 import DAO.DAOBdInmueble;
 import DAO.DAOBdPropietario;
+import DAO.Util.ClienteDTO;
 import DAO.Util.PropietarioDTO;
 import Domain.*;
 
@@ -13,7 +15,7 @@ public class GestorPropietario {
     public GestorPropietario(){
     }
 
-    public Integer guardarPropietario(PropietarioDTO pDTO){
+    public void guardarPropietario(PropietarioDTO pDTO){
 
         DAOBdPropietario pDao = new DAOBdPropietario();
         DAOBdInmueble iDao = new DAOBdInmueble();
@@ -27,7 +29,7 @@ public class GestorPropietario {
         p.setUsername(pDTO.getUsername());
         p.setPassword(pDTO.getPassword());
 
-        List<Inmueble> inmuebles = new ArrayList<Inmueble>(); // iDao.listAllByPropietario(pDTO.get) -> necesitamos un metodo en el DAO de Inmueble para traer todos los inmuebles asociados al Id del Propietario
+        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
         p.setInmuebles(inmuebles);
 
         Localidad localidad = new Localidad();
@@ -48,28 +50,32 @@ public class GestorPropietario {
 
 
        // -> deberiamos colocar los atributos de c/Clase en el DTO de propietario
-
-        return pDao.save(p);
+       pDao.update(p);
     }
 
-    public Integer borrarPropietario(PropietarioDTO pDTO){
-
+    public void borrarPropietarioByUsername(String username){
         DAOBdPropietario pDao = new DAOBdPropietario();
-        return pDao.delete(pDTO.getId());
+        pDao.deleteByUsername(username);
     }
 
-    public Integer cargarPropietario(PropietarioDTO pDTO){
+    public Propietario cargarPropietario(PropietarioDTO pDTO){
         DAOBdPropietario pDao = new DAOBdPropietario();
-        //return pDao.getById(pDTO.getId());  -> seria de esta forma como hay que realizar el cargar propietario?
-
-        return null;
+        return pDao.getByUsername(pDTO.getUsername()); // -> seria de esta forma como hay que realizar el cargar propietario?
     }
 
-    public Integer listarPropietarios(){
+    public List<PropietarioDTO> listarPropietarios(){
         DAOBdPropietario pDao = new DAOBdPropietario();
-        //return pDao.listAll();  -> seria de esta forma como hay que realizar listarPropietarios?
+        ArrayList<PropietarioDTO> listaDto=new ArrayList<>();
+        for(Propietario p : pDao.listAll()){
+            PropietarioDTO pDTO = new PropietarioDTO();
+            pDTO.setId(p.getId());
+            pDTO.setUsername(p.getUsername());
+            pDTO.setNombre(p.getNombre());
+            pDTO.setApellido(p.getApellido());
+            listaDto.add(pDTO);
+        }
 
-        return null;
+        return listaDto;
     }
 
 }
