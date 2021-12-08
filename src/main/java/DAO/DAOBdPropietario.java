@@ -1,10 +1,12 @@
 package DAO;
 
 import DAO.Util.Conexion;
+import Domain.Cliente;
 import Domain.Propietario;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 public class DAOBdPropietario implements PropietarioDAO{
@@ -12,23 +14,56 @@ public class DAOBdPropietario implements PropietarioDAO{
     @Override
     public List<Propietario> listAll() {
         EntityManager manager = Conexion.emf.createEntityManager();
-        return null;
+        List<Propietario> lista = (List<Propietario>) manager.createQuery("From Propietario").getResultList();
+        manager.close();
+        return lista;
     }
 
     @Override
-    public Integer save(Propietario p) {
-        return null;
+    public void save(Propietario p) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+
+
+        manager.getTransaction().begin();
+        manager.persist(p);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     @Override
+    public void update(Propietario p) {
+        EntityManager manager = Conexion.emf.createEntityManager();
 
-    public Integer delete(Integer idPropietario) {
-
-        return idPropietario;
+        String username = p.getUsername();
+        manager.getTransaction().begin();
+        Query query = manager.createQuery("from Propietario c where c.username = :username");
+        query.setParameter("username",username);
+        if(!query.getResultList().isEmpty()){
+            Query query2 = manager.createQuery("delete from Propietario c where c.username = :username");
+            query2.setParameter("username",username).executeUpdate();
+        }
+        manager.persist(p);
+        manager.getTransaction().commit();
+        manager.close();;
     }
 
     @Override
-    public Propietario getById(int id) {
-        return null;
+    public void deleteByUsername(String username) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        manager.getTransaction().begin();
+        Query query = manager.createQuery("delete from Propietario c where c.username = :username");
+        query.setParameter("username",username).executeUpdate();
+
+        manager.getTransaction().commit();
+        manager.close();
+    }
+
+    @Override
+    public Propietario getByUsername(String username) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        Query query = manager.createQuery("from Propietario c where c.username = :username");
+        Propietario propietario = (Propietario) query.setParameter("username",username).getSingleResult();
+        manager.close();
+        return propietario;
     }
 }
