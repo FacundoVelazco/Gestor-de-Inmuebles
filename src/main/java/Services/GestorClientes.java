@@ -5,6 +5,7 @@ import DAO.Util.ClienteDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.Cliente;
 import Domain.Preferencia;
+import Domain.Util.TipoInmueble;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class GestorClientes {
         preferenciaClienteAGuardar.setTieneLavadero(cliente.getPreferencias().getTieneLavadero());
         preferenciaClienteAGuardar.setTienePavimento(cliente.getPreferencias().getTienePavimento());
         preferenciaClienteAGuardar.setMontoDisponible(cliente.getPreferencias().getMontoDisponible());
-        preferenciaClienteAGuardar.setTipoInmueble(cliente.getPreferencias().getTipoInmueble());
+        preferenciaClienteAGuardar.setTipoInmueble(TipoInmueble.obtenerByString(cliente.getPreferencias().getTipoInmueble()));
         preferenciaClienteAGuardar.setBarrio(cliente.getPreferencias().getBarrio());
         preferenciaClienteAGuardar.setLocalidad(cliente.getPreferencias().getLocalidad());
 
@@ -70,7 +71,7 @@ public class GestorClientes {
         preferenciaDTO.setTieneTelefono(cliente.getPreferencia().getTieneTelefono());
         preferenciaDTO.setTieneLavadero(cliente.getPreferencia().getTieneLavadero());
         preferenciaDTO.setTienePavimento(cliente.getPreferencia().getTienePavimento());
-        preferenciaDTO.setTipoInmueble(cliente.getPreferencia().getTipoInmueble());
+        preferenciaDTO.setTipoInmueble(TipoInmueble.obtenerStringParaComboBox(cliente.getPreferencia().getTipoInmueble()));
         preferenciaDTO.setBarrio(cliente.getPreferencia().getBarrio());
         preferenciaDTO.setMontoDisponible(cliente.getPreferencia().getMontoDisponible());
         preferenciaDTO.setLocalidad(cliente.getPreferencia().getLocalidad());

@@ -49,7 +49,7 @@ public class Inmueble {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_persona")
     private Propietario propietarioInmueble;
 

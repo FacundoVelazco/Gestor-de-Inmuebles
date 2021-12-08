@@ -2,6 +2,7 @@ package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
 import DAO.Util.LocalidadDTO;
+import DAO.Util.PreferenciaDTO;
 import Domain.Util.TipoInmueble;
 import GUI.AutoCompletion;
 import Services.GestorInmuebles;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
 import java.util.List;
 
 public class PantallaCInmueble {
@@ -31,20 +33,22 @@ public class PantallaCInmueble {
     private JLabel tipoLabel;
     private JComboBox tipoCombo;
     private JTextField dormitoriosTextField;
-    private JTextField PrecioMaxTextField;
+    private JTextField precioMaxTextField;
     private JLabel dormitoriosLabel;
     private JLabel precioMaxLabel;
     private JButton buscarButton;
     private JPanel panelInmuebles;
+    private JPanel panelBuscar;
+    private JButton buttonLimpiar;
+    private JLabel labelError;
     private PantallaMisInmuebles pantallaMisInmuebles;
+    private static final String[] TIPOS_INMUEBLE = {"Local-Oficina", "Casa", "Departamento", "Terreno", "Quinta", "Galpón"};
 
     public PantallaCInmueble() {
 
-        pantallaMisInmuebles = new PantallaMisInmuebles();
-        pantallaMisInmuebles.getTituloLabel().setVisible(false);
-        pantallaMisInmuebles.getCrearInmuebleButton().setVisible(false);
-        panelInmuebles.add(pantallaMisInmuebles.getPanelPrincipal());
+        pantallaMisInmuebles = new PantallaMisInmuebles(null);
 
+        panelInmuebles.add(pantallaMisInmuebles.getPanelPrincipal());
 
         AutoCompletion.enable(provinciaCombo);
         AutoCompletion.enable(localidadCombo);
@@ -52,17 +56,60 @@ public class PantallaCInmueble {
 
         provinciaCombo.addItemListener(new ItemListenerProvincia());
 
-        provinciaCombo.addItem("SANTA FE");
+        provinciaCombo.addItem("Santa Fe");
 
-        tipoCombo.addItem(TipoInmueble.LOCAL_OFICINA);tipoCombo.addItem(TipoInmueble.CASA);
-        tipoCombo.addItem(TipoInmueble.DEPARTAMENTO);tipoCombo.addItem(TipoInmueble.GALPON);
-        tipoCombo.addItem(TipoInmueble.QUINTA);tipoCombo.addItem(TipoInmueble.TERRENO);
+        for (String s: TIPOS_INMUEBLE){
+            tipoCombo.addItem(s);
+        }
 
         buscarButton.addActionListener(new ActionListenerBotonAceptar());
+
+        buttonLimpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provinciaCombo.setSelectedIndex(0);
+                localidadCombo.setSelectedIndex(0);
+                dormitoriosTextField.setText("");
+                barrioTextField.setText("");
+                tipoCombo.setSelectedIndex(0);
+                precioMaxTextField.setText("");
+                validarCampos();
+            }
+        });
     }
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
+    }
+
+    private Boolean validarCampos(){
+
+        if(!dormitoriosTextField.getText().isEmpty()){
+            try {
+                Integer.parseInt(dormitoriosTextField.getText());
+            }catch (NumberFormatException nfe){
+                labelError.setText("La cantidad de dormitorios es inválida");
+                labelError.setVisible(true);
+                return false;
+            }
+        }
+        if(!precioMaxTextField.getText().isEmpty()){
+            try {
+                Float.parseFloat(precioMaxTextField.getText());
+            }catch (NumberFormatException nfe){
+                labelError.setText("El precio es inválido");
+                labelError.setVisible(true);
+                return false;
+            }
+        }
+        if(localidadCombo.getSelectedItem()==null){
+            labelError.setText("Seleccione una localidad");
+            labelError.setVisible(true);
+            return false;
+        }
+        labelError.setVisible(false);
+        return true;
+
     }
 
     private class ItemListenerProvincia implements ItemListener{
@@ -72,7 +119,6 @@ public class PantallaCInmueble {
                 localidadCombo.removeAllItems();
                 GestorLocalidades gestorLocalidades = new GestorLocalidades();
                 List<LocalidadDTO> localidadesDTO = gestorLocalidades.listarLocalidadesDTO();
-                localidadCombo.addItem(null);
                 for(LocalidadDTO localidadDTO: localidadesDTO){localidadCombo.addItem(localidadDTO);}
                 getPanelPrincipal().revalidate();
             }
@@ -81,10 +127,39 @@ public class PantallaCInmueble {
     private class ActionListenerBotonAceptar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GestorInmuebles gestorInmuebles = new GestorInmuebles();
-            List<InmuebleDTO> inmueblesDTO = gestorInmuebles.buscarInmueble((LocalidadDTO) localidadCombo.getSelectedItem(), barrioTextField.getText() ,(TipoInmueble) tipoCombo.getSelectedItem(),dormitoriosTextField.getText(),PrecioMaxTextField.getText());
 
-            //TODO cargar la info a la tabla
+
+            //TODO agregar validaciones
+            if(validarCampos()){
+
+                PreferenciaDTO preferencias = new PreferenciaDTO();
+
+                preferencias.setLocalidad(localidadCombo.getSelectedItem().toString());
+                if(!dormitoriosTextField.getText().isEmpty()){
+                    preferencias.setCantidadDormitorios(Integer.parseInt(dormitoriosTextField.getText()));
+                }else{
+                    preferencias.setCantidadDormitorios(null);
+                }
+                if(!precioMaxTextField.getText().isEmpty()){
+                    preferencias.setMontoDisponible(Float.parseFloat(precioMaxTextField.getText()));
+                }else {
+                    preferencias.setMontoDisponible(null); //*comprar*
+                }
+                preferencias.setBarrio(barrioTextField.getText()); //Se le puede pasar un string vacio (y no debería filtrar por barrio)
+                preferencias.setTipoInmueble(tipoCombo.getSelectedItem().toString());
+
+                //Se quita el panel con inmuebles
+                panelInmuebles.remove(0);
+                panelInmuebles.repaint();
+                panelInmuebles.revalidate();
+
+                //Se pone un nuevo panel con inmuebles que coincidan con los filtros
+                panelInmuebles.add(new PantallaMisInmuebles(preferencias).getPanelPrincipal());
+                panelInmuebles.repaint();
+                panelInmuebles.revalidate();
+
+            }
+
         }
     }
 }

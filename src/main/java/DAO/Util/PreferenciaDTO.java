@@ -6,11 +6,11 @@ import Domain.Util.TipoInmueble;
 import javax.persistence.Column;
 
 public class PreferenciaDTO {
-    public TipoInmueble getTipoInmueble() {
+    public String getTipoInmueble() {
         return tipoInmueble;
     }
 
-    public void setTipoInmueble(TipoInmueble tipoInmueble) {
+    public void setTipoInmueble(String tipoInmueble) {
         this.tipoInmueble = tipoInmueble;
     }
 
@@ -22,11 +22,11 @@ public class PreferenciaDTO {
         this.montoDisponible = montoDisponible;
     }
 
-    public Orientacion getOrientacion() {
+    public String getOrientacion() {
         return orientacion;
     }
 
-    public void setOrientacion(Orientacion orientacion) {
+    public void setOrientacion(String orientacion) {
         this.orientacion = orientacion;
     }
 
@@ -184,9 +184,9 @@ public class PreferenciaDTO {
 
     private String localidad;
     private String barrio;
-    private TipoInmueble tipoInmueble;
+    private String tipoInmueble;
     private Float montoDisponible;
-    private Orientacion orientacion;
+    private String orientacion;
     private Double longitudFrente;
     private Double longitudFondo;
     private Double tamanioInmueble;
@@ -204,4 +204,5 @@ public class PreferenciaDTO {
     private Boolean tieneTelefono;
     private Boolean tieneLavadero;
     private Boolean tienePavimento;
+
 }

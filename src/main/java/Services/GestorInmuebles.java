@@ -3,6 +3,7 @@ package Services;
 import DAO.*;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.LocalidadDTO;
+import DAO.Util.PreferenciaDTO;
 import Domain.Direccion;
 import Domain.Inmueble;
 import Domain.Localidad;
@@ -12,8 +13,10 @@ import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GestorInmuebles {
 
@@ -84,6 +87,95 @@ public class GestorInmuebles {
         }
 
         return listaInmueblesDTO;
+    }
+
+    public List<InmuebleDTO> listarInmuebles(Integer inicio, Integer fin) {
+        ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
+        listaInmueblesDominio.addAll(daoInmueble.listAll(inicio, fin));
+
+        for (Inmueble i : listaInmueblesDominio) {
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            listaInmueblesDTO.add(idto);
+        }
+
+        return listaInmueblesDTO;
+    }
+
+    public List<InmuebleDTO> filtrarInmuebles(PreferenciaDTO filtro) {
+
+        ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
+        DAOBdInmueble daoInmueble = new DAOBdInmueble();
+        ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
+        listaInmueblesDominio.addAll(daoInmueble.listAll());
+
+        if(filtro!=null){
+            listaInmueblesDominio = aplicarFiltros(filtro, listaInmueblesDominio);
+        }
+
+
+
+        for (Inmueble i : listaInmueblesDominio) {
+            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            listaInmueblesDTO.add(idto);
+        }
+        return listaInmueblesDTO;
+    }
+
+    private ArrayList<Inmueble> aplicarFiltros(PreferenciaDTO filtro, ArrayList<Inmueble> listaInmuebles){
+
+        ArrayList<Inmueble> listaAux = new ArrayList<>();
+        listaAux.addAll(listaInmuebles);
+
+//        System.out.println(filtro.getLocalidad());
+//        System.out.println(filtro.getBarrio());
+//        System.out.println(filtro.getTipoInmueble());
+//        System.out.println(filtro.getMontoDisponible());
+//        System.out.println(filtro.getCantidadDormitorios());
+
+
+
+        //Filtrar por localidad, barrio, tipo, precio, dormitorios
+        for(Inmueble i: listaInmuebles){
+            if(filtro.getLocalidad() != null) {
+                if (!i.getLocalidad().getNombre().equals(filtro.getLocalidad())) {
+                    listaAux.remove(i);
+                }
+            }
+
+
+            //Si el barrio no es ""
+            if(!filtro.getBarrio().isEmpty()){
+                // Primero chequeamos que el barrio no sea nulo
+                if(i.getDireccion().getBarrio() == null){
+                    listaAux.remove(i);
+                }
+                //Si no es nulo comparamos que existan coincidencias en los nombres de barrio
+                else if(!i.getDireccion().getBarrio().toLowerCase().contains(filtro.getBarrio().toLowerCase())){
+                    listaAux.remove(i);
+                }
+            }
+            if(filtro.getTipoInmueble() != null){
+                if(!i.getCaracteristicasInmueble().getTipoInmueble().equals(TipoInmueble.obtenerByString(filtro.getTipoInmueble()))){
+                    listaAux.remove(i);
+                }
+            }
+            if(filtro.getMontoDisponible() != null){
+                if(!(i.getPrecio()<=filtro.getMontoDisponible())){
+                    listaAux.remove(i);
+                }
+            }
+            if(filtro.getCantidadDormitorios() != null){
+                if(!(i.getCaracteristicasInmueble().getCantidadDormitorios()>=filtro.getCantidadDormitorios())){
+                    listaAux.remove(i);
+                }
+            }
+
+        }
+
+
+        return listaAux;
     }
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
@@ -176,55 +268,6 @@ public class GestorInmuebles {
         return inmueble;
     }
 
-    public List<InmuebleDTO> buscarInmueble(LocalidadDTO localidadDTO,String barrio, TipoInmueble tipo, String dormitorios, String precioMax) {
-        LocalidadDAO localidadDAO = new LocalidadSqlDAO();
-        DireccionDAO direccionDAO = new DireccionSqlDAO();
-        List<Direccion> direcciones = direccionDAO.list();
-        List<InmuebleDTO> inmueblesDTO = new ArrayList();
-
-        if(!barrio.isEmpty()){
-            for (Direccion direccion: direcciones){
-                if(direccion.getBarrio().contains(barrio)){
-                    inmueblesDTO.add(generarDTODesdeInmueble(direccion.getInmueble()));
-                }
-            }
-        }else{
-            for (Direccion direccion: direcciones){
-                inmueblesDTO.add(generarDTODesdeInmueble(direccion.getInmueble()));
-            }
-        }
-
-        if(localidadDTO != null){
-            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
-                if(!localidadDTO.nombre.equals(inmuebleDTO.getLocalidad())){
-                    inmueblesDTO.remove(inmuebleDTO);
-                }
-            }
-        }
-        if(tipo != null){
-            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
-                if(!inmuebleDTO.getTipoInmueble().equals(tipo.toString())){
-                    inmueblesDTO.remove(inmuebleDTO);
-                }
-            }
-        }
-        if(dormitorios != null){
-            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
-                if(inmuebleDTO.getCantidadDormitorios() < Integer.parseInt(dormitorios)){
-                    inmueblesDTO.remove(inmuebleDTO);
-                }
-            }
-        }
-        if(precioMax != null){
-            for(InmuebleDTO inmuebleDTO: inmueblesDTO){
-                if(inmuebleDTO.getPrecio() > Integer.parseInt(precioMax)){
-                    inmueblesDTO.remove(inmuebleDTO);
-                }
-            }
-        }
-
-        return inmueblesDTO;
-    }
     private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble) {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
