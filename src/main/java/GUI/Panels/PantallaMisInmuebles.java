@@ -2,6 +2,7 @@ package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
 import DAO.Util.LocalidadDTO;
+import DAO.Util.PreferenciaDTO;
 import Domain.Util.TipoInmueble;
 import GUI.Util.Pantalla;
 import Services.GestorGUI;
@@ -76,11 +77,13 @@ public class PantallaMisInmuebles {
     private JButton buttonEliminarProp4;
     private JButton buttonEliminarProp5;
     private JLabel numeroDePaginaLabel;
+    private JButton atrasAuxButton;
     private GestorInmuebles gestorInmuebles;
     private ArrayList<InmuebleDTO> inmueblesActuales;
     private InmuebleDTO inmueblePorDefecto;
     private Integer idPropietario;
     private Integer paginaActual;
+    private ActionListener actionListenerBotonSiguiente;
 
 
     public PantallaMisInmuebles() {
@@ -104,37 +107,10 @@ public class PantallaMisInmuebles {
         actualizarTablitaInmuebles(inmueblesActuales);
         actualizarBotones();
 
-        siguienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        actionListenerBotonSiguiente = crearActionListenerSiguiente(true);
 
 
-                //Calculamos los inmuebles a mostrar segun el numero de pagina
-                Integer inicio = paginaActual * 5 + 2;
-                //Sumamos 4 porque siempre nos sobra 1 inmueble de la primer solicitud a la base
-                Integer fin = inicio + 4;
-                paginaActual ++;
-
-                //Si aun no pedimos estos inmuebles a la base de datos, los pedimos
-                if(inmueblesActuales.size() <= (inicio-1)){
-                    inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,  inicio ,fin));
-                }
-
-                //Una vez tenemos todos los inmuebles, nos fijamos el tamanio de la lista, de no ser lo suficientemente grande como para ocupar los 5
-                //lugares de inmuebles, achicamos el margen a mostrar
-                if(inmueblesActuales.size() < fin - 1){
-                    fin = inmueblesActuales.size() + 1;
-                }
-
-                //Actualizamos la lista de inmuebles
-                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
-                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio-2,fin-1));
-
-                actualizarTablitaInmuebles(inmueblesAMostrar);
-                actualizarBotones();
-                numeroDePaginaLabel.setText(paginaActual.toString());
-            }
-        });
+        siguienteButton.addActionListener(actionListenerBotonSiguiente);
 
         anteriorButton.addActionListener(new ActionListener() {
             @Override
@@ -174,88 +150,27 @@ public class PantallaMisInmuebles {
             }
         });
     }
-    public PantallaMisInmuebles(LocalidadDTO localidadDTO, String barrio, TipoInmueble tipo, String dormitorios, String precioMax){
-        //configuracion inicial
-        crearInmuebleButton.setVisible(false);
-        tituloLabel.setVisible(false);
+    public PantallaMisInmuebles(PreferenciaDTO preferencias){
+        this();
 
-        gestorInmuebles = new GestorInmuebles();
+        siguienteButton.removeActionListener(actionListenerBotonSiguiente);
+        siguienteButton.addActionListener(crearActionListenerSiguiente(false));
 
-        //Definimos que es la primer pagina
-        paginaActual = 1;
-
-        //Obtengo los primeros 6 inmuebles
-        inmueblesActuales = new ArrayList<>();
-        inmueblesActuales.addAll(gestorInmuebles.buscarInmueble(localidadDTO,barrio,tipo,dormitorios,precioMax));
-
-        if(inmueblesActuales.size() < 5){
-            int tamInmueble = inmueblesActuales.size();
-            for(int i=0; i < 5 - tamInmueble; i++){
-                inmueblesActuales.add(crearInmueblePorDefecto());
-            }
-            actualizarTablitaInmuebles(inmueblesActuales);
-            actualizarBotones();
-
-        }else{
-            actualizarTablitaInmuebles((ArrayList<InmuebleDTO>) inmueblesActuales.subList(0,3));
-            actualizarBotones();
-        }
-
-        siguienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-
-                //Calculamos los inmuebles a mostrar segun el numero de pagina
-                Integer inicio = paginaActual * 5 + 2;
-                //Sumamos 4 porque siempre nos sobra 1 inmueble de la primer solicitud a la base
-                Integer fin = inicio + 4;
-                paginaActual ++;
-
-                //Si aun no pedimos estos inmuebles a la base de datos, los pedimos
-                if(inmueblesActuales.size() <= (inicio-1)){
-                    inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,  inicio ,fin));
-                }
-
-                //Una vez tenemos todos los inmuebles, nos fijamos el tamanio de la lista, de no ser lo suficientemente grande como para ocupar los 5
-                //lugares de inmuebles, achicamos el margen a mostrar
-                if(inmueblesActuales.size() < fin - 1){
-                    fin = inmueblesActuales.size() + 1;
-                }
-
-                //Actualizamos la lista de inmuebles
-                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
-                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio-2,fin-1));
-
-                actualizarTablitaInmuebles(inmueblesAMostrar);
-                actualizarBotones();
-                numeroDePaginaLabel.setText(paginaActual.toString());
-            }
-        });
-
-        anteriorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                paginaActual--;
-                Integer fin = paginaActual * 5;
-                Integer inicio = fin - 5;
-
-                //Actualizamos la lista de inmuebles
-                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
-                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio,fin));
-                actualizarTablitaInmuebles(inmueblesAMostrar);
-                actualizarBotones();
-                numeroDePaginaLabel.setText(paginaActual.toString());
-
-            }
-        });
-
-        atrasButton.addActionListener(new ActionListener() {
+        panelBotonesInferiores.setVisible(false);
+        panelTitulos.setVisible(false);
+        atrasAuxButton.setVisible(true);
+        atrasAuxButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.pop();
             }
         });
+
+        //Saco los inmuebles que se metieron en el constructor por defecto
+        inmueblesActuales.clear();
+        inmueblesActuales.addAll(gestorInmuebles.filtrarInmuebles(preferencias));
+
+
     }
     private void cargarLogicaBotonesEliminar() {
 
@@ -387,6 +302,45 @@ public class PantallaMisInmuebles {
         inmueblePorDefecto.setCalle("Calle de Prueba");
         inmueblePorDefecto.setNumeroCalle(-1111);
         return inmueblePorDefecto;
+    }
+
+    private ActionListener crearActionListenerSiguiente(Boolean conPropietario){
+         return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                //Calculamos los inmuebles a mostrar segun el numero de pagina
+                Integer inicio = paginaActual * 5 + 2;
+                //Sumamos 4 porque siempre nos sobra 1 inmueble de la primer solicitud a la base
+                Integer fin = inicio + 4;
+                paginaActual ++;
+
+                //Si aun no pedimos estos inmuebles a la base de datos, los pedimos
+                if(inmueblesActuales.size() <= (inicio-1)){
+                    if(conPropietario){
+                        inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,  inicio ,fin));
+                    }else{
+                        //TODO agregar filtros
+                        inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(inicio,fin));
+                    }
+                }
+
+                //Una vez tenemos todos los inmuebles, nos fijamos el tamanio de la lista, de no ser lo suficientemente grande como para ocupar los 5
+                //lugares de inmuebles, achicamos el margen a mostrar
+                if(inmueblesActuales.size() < fin - 1){
+                    fin = inmueblesActuales.size() + 1;
+                }
+
+                //Actualizamos la lista de inmuebles
+                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
+                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio-2,fin-1));
+
+                actualizarTablitaInmuebles(inmueblesAMostrar);
+                actualizarBotones();
+                numeroDePaginaLabel.setText(paginaActual.toString());
+            }
+        };
     }
 
     public JPanel getPanelPrincipal() {

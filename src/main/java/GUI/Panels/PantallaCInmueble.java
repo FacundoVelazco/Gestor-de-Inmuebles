@@ -2,6 +2,7 @@ package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
 import DAO.Util.LocalidadDTO;
+import DAO.Util.PreferenciaDTO;
 import Domain.Util.TipoInmueble;
 import GUI.AutoCompletion;
 import Services.GestorInmuebles;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
 import java.util.List;
 
 public class PantallaCInmueble {
@@ -31,16 +33,18 @@ public class PantallaCInmueble {
     private JLabel tipoLabel;
     private JComboBox tipoCombo;
     private JTextField dormitoriosTextField;
-    private JTextField PrecioMaxTextField;
+    private JTextField precioMaxTextField;
     private JLabel dormitoriosLabel;
     private JLabel precioMaxLabel;
     private JButton buscarButton;
     private JPanel panelInmuebles;
+    private JPanel panelBuscar;
     private PantallaMisInmuebles pantallaMisInmuebles;
+    private static final String[] TIPOS_INMUEBLE = {"Local-Oficina", "Casa", "Departamento", "Terreno", "Quinta", "Galpón"};
 
     public PantallaCInmueble() {
 
-        pantallaMisInmuebles = new PantallaMisInmuebles(null,"",null,"","");
+        pantallaMisInmuebles = new PantallaMisInmuebles(null);
 
         panelInmuebles.add(pantallaMisInmuebles.getPanelPrincipal());
 
@@ -52,11 +56,12 @@ public class PantallaCInmueble {
 
         provinciaCombo.addItem("SANTA FE");
 
-        tipoCombo.addItem(TipoInmueble.LOCAL_OFICINA);tipoCombo.addItem(TipoInmueble.CASA);
-        tipoCombo.addItem(TipoInmueble.DEPARTAMENTO);tipoCombo.addItem(TipoInmueble.GALPON);
-        tipoCombo.addItem(TipoInmueble.QUINTA);tipoCombo.addItem(TipoInmueble.TERRENO);
+        for (String s: TIPOS_INMUEBLE){
+            tipoCombo.addItem(s);
+        }
 
         buscarButton.addActionListener(new ActionListenerBotonAceptar());
+
     }
 
     public JPanel getPanelPrincipal() {
@@ -80,9 +85,19 @@ public class PantallaCInmueble {
         @Override
         public void actionPerformed(ActionEvent e) {
             GestorInmuebles gestorInmuebles = new GestorInmuebles();
-            List<InmuebleDTO> inmueblesDTO = gestorInmuebles.buscarInmueble((LocalidadDTO) localidadCombo.getSelectedItem(), barrioTextField.getText() ,(TipoInmueble) tipoCombo.getSelectedItem(),dormitoriosTextField.getText(),PrecioMaxTextField.getText());
 
-            //TODO cargar la info a la tabla
+            //TODO agregar validaciones
+            PreferenciaDTO preferencias = new PreferenciaDTO();
+            preferencias.setLocalidad(localidadCombo.getSelectedItem().toString());
+            preferencias.setCantidadDormitorios(Integer.parseInt(dormitoriosTextField.getText()));
+            preferencias.setBarrio(barrioTextField.getText());
+            preferencias.setTipoInmueble(tipoCombo.getSelectedItem().toString());
+            preferencias.setMontoDisponible(Float.parseFloat(precioMaxTextField.getText()));
+
+
+            panelInmuebles.remove(0);
+            panelInmuebles.add(new PantallaMisInmuebles(preferencias).getPanelPrincipal());
+            panelInmuebles.revalidate();
         }
     }
 }

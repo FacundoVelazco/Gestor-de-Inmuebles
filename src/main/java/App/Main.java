@@ -1,25 +1,19 @@
 package App;
 
-import DAO.InmuebleDAO;
-import DAO.InmuebleSqlDAO;
-import DAO.LocalidadDAO;
-import DAO.LocalidadSqlDAO;
-import Domain.*;
+import DAO.Util.Conexion;
 import Services.GestorGUI;
 import GUI.Util.Pantalla;
-import Services.GestorInmuebles;
-import Services.GestorLocalidades;
 
 
+import javax.persistence.EntityManager;
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Main {
     public static void main(String args[]) throws Exception {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        EntityManager manager = Conexion.emf.createEntityManager();
+        manager.close();
 //        GestorInmuebles gestorInmuebles = new GestorInmuebles();
 //        GestorLocalidades gestorLocalidades = new GestorLocalidades();
 //        LocalidadDAO localidadDAO = new LocalidadSqlDAO();

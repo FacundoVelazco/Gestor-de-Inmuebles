@@ -1,6 +1,7 @@
 package DAO;
 
 import DAO.Util.Conexion;
+import DAO.Util.PreferenciaDTO;
 import Domain.Imagen;
 import Domain.Inmueble;
 import Domain.Localidad;
@@ -94,7 +95,24 @@ public class DAOBdInmueble implements InmuebleDAO{
         return lista;
     }
 
+    @Override
+    public List<Inmueble> listAll() {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        @SuppressWarnings("unchecked")
+        List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA'").getResultList();
+        manager.close();
+        return lista;
+    }
 
+
+    @Override
+    public List<Inmueble> listAll(int inicio, int fin) {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        @SuppressWarnings("unchecked")
+        List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA'").setMaxResults(fin - inicio + 1).setFirstResult(inicio - 1).getResultList();
+        manager.close();
+        return lista;
+    }
 
 
 }
