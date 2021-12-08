@@ -3,9 +3,7 @@ package DAO;
 import DAO.Util.Conexion;
 
 import DAO.Util.PreferenciaDTO;
-import Domain.Imagen;
-import Domain.Inmueble;
-import Domain.Localidad;
+import Domain.*;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -26,11 +24,6 @@ public class DAOBdInmueble implements InmuebleDAO{
         i.setLocalidad(locAux);
 
         if(i.getId() != null) {
-            Direccion dirAux = manager.merge(i.getDireccion());
-            Preferencia prefAux = manager.merge(i.getCaracteristicasInmueble());
-            i.setDireccion(dirAux);
-            i.setCaracteristicasInmueble(prefAux);
-
             Inmueble aux = manager.merge(i);
             manager.persist(aux);
             id = aux.getId();
