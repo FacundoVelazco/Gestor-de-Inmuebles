@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DAOBdInmueble implements InmuebleDAO{
 
@@ -42,8 +43,10 @@ public class DAOBdInmueble implements InmuebleDAO{
         EntityManager manager = Conexion.emf.createEntityManager();
         Inmueble i = manager.find(Inmueble.class, id);
         //No logro que las imagenes se muestren bien, por lo tanto solo muestro por el momento la imagen principal
-        i.getFotosInmueble().size();
-        i.getFotosInmueble().clear();
+        System.out.println(i.getFotosInmueble().size());
+        ArrayList<Imagen> listaAux = new ArrayList<>();
+        listaAux.addAll(i.getFotosInmueble());
+        i.setFotosInmueble(Imagen.limpiezaDeDuplicados(i.getFotoPrincipal(), listaAux));
         manager.close();
         return i;
     }

@@ -2,7 +2,6 @@ package Services;
 
 import DAO.*;
 import DAO.Util.InmuebleDTO;
-import DAO.Util.LocalidadDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.Direccion;
 import Domain.Inmueble;
@@ -13,10 +12,8 @@ import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class GestorInmuebles {
 
@@ -55,7 +52,7 @@ public class GestorInmuebles {
 
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         Inmueble inmueble = daoInmueble.getById(id);
-        InmuebleDTO idto = generarDTODesdeInmueble(inmueble);
+        InmuebleDTO idto = generarDTODesdeInmueble(inmueble,true);
 
         return idto;
     }
@@ -68,7 +65,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            InmuebleDTO idto = generarDTODesdeInmueble(i, false);
             listaInmueblesDTO.add(idto);
         }
 
@@ -82,7 +79,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAllByPropietario(idPropietario, inicio, fin));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            InmuebleDTO idto = generarDTODesdeInmueble(i, false);
             listaInmueblesDTO.add(idto);
         }
 
@@ -96,7 +93,7 @@ public class GestorInmuebles {
         listaInmueblesDominio.addAll(daoInmueble.listAll(inicio, fin));
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            InmuebleDTO idto = generarDTODesdeInmueble(i, false);
             listaInmueblesDTO.add(idto);
         }
 
@@ -117,7 +114,7 @@ public class GestorInmuebles {
 
 
         for (Inmueble i : listaInmueblesDominio) {
-            InmuebleDTO idto = generarDTODesdeInmueble(i);
+            InmuebleDTO idto = generarDTODesdeInmueble(i, false);
             listaInmueblesDTO.add(idto);
         }
         return listaInmueblesDTO;
@@ -268,7 +265,7 @@ public class GestorInmuebles {
         return inmueble;
     }
 
-    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble) {
+    private InmuebleDTO generarDTODesdeInmueble(Inmueble inmueble, boolean desdeModificar) {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
         idto.setEstado(inmueble.getEstado().toString());
@@ -317,6 +314,15 @@ public class GestorInmuebles {
 
         ArrayList<ImageIcon> listaImagenes = new ArrayList<>();
         ArrayList<String> listaNombreArchivos = new ArrayList<>();
+
+        if(desdeModificar) {
+            for (Imagen i : inmueble.getFotosInmueble()) {
+                ImageIcon ii = i.getImagen();
+                String s = i.getNombreArchivo();
+                listaImagenes.add(ii);
+                listaNombreArchivos.add(s);
+            }
+        }
 
         idto.setFotosInmueble(listaImagenes);
         idto.setNombresArchivosFotos(listaNombreArchivos);

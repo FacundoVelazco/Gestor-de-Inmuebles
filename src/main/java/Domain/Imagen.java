@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.awt.*;
-
+import java.util.ArrayList;
 
 
 @Entity
@@ -77,13 +77,27 @@ public class Imagen {
         this.inmuebleAsociado = inmuebleAsociado;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof Imagen){
-            return ((Imagen) obj).getNombreArchivo() == this.nombreArchivo;
+    public static ArrayList<Imagen> limpiezaDeDuplicados(Imagen imagenPrincipal, ArrayList<Imagen> listaImagenes){
+        ArrayList<Imagen> aux = new ArrayList<>();
+        aux.addAll(listaImagenes);
+        Integer contador;
+        for(Imagen i : listaImagenes){
+            contador = 0;
+            String nombreArchivoActual = i.getNombreArchivo();
+            for(int j = 0; j < aux.size() ; j++){
+                if(nombreArchivoActual.equals(aux.get(j).getNombreArchivo())){
+                    if(contador == 0) contador++;
+                    else aux.remove(j);
+                }
+            }
+        }
+        for(int j = 0; j < aux.size() ; j++){
+            if(imagenPrincipal.getNombreArchivo().equals(aux.get(j).getNombreArchivo())){
+                 aux.remove(j);
+            }
         }
 
-        return super.equals(obj);
+        return aux;
     }
 
 }
