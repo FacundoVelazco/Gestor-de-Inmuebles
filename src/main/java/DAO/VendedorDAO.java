@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface VendedorDAO {
     public List<Vendedor> listAll();
-    public Integer save(Vendedor p);
-    public Integer delete(Integer idVendedor);
-
-    public Vendedor getById(int id); // creo que no es necesario este metodo
+    public void save(Vendedor v);
+    public void update(Vendedor v);
+    public void deleteByUsername(String username);
+    public Vendedor getByUsername(String username);
 }
