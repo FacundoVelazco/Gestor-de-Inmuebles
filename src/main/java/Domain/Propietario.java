@@ -29,16 +29,15 @@ public class Propietario extends Persona{
     @OneToOne
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;
-    @OneToOne
-    @JoinColumn(name = "id_provincia")
-    private Provincia provincia;
+    @Column(name = "provincia")
+    private String provincia;
     @Column(name = "email")
     private String email;
     @ManyToOne()
     @JoinColumn(name = "id_persona_vendedor")
     private Vendedor vendedor;
 
-    public Provincia getProvincia() {
+    public String getProvincia() {
         return provincia;
     }
 
@@ -87,7 +86,7 @@ public class Propietario extends Persona{
         this.localidad = localidad;
     }
 
-    public void setProvincia(Provincia provincia) {
+    public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 

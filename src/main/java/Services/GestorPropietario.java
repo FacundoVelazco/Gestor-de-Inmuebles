@@ -35,9 +35,9 @@ public class GestorPropietario {
         localidad.setId(pDTO.getIdLocalidad());
         p.setLocalidad(localidad);
 
-        Provincia provincia = new Provincia();
-        provincia.setNombre(pDTO.getProvincia());
-        provincia.setId(pDTO.getIdProvincia());
+        String provincia;
+
+        provincia = (pDTO.getProvincia());
         p.setProvincia(provincia);
 
         Direccion direccion = new Direccion();

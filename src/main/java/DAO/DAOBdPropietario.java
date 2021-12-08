@@ -2,12 +2,14 @@ package DAO;
 
 import Domain.Propietario;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class DAOBdPropietario implements PropietarioDAO{
 
     @Override
     public List<Propietario> listAll() {
+        EntityManager manager = Conexion.emf.createEntityManager();
         return null;
     }
 
