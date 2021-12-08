@@ -47,4 +47,17 @@ public class PanelExtras {
 
         return inmuebleDTO;
     }
+
+    public void setDatos(InmuebleDTO idto) {
+        checkBoxCochera.setSelected(idto.getTieneCochera());
+        checkBoxPatio.setSelected(idto.getTienePatio());
+        checkBoxPiscina.setSelected(idto.getTienePiscina());
+        checkBoxAguaCorriente.setSelected(idto.getTieneAguaCorriente());
+        checkBoxCloacas.setSelected(idto.getTieneCloacas());
+        checkBoxGasNatural.setSelected(idto.getTieneGasNatural());
+        checkBoxAguaCaliente.setSelected(idto.getTieneAguaCaliente());
+        checkBoxTelefono.setSelected(idto.getTieneAguaCaliente());
+        checkBoxLavadero.setSelected(idto.getTieneLavadero());
+        checkBoxPavimento.setSelected(idto.getTienePavimento());
+    }
 }

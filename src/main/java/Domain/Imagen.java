@@ -15,6 +15,7 @@ import java.awt.*;
 @Table(name = "imagen")
 public class Imagen {
 
+
     @Id
     @Column(name = "id_imagen")
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,9 +28,9 @@ public class Imagen {
     @Column(name = "descripcion")
     private String nombreArchivo;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_inmueble")
-    private Inmueble inmueble;
+    private Inmueble inmuebleAsociado;
 
     private BufferedImage toBufferedImage(Image im){
         BufferedImage bi = new BufferedImage(im.getWidth(null),im.getHeight(null),BufferedImage.TYPE_INT_RGB);
@@ -38,6 +39,7 @@ public class Imagen {
         bg.dispose();
         return bi;
     }
+
 
     public ImageIcon getImagen() {
         return new ImageIcon(imagen);
@@ -58,4 +60,30 @@ public class Imagen {
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Inmueble getInmuebleAsociado() {
+        return inmuebleAsociado;
+    }
+
+    public void setInmuebleAsociado(Inmueble inmuebleAsociado) {
+        this.inmuebleAsociado = inmuebleAsociado;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Imagen){
+            return ((Imagen) obj).getNombreArchivo() == this.nombreArchivo;
+        }
+
+        return super.equals(obj);
+    }
+
 }

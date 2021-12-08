@@ -2,6 +2,7 @@ package DAO;
 
 import Domain.Propietario;
 
+
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class DAOBdPropietario implements PropietarioDAO{
     }
 
     @Override
+
     public Integer delete(Integer idPropietario) {
 
         return idPropietario;

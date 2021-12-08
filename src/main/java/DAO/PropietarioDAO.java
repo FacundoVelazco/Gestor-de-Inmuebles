@@ -2,6 +2,7 @@ package DAO;
 
 import Domain.Propietario;
 
+
 import java.util.List;
 
 public interface PropietarioDAO {
@@ -11,5 +12,6 @@ public interface PropietarioDAO {
     public Integer delete(Integer idPropietario);
 
     public Propietario getById(int id); // creo que no es necesario este metodo
+
 
 }

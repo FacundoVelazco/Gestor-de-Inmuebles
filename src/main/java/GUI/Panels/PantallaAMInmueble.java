@@ -1,6 +1,7 @@
 package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
+import Domain.Inmueble;
 import GUI.Panels.AMInmueblePanels.PanelCaracteristicas;
 import GUI.Panels.AMInmueblePanels.PanelExtras;
 import GUI.Panels.AMInmueblePanels.PanelFotosAndObservaciones;
@@ -90,8 +91,31 @@ public class PantallaAMInmueble {
                 refrescarPanelRotativo();
             }
         });
+
+        botonCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.pop();
+            }
+        });
     }
 
+    //Constructor en caso de que se ingrese al panel por la opción de modificar
+    public PantallaAMInmueble(InmuebleDTO idto) {
+        this();
+        codigoLabel.setText("Código: " + idto.getId().toString());
+        estadoLabel.setText("Estado: " + idto.getEstado());
+        fechaDeCargaLabel.setText("Fecha de carga: " + idto.getFechaCarga().toString());
+        inmuebleDTO = idto;
+        cargarDatosPaneles(idto);
+    }
+
+    private void cargarDatosPaneles(InmuebleDTO idto) {
+        panelUbicacionClase.setDatos(idto);
+        panelCaracteristicasClase.setDatos(idto);
+        panelExtrasClase.setDatos(idto);
+        panelFotosAndObservacionesClase.setDatos(idto);
+    }
 
     private void refrescarPanelRotativo(){
         panelRotativo.revalidate();
@@ -148,7 +172,7 @@ public class PantallaAMInmueble {
                     obtenerDatosPanel(panelActual);
                     gestorInmuebles.guardarInmueble(inmuebleDTO);
                     GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
-                    //TODO GestorGUI.push();
+                    GestorGUI.pop();
                 }
                 break;
         }

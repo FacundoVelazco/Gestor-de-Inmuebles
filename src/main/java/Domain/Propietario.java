@@ -2,6 +2,7 @@ package Domain;
 
 import Domain.Util.TipoDNI;
 
+
 import javax.persistence.*;
 import javax.swing.*;
 import java.util.ArrayList;
@@ -9,13 +10,27 @@ import java.util.List;
 
 @Entity
 @Table(name = "propietario")
-@PrimaryKeyJoinColumn(name="id_persona")
-public class Propietario extends Persona{
-
+public class Propietario {
     @Id
     @Column(name = "id_propietario")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "username")
+    protected String username;
+
+    @Column(name = "password")
+    protected String password; //TODO implementar
+
+    @Column(name = "nombre")
+    protected String nombre;
+
+    @Column(name = "apellido")
+    protected String apellido;
+
+    @Column(name = "telefono")
+    protected String telefono;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_dni")
     private TipoDNI tipoDNI;
@@ -34,7 +49,7 @@ public class Propietario extends Persona{
     @Column(name = "email")
     private String email;
     @ManyToOne()
-    @JoinColumn(name = "id_persona_vendedor")
+    @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
 
     public String getProvincia() {
@@ -81,7 +96,6 @@ public class Propietario extends Persona{
         this.inmuebles = inmuebles;
     }
 
-
     public void setLocalidad(Localidad localidad) {
         this.localidad = localidad;
     }
@@ -94,13 +108,11 @@ public class Propietario extends Persona{
         return email;
     }
 
-    @Override
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -114,5 +126,45 @@ public class Propietario extends Persona{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

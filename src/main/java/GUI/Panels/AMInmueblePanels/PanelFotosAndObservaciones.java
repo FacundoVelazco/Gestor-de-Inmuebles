@@ -284,13 +284,14 @@ public class PanelFotosAndObservaciones{
 
         ArrayList<ImageIcon> auxListaImagenes = new ArrayList<>();
         auxListaImagenes.addAll(fotosSeleccionadas);
-        auxListaImagenes.remove(imagenSeleccionadaParaPortada);
+        auxListaImagenes.remove(inmuebleDTO.getFotoPrincipal());
         inmuebleDTO.setFotosInmueble(auxListaImagenes);
 
         List<String> auxListaNombres = new ArrayList<>();
         auxListaNombres.addAll(nombresArchivosFotos);
-        auxListaNombres.remove(imagenSeleccionadaParaPortada);
+        auxListaNombres.remove(inmuebleDTO.getNombreArchivoFotoPrincipal());
         inmuebleDTO.setNombresArchivosFotos(auxListaNombres);
+
 
         String observaciones = textAreaObservaciones.getText();
 
@@ -299,5 +300,23 @@ public class PanelFotosAndObservaciones{
         }
 
         return inmuebleDTO;
+    }
+
+    public void setDatos(InmuebleDTO idto) {
+        fotosSeleccionadas.add(idto.getFotoPrincipal());
+        nombresArchivosFotos.add(idto.getNombreArchivoFotoPrincipal());
+
+        fotosSeleccionadas.addAll(idto.getFotosInmueble());
+        nombresArchivosFotos.addAll(idto.getNombresArchivosFotos());
+
+        imagenSeleccionada = 0;
+        imagenSeleccionadaParaPortada = 0;
+
+        //Habilito o deshabilito los botones según corresponda
+        manejoBotones();
+        actualizarLabelArchivos();
+        manejoCheckBoxFotoPortada(false);
+        panelImagenExternoClase.setImagenVisible(fotosSeleccionadas.get(0));
+        checkBoxFotoPortada.setSelected(true);
     }
 }

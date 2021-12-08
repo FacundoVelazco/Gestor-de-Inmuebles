@@ -1,5 +1,6 @@
 package DAO.Util;
 
+<<<<<<< HEAD
 import Domain.Util.TipoDNI;
 
 import java.util.List;
@@ -174,4 +175,7 @@ public class PropietarioDTO {
     public Integer getId() {
         return Id;
     }
+=======
+public class PropietarioDTO {
+>>>>>>> 2de552d8c14144958004b593e0747775e856607f
 }
