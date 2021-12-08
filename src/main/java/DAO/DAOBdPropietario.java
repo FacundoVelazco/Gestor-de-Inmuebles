@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.Util.Conexion;
 import Domain.Propietario;
 
 

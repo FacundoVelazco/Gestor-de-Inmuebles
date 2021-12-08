@@ -1,8 +1,4 @@
 package DAO;
-
-<<<<<<< HEAD
-public class DAOBdInmueble{
-=======
 import DAO.Util.Conexion;
 import Domain.Imagen;
 import Domain.Inmueble;
@@ -97,8 +93,4 @@ public class DAOBdInmueble implements InmuebleDAO{
         return lista;
     }
 
-
-
-
->>>>>>> 2de552d8c14144958004b593e0747775e856607f
 }

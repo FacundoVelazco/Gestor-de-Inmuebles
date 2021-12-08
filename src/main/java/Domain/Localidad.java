@@ -30,9 +30,7 @@ public class Localidad {
         this.nombre = localidadDTO.nombre;
         this.provincia = "SANTA FE";
     }
-    public Integer getId() {
-        return this.id;
-    }
+
 
     public Localidad() {
         provincia = "SANTA FE";
