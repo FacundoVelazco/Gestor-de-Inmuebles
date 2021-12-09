@@ -12,8 +12,8 @@ import javax.swing.*;
 public class Main {
     public static void main(String args[]) throws Exception {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        EntityManager manager = Conexion.emf.createEntityManager();
-        manager.close();
+        //EntityManager manager = Conexion.emf.createEntityManager();
+        //manager.close();
 //        GestorInmuebles gestorInmuebles = new GestorInmuebles();
 //        GestorLocalidades gestorLocalidades = new GestorLocalidades();
 //        LocalidadDAO localidadDAO = new LocalidadSqlDAO();
@@ -28,6 +28,6 @@ public class Main {
 //        Imagen imagen = new Imagen(); imagen.setImagen(new ImageIcon(new ImageIcon("src/main/java/Materials/casitadefault.png").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
 //        inmueble.setFotoPrincipal(imagen);
 //        inmuebleDAO.persist(inmueble);
-        GestorGUI.init(Pantalla.MENU_PRINCIPAL);
+        GestorGUI.init(Pantalla.COMPRA_INMUEBLE);
     }
 }

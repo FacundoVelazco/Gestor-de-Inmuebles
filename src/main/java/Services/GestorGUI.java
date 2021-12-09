@@ -7,6 +7,8 @@ import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
 import TestGUI.PanelTest2;
 import TestGUI.PanelTest3;
+
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -60,6 +62,9 @@ public class GestorGUI {
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                break;
+            case COMPRA_INMUEBLE:
+                framePrincipal.setContentPane(new PantallaVenta(new ClienteDTO(),new InmuebleDTO(),framePrincipal).getPanelPrincipal());
                 break;
 
             //TODO insertar creación de pantallas en cada case

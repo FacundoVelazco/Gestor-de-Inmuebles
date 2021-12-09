@@ -175,13 +175,6 @@ public class InmuebleDTO {
         this.precio = precio;
     }
 
-    public Float getPrecioReserva() {
-        return precioReserva;
-    }
-
-    public void setPrecioReserva(Float precioReserva) {
-        this.precioReserva = precioReserva;
-    }
 
     public String getOrientacion() {
         return orientacion;
