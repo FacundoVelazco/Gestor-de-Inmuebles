@@ -24,6 +24,7 @@ public class InmuebleDTO {
     private String barrio;
     private String tipoInmueble;
     private Float precio;
+    private Float precioReserva;
     private String orientacion;
     private Double longitudFrente;
     private Double longitudFondo;
@@ -171,6 +172,14 @@ public class InmuebleDTO {
 
     public void setPrecio(Float precio) {
         this.precio = precio;
+    }
+
+    public Float getPrecioReserva() {
+        return precioReserva;
+    }
+
+    public void setPrecioReserva(Float precioReserva) {
+        this.precioReserva = precioReserva;
     }
 
     public String getOrientacion() {

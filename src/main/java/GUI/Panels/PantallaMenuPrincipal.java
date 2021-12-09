@@ -1,7 +1,9 @@
 package GUI.Panels;
 
 import GUI.Util.Pantalla;
+import Services.GestorClientes;
 import Services.GestorGUI;
+import Services.GestorInmuebles;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +20,7 @@ public class PantallaMenuPrincipal {
     private JButton buttonSalir;
     private JLabel labelDescripcion;
     private JButton misInmueblesButton;
+    private JButton buttonReserva;
 
     public PantallaMenuPrincipal() {
         buttonSalir.addActionListener(new ActionListener() {
@@ -54,6 +57,15 @@ public class PantallaMenuPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.push(Pantalla.MIS_INMUEBLES);
+            }
+        });
+        buttonReserva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO Estos clientes e inmuebles son de prueba
+                GestorClientes gestorClientes=new GestorClientes();
+                GestorInmuebles gestorInmuebles=new GestorInmuebles();
+                GestorGUI.popUpReserva(gestorClientes.listarClientes().get(0),gestorInmuebles.listarInmuebles(1,2).get(0));
             }
         });
     }

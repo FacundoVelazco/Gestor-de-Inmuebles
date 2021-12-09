@@ -26,7 +26,6 @@ public class GestorGUI {
 
             case MENU_PRINCIPAL:
                 framePrincipal.setContentPane(new PantallaMenuPrincipal().getPanelPrincipal());
-                framePrincipal.setLocation(centerPoint.x-200,centerPoint.y-200);
                 break;
 
             case ABM_CLIENTE:
@@ -79,6 +78,8 @@ public class GestorGUI {
     }
 
     public static void init(Pantalla pantalla) {
+        framePrincipal.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+                .getImage());
         push(pantalla);
         framePrincipal.pack();
         framePrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -135,6 +136,19 @@ public class GestorGUI {
     public static Boolean popUpConfirmacion(String titulo, String mensaje){
         Integer confirmacion = JOptionPane.showConfirmDialog(framePrincipal,mensaje,titulo,JOptionPane.YES_NO_OPTION);
         return confirmacion==JOptionPane.YES_OPTION;
+    }
+
+    public static void popUpReserva(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
+        JFrame framePopUp = new JFrame();
+        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+                .getImage());
+        framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        framePopUp.setTitle("Generar reserva");
+        framePopUp.setLocationRelativeTo(null);
+        framePopUp.setVisible(true);
+        framePopUp.setContentPane(new PantallaReserva(cliente, inmuebleDTO, framePopUp).getPanelPrincipal());
+        framePopUp.pack();
+
     }
 
     public static void exit(){
