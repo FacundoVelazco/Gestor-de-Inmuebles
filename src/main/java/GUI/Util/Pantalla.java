@@ -9,5 +9,6 @@ public enum Pantalla {
     AM_INMUEBLE,
     MIS_INMUEBLES,
     C_INMUEBLE,
-    MENU_PRINCIPAL;
+    MENU_PRINCIPAL,
+    GENERAR_RESERVA
 }
