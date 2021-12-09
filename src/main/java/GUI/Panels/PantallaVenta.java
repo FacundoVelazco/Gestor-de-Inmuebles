@@ -10,6 +10,10 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class PantallaVenta {
     private JPanel panelPrincipal;
@@ -77,7 +81,37 @@ public class PantallaVenta {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO logica guardar un archivo y ver como armarlo
-                
+
+                // Elegir la ruta donde guardar el documento
+                File ruta = new File("."); // Quizas en vez de File() es un String pero el IntelliJ me tiro que sea un File
+                JFileChooser seleccionPath = new JFileChooser();
+                seleccionPath.setCurrentDirectory(new File("."));
+                seleccionPath.setDialogTitle("Seleccione la carpeta donde guardar el documento...");
+                seleccionPath.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                seleccionPath.setAcceptAllFileFilterUsed(false);
+
+                if(seleccionPath.showOpenDialog(framePadre) == JFileChooser.APPROVE_OPTION){
+                    ruta = seleccionPath.getCurrentDirectory();
+                    JOptionPane.showMessageDialog(framePadre,"Se ha guardado correctamente el documento","Informacion",JOptionPane.INFORMATION_MESSAGE);
+                }
+
+                // Escribir el documento
+                File documento = new File(ruta + "Documento.txt");
+                FileWriter fw = null;
+                try {
+                    fw = new FileWriter(documento);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println("Inmueble comprado: ");
+                pw.println("Clave: " + inmueble.getId());
+                pw.println("Provincia: " + inmueble.getProvincia());
+                pw.println("Localidad: " + inmueble.getLocalidad());
+                pw.println("Calle: " + inmueble.getCalle());
+                pw.println("Nro de Calle: " + inmueble.getNumeroCalle());
+                // TODO ver que otros datos entrarian en el documento
+                pw.close();
             }
         });
     }
