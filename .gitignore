@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+#Lo de la base de datos me está molestando cambiarlo cada vez que hago un merge
+persistence.xml
+
 # Log file
 *.log
 
