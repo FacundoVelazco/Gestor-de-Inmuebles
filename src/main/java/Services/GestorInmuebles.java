@@ -244,6 +244,7 @@ public class GestorInmuebles {
         inmueble.setCaracteristicasInmueble(datosInmueble);
 
         inmueble.setPrecio(iDTO.getPrecio());
+        inmueble.setPrecioReserva(iDTO.getPrecioReserva());
 
         Imagen fotoPrincipal = new Imagen();
         fotoPrincipal.setImagen(iDTO.getFotoPrincipal());
@@ -308,6 +309,7 @@ public class GestorInmuebles {
         idto.setLongitudFrente(caracteristicas.getLongitudFrente());
 
         idto.setPrecio(inmueble.getPrecio());
+        idto.setPrecioReserva(inmueble.getPrecioReserva());
 
         idto.setFotoPrincipal(inmueble.getFotoPrincipal().getImagen());
         idto.setNombreArchivoFotoPrincipal(inmueble.getFotoPrincipal().getNombreArchivo());

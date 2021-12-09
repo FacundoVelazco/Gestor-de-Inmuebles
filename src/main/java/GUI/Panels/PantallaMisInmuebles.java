@@ -192,11 +192,71 @@ public class PantallaMisInmuebles {
         buttonEliminarProp1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5);
-                idto.setEstado("BAJA");
-                gestorInmuebles.guardarInmueble(idto);
-                GestorGUI.refreshCurrent();
-                GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
+                Boolean quiereEliminar = GestorGUI.popUpConfirmacion("Eliminación", "¿Está seguro quiere eliminar este inmueble?");
+                if(quiereEliminar){
+                    InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5);
+                    idto.setEstado("BAJA");
+                    gestorInmuebles.guardarInmueble(idto);
+                    GestorGUI.refreshCurrent();
+                    GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
+                }
+            }
+        });
+
+
+        buttonEliminarProp2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean quiereEliminar = GestorGUI.popUpConfirmacion("Eliminación", "¿Está seguro quiere eliminar este inmueble?");
+                if(quiereEliminar){
+                    InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5 + 1);
+                    idto.setEstado("BAJA");
+                    gestorInmuebles.guardarInmueble(idto);
+                    GestorGUI.refreshCurrent();
+                    GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
+                }
+            }
+        });
+
+        buttonEliminarProp3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean quiereEliminar = GestorGUI.popUpConfirmacion("Eliminación", "¿Está seguro quiere eliminar este inmueble?");
+                if(quiereEliminar){
+                    InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5 + 2);
+                    idto.setEstado("BAJA");
+                    gestorInmuebles.guardarInmueble(idto);
+                    GestorGUI.refreshCurrent();
+                    GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
+                }
+            }
+        });
+
+        buttonEliminarProp4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean quiereEliminar = GestorGUI.popUpConfirmacion("Eliminación", "¿Está seguro quiere eliminar este inmueble?");
+                if(quiereEliminar){
+                    InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5 + 3);
+                    idto.setEstado("BAJA");
+                    gestorInmuebles.guardarInmueble(idto);
+                    GestorGUI.refreshCurrent();
+                    GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
+                }
+            }
+        });
+
+        buttonEliminarProp5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean quiereEliminar = GestorGUI.popUpConfirmacion("Eliminación", "¿Está seguro quiere eliminar este inmueble?");
+                if(quiereEliminar){
+                    InmuebleDTO idto = inmueblesActuales.get((paginaActual-1) * 5 + 4);
+                    idto.setEstado("BAJA");
+                    gestorInmuebles.guardarInmueble(idto);
+                    GestorGUI.refreshCurrent();
+                    GestorGUI.popUpExito("Eliminación","El inmueble ha sido dado de baja con éxito");
+                }
             }
         });
 

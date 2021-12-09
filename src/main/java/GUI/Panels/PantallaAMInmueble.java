@@ -238,6 +238,7 @@ public class PantallaAMInmueble {
         inmuebleDTO.setLongitudFondo(aux.getLongitudFondo());
         inmuebleDTO.setTamanioInmueble(aux.getTamanioInmueble());
         inmuebleDTO.setPrecio(aux.getPrecio());
+        inmuebleDTO.setPrecioReserva(aux.getPrecioReserva());
         inmuebleDTO.setCantidadBanios(aux.getCantidadBanios());
         inmuebleDTO.setCantidadDormitorios(aux.getCantidadDormitorios());
         inmuebleDTO.setAntiguedad(aux.getAntiguedad());

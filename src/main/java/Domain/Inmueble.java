@@ -40,6 +40,9 @@ public class Inmueble {
     @Column(name = "precio")
     private Float precio;
 
+    @Column(name = "precio_reserva")
+    private Float precioReserva;
+
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_imagen_principal")
     private Imagen fotoPrincipal;
@@ -153,5 +156,13 @@ public class Inmueble {
 
     public void setPrecio(Float precio) {
         this.precio = precio;
+    }
+
+    public Float getPrecioReserva() {
+        return precioReserva;
+    }
+
+    public void setPrecioReserva(Float precioReserva) {
+        this.precioReserva = precioReserva;
     }
 }

@@ -36,7 +36,7 @@ public class PanelCaracteristicas {
     private JLabel tituloPropiedadHorizontalLabel;
     private JCheckBox checkBoxPropiedadHorizontal;
     private JLabel tituloAntiguedadLabel;
-    private JLabel tittuloPrecioLabel;
+    private JLabel tituloPrecioLabel;
     private JLabel errorLongFrenteLabel;
     private JLabel errorLongFondoLabel;
     private JLabel errorTamanioLabel;
@@ -44,6 +44,10 @@ public class PanelCaracteristicas {
     private JLabel errorCantDormitoriosLabel;
     private JLabel errorCantidadBaniosLabel;
     private JLabel errorPrecioLabel;
+    private JLabel precioDeReservaPorLabel;
+    private JTextField textFieldPrecioReserva;
+    private JLabel errorPrecioReservaLabel;
+    private JPanel panelPrecioDeReserva;
     private InmuebleDTO inmuebleDTO;
 
     public PanelCaracteristicas() {
@@ -76,6 +80,7 @@ public class PanelCaracteristicas {
         Boolean tamanioCompletado = true;
         Boolean antiguedadCompletada = true;
         Boolean precioDeVentaCompletado = true;
+        Boolean precioDeReservaCompletado = true;
         Boolean datosValidadosCorrectamente;
 
         limpiarLabelErrores();
@@ -143,7 +148,17 @@ public class PanelCaracteristicas {
             errorPrecioLabel.setText("<html>Este campo debe ser un número no negativo.</html>");
         }
 
-        datosValidadosCorrectamente = longitudesCompletadas && cantidadesCompletadas && tamanioCompletado && antiguedadCompletada && precioDeVentaCompletado;
+        try{
+            if (Float.parseFloat(textFieldPrecioReserva.getText()) < 0){
+                throw new Exception();
+            }
+        }catch(Exception e){
+            precioDeReservaCompletado = false;
+            errorPrecioReservaLabel.setText("<html>Este campo debe ser un número no negativo.</html>");
+        }
+
+
+        datosValidadosCorrectamente = longitudesCompletadas && cantidadesCompletadas && tamanioCompletado && antiguedadCompletada && precioDeVentaCompletado && precioDeReservaCompletado;
 
         return datosValidadosCorrectamente;
     }
@@ -156,6 +171,7 @@ public class PanelCaracteristicas {
         errorTamanioLabel.setText(" ");
         errorAntiguedadLabel.setText(" ");
         errorPrecioLabel.setText(" ");
+        errorPrecioReservaLabel.setText(" ");
     }
 
     //Se asume la correctitud de los datos ya que previamente se hace la validacion antes de utilizar este metodo
@@ -171,6 +187,7 @@ public class PanelCaracteristicas {
         String cantDormitorios = textFieldCantidadDormitorios.getText();
         String cantBanios = textFieldCantidadBanios.getText();
         String precioVenta = textFieldPrecioDeVenta.getText();
+        String precioReserva = textFieldPrecioReserva.getText();
 
         inmuebleDTO.setLongitudFrente(Double.parseDouble(longFrente));
         inmuebleDTO.setLongitudFondo(Double.parseDouble(longFondo));
@@ -179,6 +196,7 @@ public class PanelCaracteristicas {
         inmuebleDTO.setCantidadBanios(Integer.parseInt(cantBanios));
         inmuebleDTO.setCantidadDormitorios(Integer.parseInt(cantDormitorios));
         inmuebleDTO.setAntiguedad(Integer.parseInt(antiguedad));
+        inmuebleDTO.setPrecioReserva(Float.parseFloat(precioReserva));
 
         inmuebleDTO.setEsPropiedadHorizontal(checkBoxPropiedadHorizontal.isSelected());
 
@@ -200,5 +218,6 @@ public class PanelCaracteristicas {
         textFieldCantidadBanios.setText(idto.getCantidadBanios().toString());
         checkBoxPropiedadHorizontal.setSelected(idto.getEsPropiedadHorizontal());
         textFieldPrecioDeVenta.setText(idto.getPrecio().toString());
+        textFieldPrecioReserva.setText(idto.getPrecioReserva().toString());
     }
 }
