@@ -52,19 +52,19 @@ public class DAOBdInmueble implements InmuebleDAO{
     }
 
     @Override
-    public List<Inmueble> listAllByPropietario(int idPropietario) {
+    public List<Inmueble> listAllByPropietario(long idPropietario) {
         EntityManager manager = Conexion.emf.createEntityManager();
         @SuppressWarnings("unchecked")
-        List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA'").getResultList();
+        List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA' AND i.propietarioInmueble.id= :idprop").setParameter("idprop",idPropietario).getResultList();
         manager.close();
         return lista;
     }
 
     @Override
-    public List<Inmueble> listAllByPropietario(int idPropietario, int inicio, int fin) {
+    public List<Inmueble> listAllByPropietario(long idPropietario, int inicio, int fin) {
         EntityManager manager = Conexion.emf.createEntityManager();
         @SuppressWarnings("unchecked")
-        List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA'").setMaxResults(fin - inicio + 1).setFirstResult(inicio - 1).getResultList();
+        List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA' AND i.propietarioInmueble.id= :idprop").setParameter("idprop",idPropietario).setMaxResults(fin - inicio + 1).setFirstResult(inicio - 1).getResultList();
         manager.close();
         return lista;
     }
