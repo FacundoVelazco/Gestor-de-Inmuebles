@@ -2,10 +2,13 @@ package DAO;
 
 import DAO.Util.Conexion;
 
+import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.*;
+import Domain.Util.EstadoInmueble;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

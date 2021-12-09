@@ -3,6 +3,7 @@ package GUI.Panels;
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import Services.GestorGUI;
+import Services.GestorInmuebles;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -41,9 +42,10 @@ public class PantallaReserva {
     public PantallaReserva(ClienteDTO cliente, InmuebleDTO inmueble, JFrame framePadre) {
         this.framePadre=framePadre;
 
-        //TODO poner precio de la reserva
-//      precioReservaInmueble= inmueble.getPrecioReserva();
-        precioReservaInmueble= 0f;
+        //TODO poner precio de la reserva real
+        inmueble.setPrecioReserva(167.5f);
+        precioReservaInmueble= inmueble.getPrecioReserva();
+
 
         //Init inmueble y cliente
         labelNombreCliente.setText(cliente.getNombre()+ " "+ cliente.getApellido());
@@ -74,8 +76,9 @@ public class PantallaReserva {
         buttonGenerarReserva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO agregar lógica de la reserva
-                if(true/*metodo para generar la reserva*/){
+                GestorInmuebles gi = new GestorInmuebles();
+
+                if(gi.generarReserva(cliente,inmueble,(Integer) spinner1.getValue())){
                     GestorGUI.popUpExito("Reserva generada","Se generó la reserva satisfactoriamente por "
                             +spinner1.getValue()+" día/s a nombre de "+cliente.getNombre() + " " + cliente.getApellido()
                             +".\nTambién se ha generado el comprobante y guardado en la ruta especificada.");
