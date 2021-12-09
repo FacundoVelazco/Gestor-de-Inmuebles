@@ -2,6 +2,7 @@ package Services;
 
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
+import DAO.Util.PreferenciaDTO;
 import GUI.Panels.*;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
@@ -64,7 +65,7 @@ public class GestorGUI {
 
             //TODO insertar creación de pantallas en cada case
             case panelTest1:
-                framePrincipal.setContentPane(new PanelImagen().getPanelPrincipal()); //TODO remover paneles de testeo
+                framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal()); //TODO remover paneles de testeo
                 break;
             case panelTest2:
                 framePrincipal.setContentPane(new PanelTest2());

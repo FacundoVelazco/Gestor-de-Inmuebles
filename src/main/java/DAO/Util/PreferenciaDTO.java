@@ -182,6 +182,14 @@ public class PreferenciaDTO {
         this.barrio = barrio;
     }
 
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
     private String localidad;
     private String barrio;
     private String tipoInmueble;
@@ -204,5 +212,6 @@ public class PreferenciaDTO {
     private Boolean tieneTelefono;
     private Boolean tieneLavadero;
     private Boolean tienePavimento;
+    private Long idCliente;
 
 }
