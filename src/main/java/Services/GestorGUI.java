@@ -150,6 +150,18 @@ public class GestorGUI {
         framePopUp.pack();
 
     }
+    public static void popUpCompra(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
+        JFrame framePopUp = new JFrame();
+        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+                .getImage());
+        framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        framePopUp.setTitle("Comprar inmueble");
+        framePopUp.setLocationRelativeTo(null);
+        framePopUp.setVisible(true);
+        framePopUp.setContentPane(new PantallaVenta(cliente, inmuebleDTO, framePopUp).getPanelPrincipal());
+        framePopUp.pack();
+
+    }
 
     public static void exit(){
         framePrincipal.dispatchEvent(new WindowEvent(framePrincipal, WindowEvent.WINDOW_CLOSING));

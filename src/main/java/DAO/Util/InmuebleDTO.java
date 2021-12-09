@@ -49,7 +49,7 @@ public class InmuebleDTO {
     private List<String> nombresArchivosFotos;
     private String observaciones;
     private Long propietarioInmuebleID;
-    private Float precioReserva;
+
 
     public InmuebleDTO(){
 
