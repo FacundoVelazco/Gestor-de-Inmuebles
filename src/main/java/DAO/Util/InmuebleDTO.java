@@ -49,7 +49,6 @@ public class InmuebleDTO {
     private List<String> nombresArchivosFotos;
     private String observaciones;
     private Long propietarioInmuebleID;
-    private Float precioReserva;
 
     public InmuebleDTO(){
 
@@ -173,14 +172,6 @@ public class InmuebleDTO {
 
     public void setPrecio(Float precio) {
         this.precio = precio;
-    }
-
-    public Float getPrecioReserva() {
-        return precioReserva;
-    }
-
-    public void setPrecioReserva(Float precioReserva) {
-        this.precioReserva = precioReserva;
     }
 
     public String getOrientacion() {
