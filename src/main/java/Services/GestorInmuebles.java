@@ -178,7 +178,7 @@ public class GestorInmuebles {
         return listaAux;
     }
 
-    public Boolean generarReserva(ClienteDTO clienteDTO, InmuebleDTO inmuebleDTO, Integer duracion){
+    public Integer generarReserva(ClienteDTO clienteDTO, InmuebleDTO inmuebleDTO, Integer duracion){
         DAOBdCliente daoBdCliente= new DAOBdCliente();
         DAOBdInmueble daoBdInmueble= new DAOBdInmueble();
         DAOBdReserva daoBdReserva = new DAOBdReserva();
@@ -196,10 +196,7 @@ public class GestorInmuebles {
         reserva.setInmueble(inmueble);
         reserva.setMonto(inmuebleDTO.getPrecioReserva()*duracion);
 
-        if(daoBdReserva.save(reserva)!=null){
-            return true;
-        }
-        return false;
+        return daoBdReserva.save(reserva);
     }
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {

@@ -1,0 +1,8 @@
+##################################################################
+Inmueble reservado a nombre de Bruno Agretti
+Código del inmueble: 117
+Provincia: Santa Fe
+Localidad: Santo Tomé
+Calle: 1
+Nro de Calle: 1
+##################################################################
