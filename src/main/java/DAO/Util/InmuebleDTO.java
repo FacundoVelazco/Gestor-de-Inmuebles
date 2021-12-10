@@ -49,6 +49,7 @@ public class InmuebleDTO {
     private List<String> nombresArchivosFotos;
     private String observaciones;
     private Integer propietarioInmuebleID;
+    private PreferenciaDTO preferenciasClienteDTO;
 
     public InmuebleDTO(){
 
@@ -373,5 +374,13 @@ public class InmuebleDTO {
 
     public Float getPrecioReserva() {
         return precioReserva;
+    }
+
+    public PreferenciaDTO getPreferenciasClienteDTO() {
+        return preferenciasClienteDTO;
+    }
+
+    public void setPreferenciasClienteDTO(PreferenciaDTO preferenciasClienteDTO) {
+        this.preferenciasClienteDTO = preferenciasClienteDTO;
     }
 }

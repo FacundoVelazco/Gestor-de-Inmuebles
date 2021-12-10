@@ -1,6 +1,7 @@
 package GUI.Panels;
 
 import Domain.Cliente;
+import Domain.Util.TipoUser;
 import GUI.Util.Pantalla;
 import Services.GestorClientes;
 import Services.GestorGUI;
@@ -25,26 +26,57 @@ public class PantallaMenuPrincipal {
     private JLabel labelImagen;
     private JButton buttonCerrarSesion;
     private JLabel labelOpciones;
+    private JButton catalogoInmueblesButton;
+    private JButton modificarDatosUsuarioButton;
+    private TipoUser tipoUsuarioLogueado;
 
     public PantallaMenuPrincipal() {
 
         labelImagen.setIcon(new ImageIcon("src/main/java/Materials/GestorDeInmueblesrecortado.png"));
 
-        switch (GestorUsuarios.getUsuarioLogueado().getTipo()){
-            case ADMIN:
-                labelDescripcion.setText("Usted se ha logueado como Administrador");
-                break;
-            case CLIENTE:
-                labelDescripcion.setText("Usted se ha logueado como Cliente");
-                break;
-            case VENDEDOR:
-                labelDescripcion.setText("Usted se ha logueado como Vendedor");
-                break;
-            case PROPIETARIO:
-                labelDescripcion.setText("Usted se ha logueado como Propietario");
-                break;
+
+
+        //TODO REMOVER, SOLO PARA PRUEBAS
+        if(GestorUsuarios.getUsuarioLogueado() != null){
+            tipoUsuarioLogueado =GestorUsuarios.getUsuarioLogueado().getTipo();
+            switch (tipoUsuarioLogueado){
+                case ADMIN:
+                    labelDescripcion.setText("Usted se ha logueado como Administrador");
+                    setFuncionalidades(GestorUsuarios.getUsuarioLogueado().getTipo());
+                    break;
+                case CLIENTE:
+                    labelDescripcion.setText("Usted se ha logueado como Cliente");
+                    setFuncionalidades(GestorUsuarios.getUsuarioLogueado().getTipo());
+                    break;
+                case VENDEDOR:
+                    labelDescripcion.setText("Usted se ha logueado como Vendedor");
+                    setFuncionalidades(GestorUsuarios.getUsuarioLogueado().getTipo());
+                    break;
+                case PROPIETARIO:
+                    labelDescripcion.setText("Usted se ha logueado como Propietario");
+                    setFuncionalidades(GestorUsuarios.getUsuarioLogueado().getTipo());
+                    break;
+            }
         }
 
+
+        modificarDatosUsuarioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switch (tipoUsuarioLogueado){
+                    case CLIENTE:
+                        GestorClientes gestorClientes = new GestorClientes();
+                        GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,gestorClientes.getClienteByUsername(GestorUsuarios.getUsuarioLogueado().getUsername()));
+                        break;
+                    case VENDEDOR:
+                        //TODO MOSTRAR MODIFICAR VENDERDOR
+                        break;
+                    case PROPIETARIO:
+                        //TODO MOSTRAR MODIFICAR PROPIETARIO
+                        break;
+                }
+            }
+        });
 
         buttonSalir.addActionListener(new ActionListener() {
             @Override
@@ -79,6 +111,7 @@ public class PantallaMenuPrincipal {
         misInmueblesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO IMPLEMENTAR OBTENER PROPIETARIO con gestor e inicializador
                 GestorGUI.push(Pantalla.MIS_INMUEBLES);
             }
         });
@@ -91,6 +124,15 @@ public class PantallaMenuPrincipal {
                 GestorGUI.popUpReserva(gestorClientes.listarClientes().get(0),gestorInmuebles.listarInmuebles(1,2).get(0));
             }
         });
+
+        catalogoInmueblesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorClientes gestorClientes = new GestorClientes();
+                GestorGUI.pushModificar(Pantalla.CATALOGO,gestorClientes.getClienteByUsername(GestorUsuarios.getUsuarioLogueado().getUsername()).getPreferencias());
+            }
+        });
+
         buttonCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,7 +150,42 @@ public class PantallaMenuPrincipal {
         });
     }
 
+    private void setFuncionalidades(TipoUser tipo) {
+        switch (tipo){
+            case ADMIN:
+                modificarDatosUsuarioButton.setVisible(false);
+                misInmueblesButton.setVisible(false);
+                consultarInmuebleButton.setVisible(false);
+                buttonReserva.setVisible(false);
+                catalogoInmueblesButton.setVisible(false);
+                break;
+            case CLIENTE:
+                altaBajaYModificarButton.setVisible(false);
+                altaBajaYModificarButton2.setVisible(false);
+                altaBajaYModificarButton3.setVisible(false);
+                misInmueblesButton.setVisible(false);
+                buttonReserva.setVisible(false);
+                break;
+            case VENDEDOR:
+                altaBajaYModificarButton2.setVisible(false);
+                misInmueblesButton.setVisible(false);
+                buttonReserva.setVisible(false);
+                catalogoInmueblesButton.setVisible(false);
+                break;
+            case PROPIETARIO:
+                altaBajaYModificarButton.setVisible(false);
+                altaBajaYModificarButton2.setVisible(false);
+                altaBajaYModificarButton3.setVisible(false);
+                buttonReserva.setVisible(false);
+                catalogoInmueblesButton.setVisible(false);
+                break;
+        }
+
+    }
+
     public JPanel getPanelPrincipal(){
         return this.panelPrincipal;
     }
+
+
 }

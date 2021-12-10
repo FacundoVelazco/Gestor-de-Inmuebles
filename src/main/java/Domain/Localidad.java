@@ -1,11 +1,6 @@
 package Domain;
 
-import DAO.Util.LocalidadDTO;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "localidad")
@@ -22,13 +17,6 @@ public class Localidad {
     public Localidad(String nombre) {
         this.nombre = nombre;
     }
-
-    public Localidad(LocalidadDTO localidadDTO){
-        this.id = localidadDTO.id;
-        this.nombre = localidadDTO.nombre;
-        this.provincia = "SANTA FE";
-    }
-
 
     public Localidad() {
         provincia = "SANTA FE";

@@ -1,15 +1,12 @@
 package DAO;
 
 import DAO.Util.Conexion;
+import Domain.Inmueble;
 import Domain.Localidad;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class DAOBdLocalidad implements LocalidadDAO {
-    @Override
-    public void persist(Localidad localidad) {
-
-    }
 
     @Override
     public Localidad getByName(String name) {
@@ -21,22 +18,12 @@ public class DAOBdLocalidad implements LocalidadDAO {
     }
 
     @Override
-    public Localidad getById(Integer id) {
-        return null;
+    public List<Localidad> listAll() {
+        EntityManager manager = Conexion.emf.createEntityManager();
+        @SuppressWarnings("unchecked")
+        List<Localidad> lista = (List<Localidad>) manager.createQuery("From Localidad").getResultList();
+        manager.close();
+        return lista;
     }
 
-    @Override
-    public List list() {
-        return null;
-    }
-
-    @Override
-    public void merge(Localidad localidad) {
-
-    }
-
-    @Override
-    public void close() {
-
-    }
 }

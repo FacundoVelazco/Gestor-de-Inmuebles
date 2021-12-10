@@ -1,10 +1,5 @@
 package DAO.Util;
 
-import Domain.Util.Orientacion;
-import Domain.Util.TipoInmueble;
-
-import javax.persistence.Column;
-
 public class PreferenciaDTO {
     public String getTipoInmueble() {
         return tipoInmueble;
@@ -182,13 +177,6 @@ public class PreferenciaDTO {
         this.barrio = barrio;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
-    }
 
     private String localidad;
     private String barrio;
@@ -212,6 +200,5 @@ public class PreferenciaDTO {
     private Boolean tieneTelefono;
     private Boolean tieneLavadero;
     private Boolean tienePavimento;
-    private Long idCliente;
 
 }
