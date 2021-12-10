@@ -1,6 +1,8 @@
 package Domain;
 
 import DAO.Util.LocalidadDTO;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,8 +16,10 @@ public class Localidad {
     private Integer id;
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
-    @Column(name = "id_provincia")
+    @Column(name = "provincia")
     private String provincia;
+    @Column(name = "Barrios")
+    private List<String> barrios;
 
     public Localidad(String nombre) {
         this.nombre = nombre;
@@ -26,17 +30,18 @@ public class Localidad {
         this.nombre = localidadDTO.nombre;
         this.provincia = "SANTA FE";
     }
-    public Integer getId() {
-        return this.id;
-    }
+
 
     public Localidad() {
         provincia = "SANTA FE";
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
-
     }
 
     public String getNombre() {
@@ -55,4 +60,11 @@ public class Localidad {
         this.provincia = provincia;
     }
 
+    public List<String> getBarrios() {
+        return barrios;
+    }
+
+    public void setBarrios(List<String> barrios) {
+        this.barrios = barrios;
+    }
 }

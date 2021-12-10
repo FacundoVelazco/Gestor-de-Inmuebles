@@ -21,4 +21,5 @@ public interface InmuebleDAO {
 
     public List<Inmueble> listAll(int inicio, int fin);
 
+
 }

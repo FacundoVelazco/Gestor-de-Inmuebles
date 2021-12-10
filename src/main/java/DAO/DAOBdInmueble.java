@@ -1,5 +1,4 @@
 package DAO;
-
 import DAO.Util.Conexion;
 
 import DAO.Util.InmuebleDTO;
@@ -54,6 +53,7 @@ public class DAOBdInmueble implements InmuebleDAO{
 
     @Override
     public List<Inmueble> listAllByPropietario(long idPropietario) {
+
         EntityManager manager = Conexion.emf.createEntityManager();
         @SuppressWarnings("unchecked")
         List<Inmueble> lista = (List<Inmueble>) manager.createQuery("From Inmueble as i Where i.estado!='BAJA' AND i.propietarioInmueble.id= :idprop").setParameter("idprop",idPropietario).getResultList();
@@ -79,7 +79,6 @@ public class DAOBdInmueble implements InmuebleDAO{
         return lista;
     }
 
-
     @Override
     public List<Inmueble> listAll(int inicio, int fin) {
         EntityManager manager = Conexion.emf.createEntityManager();
@@ -88,6 +87,5 @@ public class DAOBdInmueble implements InmuebleDAO{
         manager.close();
         return lista;
     }
-
 
 }

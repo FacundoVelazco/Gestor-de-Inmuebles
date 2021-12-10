@@ -6,6 +6,9 @@ import Domain.Util.Usuario;
 
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 @Entity
@@ -41,10 +44,29 @@ public class Propietario implements Usuario {
     private Direccion direccion;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
-
+    @OneToOne
+    @JoinColumn(name = "id_localidad")
+    private Localidad localidad;
+    @Column(name = "provincia")
+    private String provincia;
+    @Column(name = "email")
+    private String email;
     @ManyToOne()
-    @JoinColumn(name = "id_persona_vendedor")
+    @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+    public Propietario(){
+            this.inmuebles = new ArrayList<Inmueble>();
+    }
+
     public TipoDNI getTipoDNI() {
         return tipoDNI;
     }
@@ -77,9 +99,16 @@ public class Propietario implements Usuario {
         this.inmuebles = inmuebles;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Integer getId() {
@@ -93,5 +122,57 @@ public class Propietario implements Usuario {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }
