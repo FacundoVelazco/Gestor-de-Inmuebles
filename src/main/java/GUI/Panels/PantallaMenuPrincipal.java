@@ -1,16 +1,17 @@
 package GUI.Panels;
 
+import Domain.Cliente;
 import GUI.Util.Pantalla;
 import Services.GestorClientes;
 import Services.GestorGUI;
 import Services.GestorInmuebles;
+import Services.GestorUsuarios;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PantallaMenuPrincipal {
-    private JPanel panelTitulo;
     private JLabel textoTitulo;
     private JPanel panelPrincipal;
     private JButton altaBajaYModificarButton;
@@ -21,8 +22,30 @@ public class PantallaMenuPrincipal {
     private JLabel labelDescripcion;
     private JButton misInmueblesButton;
     private JButton buttonReserva;
+    private JLabel labelImagen;
+    private JButton buttonCerrarSesion;
+    private JLabel labelOpciones;
 
     public PantallaMenuPrincipal() {
+
+        labelImagen.setIcon(new ImageIcon("src/main/java/Materials/GestorDeInmueblesrecortado.png"));
+
+        switch (GestorUsuarios.getUsuarioLogueado().getTipo()){
+            case ADMIN:
+                labelDescripcion.setText("Usted se ha logueado como Administrado");
+                break;
+            case CLIENTE:
+                labelDescripcion.setText("Usted se ha logueado como Cliente");
+                break;
+            case VENDEDOR:
+                labelDescripcion.setText("Usted se ha logueado como Vendedor");
+                break;
+            case PROPIETARIO:
+                labelDescripcion.setText("Usted se ha logueado como Propietario");
+                break;
+        }
+
+
         buttonSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +89,15 @@ public class PantallaMenuPrincipal {
                 GestorClientes gestorClientes=new GestorClientes();
                 GestorInmuebles gestorInmuebles=new GestorInmuebles();
                 GestorGUI.popUpReserva(gestorClientes.listarClientes().get(0),gestorInmuebles.listarInmuebles(1,2).get(0));
+            }
+        });
+        buttonCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.abrirLogin();
+                GestorUsuarios.setUsuarioLogueado(null);
+
+
             }
         });
     }

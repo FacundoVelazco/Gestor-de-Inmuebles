@@ -1,15 +1,18 @@
 package Domain;
 
+import Domain.Util.TipoUser;
+import Domain.Util.Usuario;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "admin")
-public class Admin {
+public class Admin implements Usuario {
     @Id
     @Column(name = "id_admin")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(name = "username")
     protected String username;
@@ -26,7 +29,21 @@ public class Admin {
     @Column(name = "telefono")
     protected String telefono;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "admin")
-    private List<Vendedor> vendedores;
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "admin")
+//    private List<Vendedor> vendedores;
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public TipoUser getTipo() {
+        return TipoUser.ADMIN;
+    }
 }

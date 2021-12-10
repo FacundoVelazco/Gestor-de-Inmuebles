@@ -1,22 +1,25 @@
 package Domain;
 
 
+import Domain.Util.TipoUser;
+import Domain.Util.Usuario;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cliente")
-public class Cliente {
+public class Cliente implements Usuario {
     @Id
     @Column(name = "id_cliente")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
 
     @Column(name = "username")
     protected String username;
 
     @Column(name = "password")
-    protected String password; //TODO implementar
+    protected String password; //TODO implementar hash
 
     @Column(name = "nombre")
     protected String nombre;
@@ -31,6 +34,7 @@ public class Cliente {
     @JoinColumn(name = "id_preferencia")
     private Preferencia preferencia;
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -72,11 +76,16 @@ public class Cliente {
     }
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    @Override
+    public TipoUser getTipo() {
+        return TipoUser.CLIENTE;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
