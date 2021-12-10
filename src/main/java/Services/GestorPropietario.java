@@ -83,7 +83,8 @@ public class GestorPropietario {
         pDTO.setPassword(p.getPassword());
         pDTO.setTipoDNI(p.getTipoDNI());
         pDTO.setDni(p.getDni());
-        pDTO.setCalleYNumero(p.getCalleYNumero());
+        pDTO.setCalle(p.getCalle());
+        pDTO.setNroDeCalle(p.getNroDeCalle());
         pDTO.setProvincia(p.getProvincia());
         //pDTO.setLocalidad(p.getLocalidad());
         pDTO.setTelefono(p.getTelefono());

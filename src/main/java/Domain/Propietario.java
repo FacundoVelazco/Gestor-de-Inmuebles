@@ -54,7 +54,7 @@ public class Propietario implements Usuario {
     @Column(name = "calle")
     private String calle;
     @Column(name = "numeroDeCalle")
-    private Integer nroDeCalle;
+    private String nroDeCalle;
     @ManyToOne()
     @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
@@ -71,11 +71,11 @@ public class Propietario implements Usuario {
         this.calle = calle;
     }
 
-    public Integer getNroDeCalle() {
+    public String getNroDeCalle() {
         return nroDeCalle;
     }
 
-    public void setNroDeCalle(Integer nroDeCalle) {
+    public void setNroDeCalle(String nroDeCalle) {
         this.nroDeCalle = nroDeCalle;
     }
 
