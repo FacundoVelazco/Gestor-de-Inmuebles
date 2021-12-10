@@ -170,6 +170,10 @@ public class GestorGUI {
         return confirmacion==JOptionPane.YES_OPTION;
     }
 
+    public static void popUpError(String titulo, String mensaje){
+        JOptionPane.showMessageDialog(framePrincipal,mensaje,titulo, JOptionPane.ERROR_MESSAGE);
+    }
+
     public static void popUpReserva(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
         JFrame framePopUp = new JFrame();
         framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/G.png")

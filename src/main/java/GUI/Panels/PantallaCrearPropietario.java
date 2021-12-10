@@ -4,6 +4,7 @@ import DAO.Util.PropietarioDTO;
 import Domain.Util.TipoDNI;
 import GUI.AutoCompletion;
 import Services.GestorGUI;
+import Services.GestorLocalidades;
 import Services.GestorPropietario;
 
 import javax.swing.*;
@@ -101,14 +102,13 @@ public class PantallaCrearPropietario {
             comboBoxTipoDocumento.addItem(TipoDNI.obtenerStringParaComboBox(t));
         }
 
-        comboBoxProvincia.addItem("Santa Fe");      // TODO Completar las localidades con el metodo que hizo AGUS
+        comboBoxProvincia.addItem("Santa Fe");
 
-        comboBoxLocalidad.addItem("Santa Fe");
-        comboBoxLocalidad.addItem("Santo Tome");
-        comboBoxLocalidad.addItem("Sauce viejo");
-        comboBoxLocalidad.addItem("Rincon");
-        comboBoxLocalidad.addItem("Colastine Norte");
-        comboBoxLocalidad.addItem("Colastine Sur");
+        GestorLocalidades gestorLocalidades = new GestorLocalidades();
+        for(String loc : gestorLocalidades.listarLocalidades()){
+            comboBoxLocalidad.addItem(loc);
+        }
+        comboBoxLocalidad.setSelectedItem("Santa Fe");
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -148,12 +148,9 @@ public class PantallaCrearPropietario {
         textFieldEmail.setText(pDTO.getEmail());
         textFieldTelefono.setText(pDTO.getTelefono());
         textFieldNumeroDocumento.setText(pDTO.getDni());
-
-
-        //Autocompletado de los comboboxes
-        AutoCompletion.enable(comboBoxTipoDocumento);
-        AutoCompletion.enable(comboBoxLocalidad);
-        AutoCompletion.enable(comboBoxProvincia);
+        comboBoxProvincia.setSelectedItem("Santa Fe");
+        comboBoxLocalidad.setSelectedItem(pDTO.getLocalidad());
+        comboBoxTipoDocumento.setSelectedItem(pDTO.getTipoDocumento());
 
     }
 
