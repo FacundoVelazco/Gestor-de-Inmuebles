@@ -12,6 +12,7 @@ import Services.GestorUsuarios;
 import org.hibernate.mapping.UnionSubclass;
 
 
+
 import javax.persistence.EntityManager;
 import javax.swing.*;
 
@@ -27,8 +28,6 @@ public class Main {
 
         //Pantalla de login
         GestorGUI.abrirLogin();
-//        GestorUsuarios gu = new GestorUsuarios();
-//        GestorUsuarios.setUsuarioLogueado(gu.getUsuario("bruno","1234",TipoUser.ADMIN));
-//        GestorGUI.init(Pantalla.MENU_PRINCIPAL);
+
     }
 }

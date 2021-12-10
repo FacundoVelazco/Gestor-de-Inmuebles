@@ -2,6 +2,7 @@ package Services;
 
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
+import DAO.Util.PreferenciaDTO;
 import GUI.Panels.*;
 import GUI.Util.Pantalla;
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.util.Stack;
 public class GestorGUI {
 
     static JFrame framePrincipal = new JFrame();
+
     static Stack<Pantalla> historia = new Stack<>();
 
 
@@ -87,6 +89,16 @@ public class GestorGUI {
             historia.pop();
             framePrincipal.setLocationRelativeTo(null);
             setPantalla(historia.lastElement(), null);
+        } else {
+            System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
+        }
+    }
+
+    public static void popModificar(Object elemento) {
+        if (historia.size() > 1) {
+            historia.pop();
+            framePrincipal.setLocationRelativeTo(null);
+            setPantalla(historia.lastElement(), elemento);
         } else {
             System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
         }

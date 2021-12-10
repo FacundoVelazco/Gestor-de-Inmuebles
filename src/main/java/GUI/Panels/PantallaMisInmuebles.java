@@ -394,8 +394,8 @@ public class PantallaMisInmuebles {
                     if(conPropietario){
                         inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,  inicio ,fin));
                     }else{
-                        //TODO agregar filtros
-                        inmueblesActuales.addAll(gestorInmuebles.listarInmuebles(inicio,fin));
+                        //Agregado para correccion de bug
+                        inmueblesActuales.addAll(new ArrayList<>());
                     }
                 }
 

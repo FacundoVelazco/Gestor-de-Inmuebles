@@ -39,6 +39,7 @@ public class PantallaAMInmueble {
     private JPanel panelExtras;
     private JPanel panelFotosAndObservaciones;
     private GestorInmuebles gestorInmuebles;
+    private Boolean esModificar;
 
 
     //Creamos el Data Transfer Object para el manejo de la información del inmueble
@@ -56,6 +57,8 @@ public class PantallaAMInmueble {
 
         //Definimos el gestor de inmuebles
         gestorInmuebles = new GestorInmuebles();
+
+        esModificar = false;
 
         //Creamos todas las clases asociadas a los paneles a utilizar
         panelUbicacionClase = new PanelUbicacion();
@@ -103,6 +106,9 @@ public class PantallaAMInmueble {
     //Constructor en caso de que se ingrese al panel por la opción de modificar
     public PantallaAMInmueble(InmuebleDTO idto) {
         this();
+
+        esModificar = true;
+
         codigoLabel.setText("Código: " + idto.getId().toString());
         estadoLabel.setText("Estado: " + idto.getEstado());
         fechaDeCargaLabel.setText("Fecha de carga: " + idto.getFechaCarga().toString());
@@ -171,7 +177,11 @@ public class PantallaAMInmueble {
                 if(perimtidoCambiarPantalla){
                     obtenerDatosPanel(panelActual);
                     gestorInmuebles.guardarInmueble(inmuebleDTO);
-                    GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
+                    if(esModificar){
+                        GestorGUI.popUpExito("Éxito", "El inmueble ha sido modificado exitosamente");
+                    }else{
+                        GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
+                    }
                     GestorGUI.pop();
                 }
                 break;
