@@ -135,6 +135,7 @@ public class PantallaCrearVendedor {
         }
         else labelErrorLegajo.setVisible(false);
 
+        GestorGUI.pack();
         return bandera;
     }
 

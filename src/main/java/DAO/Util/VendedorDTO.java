@@ -18,7 +18,6 @@ public class VendedorDTO {
     private String apellido;
     private String password;
     private String username;
-    private LocalidadDTO localidad;
     private Integer idLocalidad;
     private String provincia;
     private Integer idProvincia;
@@ -139,14 +138,6 @@ public class VendedorDTO {
 
     public Integer getId() {
         return id;
-    }
-
-    public LocalidadDTO getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(LocalidadDTO localidad) {
-        this.localidad = localidad;
     }
 
     public void setId(Integer id) {
