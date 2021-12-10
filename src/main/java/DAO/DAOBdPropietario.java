@@ -36,31 +36,32 @@ public class DAOBdPropietario implements PropietarioDAO{
     public void update(Propietario propietario) {
         EntityManager manager = Conexion.emf.createEntityManager();
 
-        String username = propietario.getUsername();
+//        String username = propietario.getUsername();
+//        manager.getTransaction().begin();
+//        Query query = manager.createQuery("from Propietario p where p.username = :username");
+//        query.setParameter("username",username);
+//        if(!query.getResultList().isEmpty()){
+//            Query query2 = manager.createQuery("delete from Propietario p where p.username = :username");
+//            query2.setParameter("username",username).executeUpdate();
+//        }
+//        manager.persist(propietario);
+//        manager.getTransaction().commit();
+//        manager.close();
+
         manager.getTransaction().begin();
-        Query query = manager.createQuery("from Propietario p where p.username = :username");
-        query.setParameter("username",username);
-        if(!query.getResultList().isEmpty()){
-            Query query2 = manager.createQuery("delete from Propietario p where p.username = :username");
-            query2.setParameter("username",username).executeUpdate();
+
+        Localidad locAux = manager.merge(propietario.getLocalidad());
+        propietario.setLocalidad(locAux);
+
+        if(propietario.getId() != null) {
+            Propietario aux = manager.merge(propietario);
+            manager.persist(aux);
+        }else{
+            manager.persist(propietario);
         }
-        manager.persist(propietario);
         manager.getTransaction().commit();
         manager.close();
 
-//        EntityManager manager = Conexion.emf.createEntityManager();
-//        Integer id;
-//
-//        manager.getTransaction().begin();
-//
-//        if(p.getId() != null) {
-//            Propietario aux = manager.merge(p);
-//            manager.persist(aux);
-//        }else{
-//            manager.persist(p);
-//        }
-//        manager.getTransaction().commit();
-//        manager.close();
 
     }
 

@@ -52,6 +52,7 @@ public class PantallaCrearPropietario {
     private JLabel labelNroDeCalle;
     private JLabel labelErrorNroCalle;
     private ActionListener actionListenerCrear;
+    private PropietarioDTO propietarioDTOModificar;
 
 
     private GestorPropietario gestorPropietario = new GestorPropietario();
@@ -88,6 +89,8 @@ public class PantallaCrearPropietario {
     }
 
     public PantallaCrearPropietario() {
+
+        propietarioDTOModificar = new PropietarioDTO();
 
         //Autocompletado de los comboboxes
         AutoCompletion.enable(comboBoxTipoDocumento);
@@ -131,6 +134,8 @@ public class PantallaCrearPropietario {
 
     public PantallaCrearPropietario(PropietarioDTO pDTO) {
         this();
+        propietarioDTOModificar=pDTO;
+
         buttonCrear.setText("Modificar");
         textoTitulo.setText("Modificar propietario");
         textFieldNombreUsuario.setText(pDTO.getUsername());
@@ -143,7 +148,6 @@ public class PantallaCrearPropietario {
         textFieldEmail.setText(pDTO.getEmail());
         textFieldTelefono.setText(pDTO.getTelefono());
         textFieldNumeroDocumento.setText(pDTO.getDni());
-
 
 
         //Autocompletado de los comboboxes
@@ -203,12 +207,13 @@ public class PantallaCrearPropietario {
             labelErrorTelefono.setVisible(true);
             bandera = false;
         }
+        else labelErrorTelefono.setVisible(false);
+
         if (!(isInteger(textFieldNroDeCalle.getText()))) {
             labelErrorNroCalle.setVisible(true);
             bandera = false;
         }
-
-        else labelErrorTelefono.setVisible(false);
+        else labelErrorNroCalle.setVisible(false);
 
         if ((textFieldEmail.getText().length() > 60) || !(emailValido(textFieldEmail.getText()))){
             labelErrorEmail.setVisible(true);
@@ -230,6 +235,15 @@ public class PantallaCrearPropietario {
         propietario.setApellido(textFieldApellido.getText());
         propietario.setTelefono(textFieldTelefono.getText());
         propietario.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+        propietario.setDni(textFieldNumeroDocumento.getText());
+        propietario.setTipoDNI(TipoDNI.obtenerByString(comboBoxTipoDocumento.getSelectedItem().toString()));
+        propietario.setNroDeCalle(textFieldNroDeCalle.getText());
+        propietario.setCalle(textFieldCalle.getText());
+        propietario.setEmail(textFieldEmail.getText());
+        propietario.setProvincia(comboBoxProvincia.getSelectedItem().toString());
+
+        propietario.setId(propietarioDTOModificar.getId());
+
         return propietario;
 
     }

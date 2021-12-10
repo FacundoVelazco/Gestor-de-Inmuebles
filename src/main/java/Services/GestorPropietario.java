@@ -2,6 +2,7 @@ package Services;
 
 import DAO.DAOBdCliente;
 import DAO.DAOBdInmueble;
+import DAO.DAOBdLocalidad;
 import DAO.DAOBdPropietario;
 import DAO.Util.ClienteDTO;
 import DAO.Util.PreferenciaDTO;
@@ -23,21 +24,23 @@ public class GestorPropietario {
         DAOBdInmueble iDao = new DAOBdInmueble();
 
         Propietario p = new Propietario();
+        p.setId(pDTO.getId());
         p.setEmail(pDTO.getEmail());
-        p.setDni(pDTO.getDni());
+        p.setDni(pDTO.getDni());     //aca el dni llega bien
         p.setTipoDNI(pDTO.getTipoDNI());
         p.setApellido(pDTO.getApellido());
         p.setNombre(pDTO.getNombre());
         p.setUsername(pDTO.getUsername());
         p.setPassword(pDTO.getPassword());
+        p.setTelefono(pDTO.getTelefono());
 
 //        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
         ArrayList<Inmueble> listaInmuebles = new ArrayList<>();
         p.setInmuebles(listaInmuebles);
 
-        Localidad localidad = new Localidad();
-        localidad.setNombre(pDTO.getLocalidad());
-        localidad.setId(pDTO.getIdLocalidad());
+        DAOBdLocalidad daoBdLocalidad = new DAOBdLocalidad();
+        Localidad localidad = daoBdLocalidad.getByName(pDTO.getLocalidad());
+
         p.setLocalidad(localidad);
 
         String provincia;
@@ -45,11 +48,8 @@ public class GestorPropietario {
         provincia = (pDTO.getProvincia());
         p.setProvincia(provincia);
 
-        Direccion direccion = new Direccion();
-        //direccion.setCalle(pDTO.getCalle());         TODO ver como dejar CAllE y  -> si juntos o separados
-        //direccion.setNumero(pDTO.getNumeroDeCalle());
-        direccion.setId(pDTO.getIdDireccion());
-        p.setDireccion(direccion);
+        p.setCalle(pDTO.getCalle());
+        p.setNroDeCalle(pDTO.getNroDeCalle());
 
        pDao.update(p);
     }
@@ -87,7 +87,7 @@ public class GestorPropietario {
         pDTO.setCalle(p.getCalle());
         pDTO.setNroDeCalle(p.getNroDeCalle());
         pDTO.setProvincia(p.getProvincia());
-        //pDTO.setLocalidad(p.getLocalidad());
+        pDTO.setLocalidad(p.getLocalidad().getNombre());
         pDTO.setTelefono(p.getTelefono());
         pDTO.setEmail(p.getEmail());
 
