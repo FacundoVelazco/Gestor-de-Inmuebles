@@ -4,6 +4,7 @@ import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
 import DAO.Util.VendedorDTO;
+import DAO.Util.PropietarioDTO;
 import GUI.Panels.*;
 import GUI.Util.Pantalla;
 import javax.swing.*;
@@ -26,6 +27,10 @@ public class GestorGUI {
 
             case ABM_CLIENTE:
                 framePrincipal.setContentPane(new PantallaABMCliente().getPanelPrincipal());
+                break;
+
+            case ABM_PROPIETARIO:
+                framePrincipal.setContentPane(new PantallaABMPropietario().getPanelPrincipal());
                 break;
 
             case CREAR_CLIENTE:
@@ -56,7 +61,25 @@ public class GestorGUI {
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+             break;
 
+            case CATALOGO:
+                framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal());
+                framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                break;
+
+            case VER_INMUEBLE:
+                framePrincipal.setContentPane(new PantallaVerInmueble((InmuebleDTO) elemento).getPanelPrincipal());
+                break;
+
+            case CREAR_PROPIETARIO:
+                PantallaCrearPropietario pantallaCrearPropietario;
+                if(elemento == null){
+                    pantallaCrearPropietario = new PantallaCrearPropietario();
+                }else{
+                    pantallaCrearPropietario = new PantallaCrearPropietario((PropietarioDTO) elemento);
+                }
+                framePrincipal.setContentPane(pantallaCrearPropietario.getPanelPrincipal());
                 break;
             case ABM_VENDEDOR:
                 framePrincipal.setContentPane(new PantallaABMVendedor().getPanelPrincipal());
@@ -179,6 +202,10 @@ public class GestorGUI {
         frameLogin.setSize(350, 230);
         frameLogin.setLocationRelativeTo(null);
         frameLogin.setResizable(false);
+    }
+
+    public static void pack(){
+        framePrincipal.pack();
     }
 
 

@@ -21,15 +21,23 @@ public class PropietarioDTO {
     private String username;
     private String password;
     private Integer idLocalidad;
-    private Integer idProvincia;
     private Integer idDireccion;
     private String calle;
-    private Integer numeroDeCalle;
+    private String nroDeCalle;
     private String barrio;
+    private String telefono;
 
 
 
     public PropietarioDTO(){
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public void setId(Integer id) {
@@ -138,30 +146,6 @@ public class PropietarioDTO {
         this.idLocalidad = idLocalidad;
     }
 
-    public Integer getIdProvincia() {
-        return idProvincia;
-    }
-
-    public void setIdProvincia(Integer idProvincia) {
-        this.idProvincia = idProvincia;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public Integer getNumeroDeCalle() {
-        return numeroDeCalle;
-    }
-
-    public void setNumeroDeCalle(Integer numeroDeCalle) {
-        this.numeroDeCalle = numeroDeCalle;
-    }
-
     public String getBarrio() {
         return barrio;
     }
@@ -190,4 +174,19 @@ public class PropietarioDTO {
         this.vendedor = vendedor;
     }
 
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNroDeCalle() {
+        return nroDeCalle;
+    }
+
+    public void setNroDeCalle(String nroDeCalle) {
+        this.nroDeCalle = nroDeCalle;
+    }
 }

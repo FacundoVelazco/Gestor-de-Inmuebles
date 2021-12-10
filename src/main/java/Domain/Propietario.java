@@ -42,16 +42,36 @@ public class Propietario implements Usuario {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
-    @OneToOne
+    @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;
     @Column(name = "provincia")
     private String provincia;
     @Column(name = "email")
     private String email;
+    @Column(name = "calle")
+    private String calle;
+    @Column(name = "numeroDeCalle")
+    private String nroDeCalle;
 
     public String getProvincia() {
         return provincia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNroDeCalle() {
+        return nroDeCalle;
+    }
+
+    public void setNroDeCalle(String nroDeCalle) {
+        this.nroDeCalle = nroDeCalle;
     }
 
     public Localidad getLocalidad() {

@@ -2,6 +2,8 @@ package GUI.Panels;
 
 import DAO.Util.InmuebleDTO;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
+import Services.GestorClientes;
+import Services.GestorGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -68,12 +70,8 @@ public class PantallaVerInmueble{
     private List<ImageIcon> fotosSeleccionadas;
     private Integer imagenSeleccionada;
     private ImageIcon imagenPorDefecto;
-    private InmuebleDTO inmuebleAMostrar;
 
     public PantallaVerInmueble(InmuebleDTO idto) {
-
-        //Creo el inmuebleDTO para el manejo de datos
-        inmuebleAMostrar = new InmuebleDTO();
 
         //Creamos el panel externo que va a mostrar nuestras imagenes
         panelImagenExternoClase = new PanelImagen();
@@ -104,6 +102,13 @@ public class PantallaVerInmueble{
                 imagenSeleccionada--;
                 panelImagenExternoClase.setImagenVisible(fotosSeleccionadas.get(imagenSeleccionada));
                 manejoBotones();
+            }
+        });
+
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.popModificar(idto.getPreferenciasClienteDTO());
             }
         });
 

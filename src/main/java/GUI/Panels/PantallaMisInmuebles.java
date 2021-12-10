@@ -83,6 +83,8 @@ public class PantallaMisInmuebles {
     private ActionListener actionListenerBotonSiguiente;
 
 
+
+    //TODO HACER REMAKE CONSTRUCTOR
     public PantallaMisInmuebles() {
         //Seteamos parámetros del inmueble por defecto
         crearInmueblePorDefecto();
@@ -99,7 +101,11 @@ public class PantallaMisInmuebles {
 
         //Obtengo los primeros 6 inmuebles del propietario (el ultimo solo para determinar si se habilita o no el boton de siguiente)
         inmueblesActuales = new ArrayList<>();
-        inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario,1,6));
+        try {
+            inmueblesActuales.addAll(gestorInmuebles.listarInmueblesPorPropietario(idPropietario, 1, 6));
+        }catch (Exception e){
+            //ERROR :P
+        }
 
         actualizarTablitaInmuebles(inmueblesActuales);
         actualizarBotones();
