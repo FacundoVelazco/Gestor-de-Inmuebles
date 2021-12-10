@@ -45,8 +45,6 @@ public class DAOBdInmueble implements InmuebleDAO{
     public Inmueble getById(int id) {
         EntityManager manager = Conexion.emf.createEntityManager();
         Inmueble i = manager.find(Inmueble.class, id);
-        //No logro que las imagenes se muestren bien, por lo tanto solo muestro por el momento la imagen principal
-        System.out.println(i.getFotosInmueble().size());
         ArrayList<Imagen> listaAux = new ArrayList<>();
         listaAux.addAll(i.getFotosInmueble());
         i.setFotosInmueble(Imagen.limpiezaDeDuplicados(i.getFotoPrincipal(), listaAux));

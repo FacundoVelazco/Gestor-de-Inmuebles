@@ -15,6 +15,7 @@ import java.util.Stack;
 public class GestorGUI {
 
     static JFrame framePrincipal = new JFrame();
+
     static Stack<Pantalla> historia = new Stack<>();
 
     //Variables para obtener tamaño de pantalla
@@ -67,7 +68,7 @@ public class GestorGUI {
                 framePrincipal.setContentPane(new PanelImagen().getPanelPrincipal()); //TODO remover paneles de testeo
                 break;
             case panelTest2:
-                framePrincipal.setContentPane(new PanelTest2());
+                framePrincipal.setContentPane(new PantallaVerInmueble((InmuebleDTO) elemento).getPanelPrincipal());
                 break;
             case panelTest3:
                 framePrincipal.setContentPane(new PanelTest3());
@@ -103,6 +104,16 @@ public class GestorGUI {
             historia.pop();
             framePrincipal.setLocationRelativeTo(null);
             setPantalla(historia.lastElement(), null);
+        } else {
+            System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
+        }
+    }
+
+    public static void popModificar(Object elemento) {
+        if (historia.size() > 1) {
+            historia.pop();
+            framePrincipal.setLocationRelativeTo(null);
+            setPantalla(historia.lastElement(), elemento);
         } else {
             System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
         }

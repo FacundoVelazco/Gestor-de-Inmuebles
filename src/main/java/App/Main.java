@@ -1,8 +1,10 @@
 package App;
 
 import DAO.Util.Conexion;
+import DAO.Util.InmuebleDTO;
 import Services.GestorGUI;
 import GUI.Util.Pantalla;
+import Services.GestorInmuebles;
 
 
 import javax.persistence.EntityManager;
@@ -28,6 +30,12 @@ public class Main {
 //        Imagen imagen = new Imagen(); imagen.setImagen(new ImageIcon(new ImageIcon("src/main/java/Materials/casitadefault.png").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
 //        inmueble.setFotoPrincipal(imagen);
 //        inmuebleDAO.persist(inmueble);
-        GestorGUI.init(Pantalla.MENU_PRINCIPAL);
+
+
+        GestorGUI.init(Pantalla.MIS_INMUEBLES);
+        GestorInmuebles g = new GestorInmuebles();
+        InmuebleDTO i = g.cargarInmueble(1650);
+        GestorGUI.pushModificar(Pantalla.panelTest2,i);
+
     }
 }
