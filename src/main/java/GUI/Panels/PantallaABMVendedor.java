@@ -1,7 +1,12 @@
 package GUI.Panels;
 
-import GUI.GestorGUI;
-import GUI.Pantalla;
+import DAO.Util.ClienteDTO;
+import DAO.Util.VendedorDTO;
+import GUI.*;
+import GUI.Util.Pantalla;
+import Services.GestorGUI;
+import Services.GestorVendedor;
+
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -26,15 +31,10 @@ public class PantallaABMVendedor {
     private JPanel panelControles;
     private JButton buttonLimpiar;
     private JButton buttonNuevoVendedor;
+    private JButton volverButton;
 
-    private DataModel dataModel = new DataModel(DATA, COLUMNS);
+    private DefaultTableModel dataModel = new DefaultTableModel(COLUMNS,0);
     private static final String[] COLUMNS = {"Nombre", "Apellido","Nombre de usuario"};
-    private static final Object[][] DATA = {
-            {"Vendedor1", "ekisde", "v1ekisde"}, {"Agustín Ignacio", "García", "garagus_99"},
-            {"Eira Micaela","Martínez","eira12"},{"Facundo Jesualdo","Velazco","elfacu"},
-            {"Bruno","Agretti","bagretti"},{"Pablo","Leonarduzzi","pablisky95"},
-            {"Elon","Musk","tesla"},
-            {"Face","Book","meta"},};
 
     private class DataModel extends DefaultTableModel{
         public DataModel(Object[][] data, Object[] columnNames) {
@@ -51,28 +51,29 @@ public class PantallaABMVendedor {
     public PantallaABMVendedor() {
 
         //Configuración de la tabla
-        tablaVendedores.setModel(new DataModel(DATA, COLUMNS));
+        tablaVendedores.setModel(dataModel);
         tablaVendedores.getTableHeader().setReorderingAllowed(false);
         tablaVendedores.getTableHeader().setResizingAllowed(false);
         tablaVendedores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         sorter = new TableRowSorter<>(dataModel);
         tablaVendedores.setRowSorter(sorter);
 
+        // Carga de vendedores en la tabla
+        GestorVendedor gestorVendedor = new GestorVendedor();
+        for (VendedorDTO c : gestorVendedor.listarVendedores()){
+            ((DefaultTableModel) tablaVendedores.getModel()).insertRow(0,new Object[]{c.getUsername(),c.getNombre(),c.getApellido(),c.getId()});
+        }
+
         buttonNuevoVendedor.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {GestorGUI.push(Pantalla.CREAR_VENDEDOR);
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.push(Pantalla.CREAR_VENDEDOR);
             }
         });
 
         botonModificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog framePopUp = new JDialog(GestorGUI.getFrame());
-                framePopUp.add(new PantallaModificarVendedorPopup(framePopUp, (String) dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),2)).getPanelPrincipal());
-                framePopUp.setLocationRelativeTo(null);
-                framePopUp.setResizable(false);
-                framePopUp.setSize(350,275);
-                framePopUp.setVisible(true);
 
             }
         });
@@ -114,14 +115,39 @@ public class PantallaABMVendedor {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaVendedores.getSelectedRow()>-1 && e.getValueIsAdjusting()){
-                    System.out.println("Vendedor seleccionado: " +
-                            dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),0));
                     botonesActivados(true);
                 }
             }
         });
 
+        botonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(GestorGUI.popUpConfirmacion("Eliminar vendedor","¿Está seguro que desea eliminar el vendedor?")){
+                    String username = dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),0).toString();
+                    gestorVendedor.borrarVendedorByUsername(username);
+                    botonesActivados(false);
+                    GestorGUI.refreshCurrent();
+                }
+            }
+        });
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VendedorDTO vendedor = gestorVendedor.getVendedorByUsername(
+                        dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),0).toString());
+                GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,vendedor);
+            }
+        });
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.pop();
+            }
+        });
+
     }
+
 
     /** Activa o desactiva los botones de Eliminar y Modificar */
     private void botonesActivados(Boolean b){

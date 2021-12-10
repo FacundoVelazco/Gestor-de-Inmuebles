@@ -1,6 +1,12 @@
 package GUI.Panels;
 
-import GUI.GestorGUI;
+
+import DAO.Util.ClienteDTO;
+import DAO.Util.PreferenciaDTO;
+import DAO.Util.VendedorDTO;
+import Services.GestorClientes;
+import Services.GestorGUI;
+import Services.GestorVendedor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -37,6 +43,8 @@ public class PantallaCrearVendedor {
     private JLabel labelErrorDNI;
     private JLabel labelErrorLegajo;
 
+    GestorVendedor gestorVendedor = new GestorVendedor();
+
     /*Método que retorna true si un string es un numero entero escrito como string*/
 
     public boolean isInteger(String s) {
@@ -65,65 +73,94 @@ public class PantallaCrearVendedor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.pop();
-                GestorGUI.updateFramePrincipal();
             }
         });
         crearVendedorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                boolean bandera = true;
-
-                if (textFieldNombreUsuario.getText().length() > 20 || textFieldNombreUsuario.getText().length() < 5){
-                    labelErrorUsuario.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorUsuario.setVisible(false);
-
-                if ((textFieldContraseña.getText().length() < 6) || (textFieldContraseña.getText().length() > 25)){
-                    labelErrorContraseña.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorContraseña.setVisible(false);
-
-                if (!textFieldConfirmarContraseña.getText().equals(textFieldContraseña.getText())){
-                    labelErrorConfirmarContraseña.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorConfirmarContraseña.setVisible(false);
-
-                if (textFieldNombre.getText().length() > 30 || textFieldNombre.getText().length() < 3){
-                    labelErrorNombre.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorNombre.setVisible(false);
-
-                if (textFieldApellido.getText().length() > 30 || textFieldApellido.getText().length() < 2){
-                    labelErrorApellido.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorApellido.setVisible(false);
-
-                if (!(isInteger(textFieldDNI.getText())) || textFieldDNI.getText().length() < 7 || textFieldDNI.getText().length() > 9){
-                    labelErrorDNI.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorDNI.setVisible(false);
-
-                if (!(isInteger(textFieldLegajo.getText())) || textFieldLegajo.getText().length() != 6){
-                    labelErrorLegajo.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorLegajo.setVisible(false);
-
-                GestorGUI.updateFramePrincipal();
-
-                if(bandera){
+                if(verificacion()){
+                    // TODO guardar o actualizar vendedor
+                    VendedorDTO vendedorDTO = collectDataVendedor();
+                    gestorVendedor.guardarVendedor(vendedorDTO);
                     GestorGUI.pop();
                 }
             }
         });
     }
+    public PantallaCrearVendedor(VendedorDTO vendedorDTO){
+        this();
+        crearVendedorButton.setText("Modificar Vendedor");
+        textFieldNombreUsuario.setText(vendedorDTO.getUsername());
+        textFieldNombre.setText(vendedorDTO.getNombre());
+        textFieldApellido.setText(vendedorDTO.getApellido());
+        textFieldDNI.setText(String.valueOf(vendedorDTO.getDni()));
+        textFieldLegajo.setText(String.valueOf(vendedorDTO.getNroLegajo()));
+        textFieldContraseña.setText(vendedorDTO.getPassword());
+        textFieldConfirmarContraseña.setText(vendedorDTO.getPassword());
+
+
+    }
+    private VendedorDTO collectDataVendedor() {
+
+        VendedorDTO vendedor = new VendedorDTO();
+        vendedor.setUsername(textFieldNombreUsuario.getText());
+        vendedor.setPassword(textFieldContraseña.getText());
+        vendedor.setNombre(textFieldNombre.getText());
+        vendedor.setApellido(textFieldApellido.getText());
+        vendedor.setDni( Integer.valueOf(textFieldDNI.getText()));
+        vendedor.setNroLegajo(Integer.valueOf(textFieldLegajo.getText()));
+        return vendedor;
+    }
+    public boolean verificacion(){
+
+        boolean bandera = true;
+
+        if (textFieldNombreUsuario.getText().length() > 20 || textFieldNombreUsuario.getText().length() < 5){
+            labelErrorUsuario.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorUsuario.setVisible(false);
+
+        if ((textFieldContraseña.getText().length() < 6) || (textFieldContraseña.getText().length() > 25)){
+            labelErrorContraseña.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorContraseña.setVisible(false);
+
+        if (!textFieldConfirmarContraseña.getText().equals(textFieldContraseña.getText())){
+            labelErrorConfirmarContraseña.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorConfirmarContraseña.setVisible(false);
+
+        if (textFieldNombre.getText().length() > 30 || textFieldNombre.getText().length() < 3){
+            labelErrorNombre.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorNombre.setVisible(false);
+
+        if (textFieldApellido.getText().length() > 30 || textFieldApellido.getText().length() < 2){
+            labelErrorApellido.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorApellido.setVisible(false);
+
+        if (!(isInteger(textFieldDNI.getText())) || textFieldDNI.getText().length() < 7 || textFieldDNI.getText().length() > 9){
+            labelErrorDNI.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorDNI.setVisible(false);
+
+        if (!(isInteger(textFieldLegajo.getText())) || textFieldLegajo.getText().length() != 6){
+            labelErrorLegajo.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorLegajo.setVisible(false);
+
+        return bandera;
+    }
+
+
 
 
 }

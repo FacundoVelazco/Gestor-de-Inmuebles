@@ -1,5 +1,6 @@
 package Domain;
 
+import DAO.Util.PropietarioDTO;
 import Domain.Util.TipoUser;
 import Domain.Util.Usuario;
 
@@ -36,13 +37,27 @@ public class Vendedor implements Usuario {
     @Column(name = "apellido")
     private String apellido;
 
-    @OneToOne
+    @Column(name = "provincia")
+    private String provincia;
+
+    @Column(name = "calle")
+    private String calle;
+
+    @Column(name = "numeroDeCalle")
+    private String numeroDeCalle;
+
+    @ManyToOne
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;
 
-    @OneToOne
-    @JoinColumn(name = "id_direccion")
-    private Direccion direccion;
+    @OneToMany
+    @JoinColumn(name = "id_propietarios")
+    private List<PropietarioDTO> propietarios;
+
+
+
+
+
 
 
 
@@ -122,12 +137,28 @@ public class Vendedor implements Usuario {
         this.localidad = localidad;
     }
 
-    public Direccion getDireccion() {
-        return direccion;
+    public String getProvincia() {
+        return provincia;
     }
 
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumeroDeCalle() {
+        return numeroDeCalle;
+    }
+
+    public void setNumeroDeCalle(String numeroDeCalle) {
+        this.numeroDeCalle = numeroDeCalle;
     }
 
     @Override

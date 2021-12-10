@@ -7,5 +7,7 @@ public enum Pantalla {
     MIS_INMUEBLES,
     C_INMUEBLE,
     MENU_PRINCIPAL,
-    LOGIN
+    LOGIN,
+    ABM_VENDEDOR,
+    CREAR_VENDEDOR
 }

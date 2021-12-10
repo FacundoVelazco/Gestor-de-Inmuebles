@@ -73,4 +73,6 @@ public class GestorPropietario {
         return listaDto;
     }
 
+
+
 }

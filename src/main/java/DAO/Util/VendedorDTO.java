@@ -18,12 +18,12 @@ public class VendedorDTO {
     private String apellido;
     private String password;
     private String username;
-    private String localidad;
+    private LocalidadDTO localidad;
     private Integer idLocalidad;
     private String provincia;
     private Integer idProvincia;
     private String calle;
-    private Integer numeroDeCalle;
+    private String numeroDeCalle;
     private Integer idDireccion;
 
     public Integer getDni() {
@@ -89,14 +89,6 @@ public class VendedorDTO {
         this.username = username;
     }
 
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
-    }
-
     public Integer getIdLocalidad() {
         return idLocalidad;
     }
@@ -129,11 +121,11 @@ public class VendedorDTO {
         this.calle = calle;
     }
 
-    public Integer getNumeroDeCalle() {
+    public String getNumeroDeCalle() {
         return numeroDeCalle;
     }
 
-    public void setNumeroDeCalle(Integer numeroDeCalle) {
+    public void setNumeroDeCalle(String numeroDeCalle) {
         this.numeroDeCalle = numeroDeCalle;
     }
 
@@ -147,6 +139,14 @@ public class VendedorDTO {
 
     public Integer getId() {
         return id;
+    }
+
+    public LocalidadDTO getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(LocalidadDTO localidad) {
+        this.localidad = localidad;
     }
 
     public void setId(Integer id) {
