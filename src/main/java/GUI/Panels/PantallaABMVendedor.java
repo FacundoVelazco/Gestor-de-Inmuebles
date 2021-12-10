@@ -136,7 +136,7 @@ public class PantallaABMVendedor {
             public void actionPerformed(ActionEvent e) {
                 VendedorDTO vendedor = gestorVendedor.getVendedorByUsername(
                         dataModel.getValueAt(tablaVendedores.convertRowIndexToModel(tablaVendedores.getSelectedRow()),0).toString());
-                GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,vendedor);
+                GestorGUI.pushModificar(Pantalla.CREAR_VENDEDOR,vendedor);
             }
         });
         volverButton.addActionListener(new ActionListener() {

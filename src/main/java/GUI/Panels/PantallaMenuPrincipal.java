@@ -100,6 +100,12 @@ public class PantallaMenuPrincipal {
 
             }
         });
+        altaBajaYModificarButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.push(Pantalla.ABM_VENDEDOR);
+            }
+        });
     }
 
     public JPanel getPanelPrincipal(){

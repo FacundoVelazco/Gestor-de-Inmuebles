@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.Util.Conexion;
 import Domain.Cliente;
+import Domain.Inmueble;
+import Domain.Localidad;
 import Domain.Vendedor;
 
 import javax.persistence.EntityManager;
@@ -32,15 +34,14 @@ public class DAOBdVendedor implements VendedorDAO{
     public void update(Vendedor v) {
         EntityManager manager = Conexion.emf.createEntityManager();
 
-        String username = v.getUsername();
         manager.getTransaction().begin();
-        Query query = manager.createQuery("from Vendedor c where c.username = :username");
-        query.setParameter("username",username);
-        if(!query.getResultList().isEmpty()){
-            Query query2 = manager.createQuery("delete from Vendedor c where c.username = :username");
-            query2.setParameter("username",username).executeUpdate();
+
+        if(v.getId() != null) {
+            Vendedor aux = manager.merge(v);
+            manager.persist(aux);
+        }else{
+            manager.persist(v);
         }
-        manager.persist(v);
         manager.getTransaction().commit();
         manager.close();
     }

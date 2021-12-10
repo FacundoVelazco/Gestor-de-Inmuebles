@@ -1,12 +1,8 @@
 package Domain;
 
-import DAO.Util.PropietarioDTO;
 import Domain.Util.TipoUser;
 import Domain.Util.Usuario;
-
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "vendedor")
@@ -25,9 +21,6 @@ public class Vendedor implements Usuario {
     @Column(name = "dni")
     private Integer dni;
 
-    @Column(name = "tipo_dni")
-    private String tipoDni;
-
     @Column(name = "nro_legajo")
     private Integer nroLegajo;
 
@@ -37,33 +30,6 @@ public class Vendedor implements Usuario {
     @Column(name = "apellido")
     private String apellido;
 
-    @Column(name = "provincia")
-    private String provincia;
-
-    @Column(name = "calle")
-    private String calle;
-
-    @Column(name = "numeroDeCalle")
-    private String numeroDeCalle;
-
-    @ManyToOne
-    @JoinColumn(name = "id_localidad")
-    private Localidad localidad;
-
-    @OneToMany
-    @JoinColumn(name = "id_propietarios")
-    private List<PropietarioDTO> propietarios;
-
-
-
-
-
-
-
-
-//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "vendedor")
-//    private List<Propietario> propietarios;
-
     @Override
     public String getUsername() {
         return username;
@@ -71,10 +37,6 @@ public class Vendedor implements Usuario {
 
     public Integer getDni() {
         return dni;
-    }
-
-    public String getTipoDni() {
-        return tipoDni;
     }
 
     public Integer getNroLegajo() {
@@ -105,10 +67,6 @@ public class Vendedor implements Usuario {
         this.dni = dni;
     }
 
-    public void setTipoDni(String tipoDni) {
-        this.tipoDni = tipoDni;
-    }
-
     public void setNroLegajo(Integer nroLegajo) {
         this.nroLegajo = nroLegajo;
     }
@@ -129,41 +87,8 @@ public class Vendedor implements Usuario {
         this.apellido = apellido;
     }
 
-    public Localidad getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(Localidad localidad) {
-        this.localidad = localidad;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public String getNumeroDeCalle() {
-        return numeroDeCalle;
-    }
-
-    public void setNumeroDeCalle(String numeroDeCalle) {
-        this.numeroDeCalle = numeroDeCalle;
-    }
-
     @Override
     public TipoUser getTipo() {
         return TipoUser.VENDEDOR;
-
     }
 }

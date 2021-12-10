@@ -22,9 +22,7 @@ public class PantallaCrearVendedor {
     private JLabel labelNombreUsuario;
     private JTextField textFieldNombreUsuario;
     private JLabel labelContraseña;
-    private JTextField textFieldContraseña;
-    private JLabel labelConfirmarContraseña;
-    private JTextField textFieldConfirmarContraseña;
+    private JPasswordField textFieldContraseña;
     private JLabel labelNombre;
     private JTextField textFieldNombre;
     private JLabel labelApellido;
@@ -37,38 +35,21 @@ public class PantallaCrearVendedor {
     private JButton crearVendedorButton;
     private JLabel labelErrorUsuario;
     private JLabel labelErrorContraseña;
-    private JLabel labelErrorConfirmarContraseña;
     private JLabel labelErrorNombre;
     private JLabel labelErrorApellido;
     private JLabel labelErrorDNI;
     private JLabel labelErrorLegajo;
+    private VendedorDTO vendedorDTOModificar;
 
     GestorVendedor gestorVendedor = new GestorVendedor();
-
-    /*Método que retorna true si un string es un numero entero escrito como string*/
-
-    public boolean isInteger(String s) {
-        return isInteger(s,10);
-    }
-
-    public boolean isInteger(String s, int radix) {
-        if(s.isEmpty()) return false;
-        for(int i = 0; i < s.length(); i++) {
-            if(i == 0 && s.charAt(i) == '-') {
-                if(s.length() == 1) return false;
-                else continue;
-            }
-            if(Character.digit(s.charAt(i),radix) < 0) return false;
-        }
-        return true;
-    }
-
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
     public PantallaCrearVendedor(){
+        vendedorDTOModificar = new VendedorDTO();
+
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,7 +60,6 @@ public class PantallaCrearVendedor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(verificacion()){
-                    // TODO guardar o actualizar vendedor
                     VendedorDTO vendedorDTO = collectDataVendedor();
                     gestorVendedor.guardarVendedor(vendedorDTO);
                     GestorGUI.pop();
@@ -89,6 +69,9 @@ public class PantallaCrearVendedor {
     }
     public PantallaCrearVendedor(VendedorDTO vendedorDTO){
         this();
+
+        vendedorDTOModificar=vendedorDTO;
+
         crearVendedorButton.setText("Modificar Vendedor");
         textFieldNombreUsuario.setText(vendedorDTO.getUsername());
         textFieldNombre.setText(vendedorDTO.getNombre());
@@ -96,8 +79,6 @@ public class PantallaCrearVendedor {
         textFieldDNI.setText(String.valueOf(vendedorDTO.getDni()));
         textFieldLegajo.setText(String.valueOf(vendedorDTO.getNroLegajo()));
         textFieldContraseña.setText(vendedorDTO.getPassword());
-        textFieldConfirmarContraseña.setText(vendedorDTO.getPassword());
-
 
     }
     private VendedorDTO collectDataVendedor() {
@@ -107,9 +88,12 @@ public class PantallaCrearVendedor {
         vendedor.setPassword(textFieldContraseña.getText());
         vendedor.setNombre(textFieldNombre.getText());
         vendedor.setApellido(textFieldApellido.getText());
-        vendedor.setDni( Integer.valueOf(textFieldDNI.getText()));
+        vendedor.setDni(Integer.valueOf(textFieldDNI.getText()));
         vendedor.setNroLegajo(Integer.valueOf(textFieldLegajo.getText()));
+
+        vendedor.setId(vendedorDTOModificar.getId());
         return vendedor;
+
     }
     public boolean verificacion(){
 
@@ -126,12 +110,6 @@ public class PantallaCrearVendedor {
             bandera = false;
         }
         else labelErrorContraseña.setVisible(false);
-
-        if (!textFieldConfirmarContraseña.getText().equals(textFieldContraseña.getText())){
-            labelErrorConfirmarContraseña.setVisible(true);
-            bandera = false;
-        }
-        else labelErrorConfirmarContraseña.setVisible(false);
 
         if (textFieldNombre.getText().length() > 30 || textFieldNombre.getText().length() < 3){
             labelErrorNombre.setVisible(true);
@@ -159,6 +137,24 @@ public class PantallaCrearVendedor {
 
         return bandera;
     }
+
+    /*Método que retorna true si un string es un numero entero escrito como string*/
+    public boolean isInteger(String s) {
+        return isInteger(s,10);
+    }
+
+    public boolean isInteger(String s, int radix) {
+        if(s.isEmpty()) return false;
+        for(int i = 0; i < s.length(); i++) {
+            if(i == 0 && s.charAt(i) == '-') {
+                if(s.length() == 1) return false;
+                else continue;
+            }
+            if(Character.digit(s.charAt(i),radix) < 0) return false;
+        }
+        return true;
+    }
+
 
 
 

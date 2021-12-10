@@ -46,7 +46,7 @@ public class GestorPropietario {
         direccion.setCalle(pDTO.getCalle());
         direccion.setNumero(pDTO.getNumeroDeCalle());
         direccion.setId(pDTO.getIdDireccion());
-        p.setDireccion(direccion);
+//        p.setDireccion(direccion);
 
 
        // -> deberiamos colocar los atributos de c/Clase en el DTO de propietario

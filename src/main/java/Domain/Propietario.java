@@ -38,10 +38,8 @@ public class Propietario implements Usuario {
     @Column(name = "tipo_dni")
     private TipoDNI tipoDNI;
     @Column(name = "dni")
-    private String Dni;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_direccion")
-    private Direccion direccion;
+    private String dni;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
     @OneToOne
@@ -51,9 +49,6 @@ public class Propietario implements Usuario {
     private String provincia;
     @Column(name = "email")
     private String email;
-    @ManyToOne()
-    @JoinColumn(name = "id_vendedor")
-    private Vendedor vendedor;
 
     public String getProvincia() {
         return provincia;
@@ -76,19 +71,11 @@ public class Propietario implements Usuario {
     }
 
     public String getDni() {
-        return Dni;
+        return dni;
     }
 
     public void setDni(String dni) {
-        Dni = dni;
-    }
-
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
+        this.dni = dni;
     }
 
     public List<Inmueble> getInmuebles() {
@@ -122,14 +109,6 @@ public class Propietario implements Usuario {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Vendedor getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
     }
 
     public void setEmail(String email) {

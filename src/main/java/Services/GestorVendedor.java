@@ -27,11 +27,7 @@ public class GestorVendedor {
         v.setApellido(vDTO.getApellido());
         v.setPassword(vDTO.getPassword());
         v.setUsername(vDTO.getUsername());
-
-        Localidad localidad = new Localidad();
-        localidad.setNombre(vDTO.getLocalidad().getNombre());
-        localidad.setId(vDTO.getLocalidad().getId());
-        v.setLocalidad(localidad);
+        v.setId(vDTO.getId());
 
         vDao.update(v);
     }
@@ -65,14 +61,8 @@ public class GestorVendedor {
         vDTO.setApellido(v.getApellido());
         vDTO.setPassword(v.getPassword());
         vDTO.setDni(v.getDni());
-        vDTO.setProvincia(v.getProvincia());
         vDTO.setNroLegajo(v.getNroLegajo());
-        vDTO.setCalle(v.getCalle());
-        vDTO.setNumeroDeCalle(v.getNumeroDeCalle());
-
-//        vDTO.setLocalidad(v.getLocalidad());
-//        vDTO.setPropietarios(v.getPropietarios()); // TODO ver como trabajar con las clases sin cagarla :c
-
+        vDTO.setId(v.getId());
 
         return vDTO;
     }
