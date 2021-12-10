@@ -11,6 +11,9 @@ public enum TipoInmueble {
 
     //Para obtener el tipo segun la opcion seleccionada por el usuario
     public static TipoInmueble obtenerByString(String s){
+        if (s==null){
+            return null;
+        }
         switch (s){
             case "Local-Oficina":
                 return LOCAL_OFICINA;
@@ -27,6 +30,9 @@ public enum TipoInmueble {
     }
 
     public static String obtenerStringParaComboBox(TipoInmueble t){
+        if(t==null){
+            return "Cualquiera";
+        }
         switch (t){
             case LOCAL_OFICINA:
                 return "Local-Oficina";

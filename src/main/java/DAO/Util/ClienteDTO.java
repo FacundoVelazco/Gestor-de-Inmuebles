@@ -3,7 +3,7 @@ package DAO.Util;
 import Domain.Preferencia;
 
 public class ClienteDTO {
-    private Long id;
+    private Integer id;
     private String username;
     private String nombre;
     private String apellido;
@@ -19,7 +19,7 @@ public class ClienteDTO {
         this.telefono = telefono;
     }
 
-    public ClienteDTO(Long id, String username, String nombre, String apellido) {
+    public ClienteDTO(Integer id, String username, String nombre, String apellido) {
 
         this.id = id;
         this.username = username;
@@ -46,7 +46,7 @@ public class ClienteDTO {
         this.password = password;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

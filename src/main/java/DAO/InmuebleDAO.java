@@ -13,12 +13,13 @@ public interface InmuebleDAO {
 
     public Inmueble getById(int id);
 
-    public List<Inmueble> listAllByPropietario(long idPropietario);
+    public List<Inmueble> listAllByPropietario(int idPropietario);
 
-    public List<Inmueble> listAllByPropietario(long idPropietario, int inicio, int fin);
+    public List<Inmueble> listAllByPropietario(int idPropietario, int inicio, int fin);
 
     public List<Inmueble> listAll();
 
     public List<Inmueble> listAll(int inicio, int fin);
+
 
 }

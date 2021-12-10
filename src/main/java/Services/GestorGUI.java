@@ -4,12 +4,8 @@ import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
 import GUI.Panels.*;
-import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
-import TestGUI.PanelTest2;
-import TestGUI.PanelTest3;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.Stack;
 
@@ -19,9 +15,6 @@ public class GestorGUI {
 
     static Stack<Pantalla> historia = new Stack<>();
 
-    //Variables para obtener tamaño de pantalla
-    static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    static Point centerPoint = ge.getCenterPoint();
 
     private static void setPantalla(Pantalla pantalla, Object elemento){
         switch (pantalla){
@@ -62,7 +55,7 @@ public class GestorGUI {
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                break;
+             break;
 
             case CATALOGO:
                 framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal()); //TODO remover paneles de testeo
@@ -71,17 +64,15 @@ public class GestorGUI {
             case VER_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaVerInmueble((InmuebleDTO) elemento).getPanelPrincipal());
                 break;
-
-            case panelTest3:
-                framePrincipal.setContentPane(new PanelTest3());
-                break;
+              
         }
+        framePrincipal.setLocationRelativeTo(null);
         framePrincipal.revalidate();
         framePrincipal.pack();
     }
 
     public static void init(Pantalla pantalla) {
-        framePrincipal.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+        framePrincipal.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
                 .getImage());
         push(pantalla);
         framePrincipal.pack();
@@ -153,7 +144,7 @@ public class GestorGUI {
 
     public static void popUpReserva(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
         JFrame framePopUp = new JFrame();
-        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
                 .getImage());
         framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         framePopUp.setTitle("Generar reserva");
@@ -163,6 +154,28 @@ public class GestorGUI {
         framePopUp.pack();
 
     }
+
+    public static void abrirLogin(){
+
+        if(framePrincipal!=null){
+            framePrincipal.dispose();
+        }
+
+        JFrame frameLogin = new JFrame();
+        frameLogin.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+                .getImage());
+        frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameLogin.setTitle("Gestor de inmuebles");
+
+        frameLogin.setVisible(true);
+        frameLogin.setContentPane(new PantallaLogin(frameLogin).getPanelPrincipal());
+
+
+        frameLogin.setSize(350, 230);
+        frameLogin.setLocationRelativeTo(null);
+        frameLogin.setResizable(false);
+    }
+
 
     public static void exit(){
         framePrincipal.dispatchEvent(new WindowEvent(framePrincipal, WindowEvent.WINDOW_CLOSING));

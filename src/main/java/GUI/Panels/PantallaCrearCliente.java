@@ -97,12 +97,14 @@ public class PantallaCrearCliente {
         AutoCompletion.enable(comboBoxLocalidad);
 
         //Inicializado del combo box
+        comboBoxTipo.addItem("Cualquiera"); //Agrego opción de cualquiera (para no pedir in tipo de inmueble en especifico)
         for(TipoInmueble tipo : TipoInmueble.values()){
             comboBoxTipo.addItem(TipoInmueble.obtenerStringParaComboBox(tipo));
         }
 
         //init de combo box localidades
-        comboBoxLocalidad.addItem("Santa Fe");
+        comboBoxLocalidad.addItem("Cualquiera");
+        comboBoxLocalidad.addItem("Santa Fe");//TODO agregar localidades
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -120,8 +122,6 @@ public class PantallaCrearCliente {
                     PreferenciaDTO preferenciaDTO = collectDataPreferencias();
                     clienteDTO.setPreferencias(preferenciaDTO);
                     gestorClientes.guardarCliente(clienteDTO);
-
-                    System.out.println("Ejecutado boton crear"); //TODO sysout debug
 
                     GestorGUI.pop();
                 }
@@ -188,8 +188,17 @@ public class PantallaCrearCliente {
 
     private PreferenciaDTO collectDataPreferencias() {
     PreferenciaDTO preferencias = new PreferenciaDTO();
-    preferencias.setTipoInmueble(comboBoxTipo.getSelectedItem().toString());
-    preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+
+    if(comboBoxTipo.getSelectedItem().toString().equals("Cualquiera")){
+        preferencias.setTipoInmueble(null);
+    }else{
+        preferencias.setTipoInmueble(comboBoxTipo.getSelectedItem().toString());
+    }
+    if(comboBoxLocalidad.getSelectedItem().toString().equals("Cualquiera")){
+        preferencias.setLocalidad(null);
+    }else{
+        preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+    }
 
     //nos fijamos que ingresen numeros
     if (formattedTextFieldMonto.getText().replaceAll("[^0-9]", "").length()>0) {

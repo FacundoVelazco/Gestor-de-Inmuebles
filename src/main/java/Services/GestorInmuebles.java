@@ -42,7 +42,7 @@ public class GestorInmuebles {
             //Propietario propietarioInmueble = propietarioDAO.getById(iDTO.getPropietarioInmuebleID());
             //TODO SACAR, ES SOLO PARA PRUEBA
             Propietario propietarioInmueble = new Propietario();
-            propietarioInmueble.setId(1l);
+            propietarioInmueble.setId(1);
             //Se lo asigno al inmueble
             inmueble.setPropietarioInmueble(propietarioInmueble);
         }
@@ -257,7 +257,7 @@ public class GestorInmuebles {
 
         //TODO FALTA LOGICA DE LEVANTAR PROP DE LA BD
         Propietario p = new Propietario();
-        p.setId(1l);
+        p.setId(1);
         inmueble.setPropietarioInmueble(p);
         //TODO QUITAR
 

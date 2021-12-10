@@ -48,7 +48,7 @@ public class InmuebleDTO {
     private List<ImageIcon> fotosInmueble;
     private List<String> nombresArchivosFotos;
     private String observaciones;
-    private Long propietarioInmuebleID;
+    private Integer propietarioInmuebleID;
 
     public InmuebleDTO(){
 
@@ -350,11 +350,11 @@ public class InmuebleDTO {
         this.nombresArchivosFotos = nombresArchivosFotos;
     }
 
-    public Long getPropietarioInmuebleID() {
+    public Integer getPropietarioInmuebleID() {
         return propietarioInmuebleID;
     }
 
-    public void setPropietarioInmuebleID(Long propietarioInmuebleID) {
+    public void setPropietarioInmuebleID(Integer propietarioInmuebleID) {
         this.propietarioInmuebleID = propietarioInmuebleID;
     }
 

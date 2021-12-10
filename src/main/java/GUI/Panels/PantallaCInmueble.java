@@ -25,7 +25,7 @@ public class PantallaCInmueble {
     private JComboBox<String> provinciaCombo;
     private JPanel panelLocalidad;
     private JLabel localidadLabel;
-    private JComboBox<LocalidadDTO> localidadCombo;
+    private JComboBox<String> localidadCombo;
     private JPanel panelBarrio;
     private JPanel panelTipo;
     private JLabel barrioLabel;
@@ -42,7 +42,6 @@ public class PantallaCInmueble {
     private JButton buttonLimpiar;
     private JLabel labelError;
     private PantallaMisInmuebles pantallaMisInmuebles;
-    private static final String[] TIPOS_INMUEBLE = {"Local-Oficina", "Casa", "Departamento", "Terreno", "Quinta", "Galpón"};
 
     public PantallaCInmueble() {
 
@@ -58,8 +57,13 @@ public class PantallaCInmueble {
 
         provinciaCombo.addItem("Santa Fe");
 
-        for (String s: TIPOS_INMUEBLE){
-            tipoCombo.addItem(s);
+        localidadCombo.addItem("Cualquiera");
+        localidadCombo.addItem("Santa Fe");
+        //TODO AGREGAR LOCALIDADESn't
+
+        tipoCombo.addItem("Cualquiera");
+        for (TipoInmueble t: TipoInmueble.values()){
+            tipoCombo.addItem(TipoInmueble.obtenerStringParaComboBox(t));
         }
 
         buscarButton.addActionListener(new ActionListenerBotonAceptar());
@@ -119,7 +123,7 @@ public class PantallaCInmueble {
                 localidadCombo.removeAllItems();
                 GestorLocalidades gestorLocalidades = new GestorLocalidades();
                 List<LocalidadDTO> localidadesDTO = gestorLocalidades.listarLocalidadesDTO();
-                for(LocalidadDTO localidadDTO: localidadesDTO){localidadCombo.addItem(localidadDTO);}
+                for(LocalidadDTO localidadDTO: localidadesDTO){localidadCombo.addItem(localidadDTO.getNombre());}
                 getPanelPrincipal().revalidate();
             }
         }
@@ -128,13 +132,21 @@ public class PantallaCInmueble {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-            //TODO agregar validaciones
             if(validarCampos()){
 
                 PreferenciaDTO preferencias = new PreferenciaDTO();
+                if(localidadCombo.getSelectedItem().toString().equals("Cualquiera")){
+                    preferencias.setLocalidad(null);
+                }else{
+                    preferencias.setLocalidad(localidadCombo.getSelectedItem().toString());
+                }
+                if(tipoCombo.getSelectedItem().toString().equals("Cualquiera")){
+                    preferencias.setTipoInmueble(null);
+                }else{
+                    preferencias.setTipoInmueble(tipoCombo.getSelectedItem().toString());
+                }
 
-                preferencias.setLocalidad(localidadCombo.getSelectedItem().toString());
+
                 if(!dormitoriosTextField.getText().isEmpty()){
                     preferencias.setCantidadDormitorios(Integer.parseInt(dormitoriosTextField.getText()));
                 }else{
@@ -146,7 +158,7 @@ public class PantallaCInmueble {
                     preferencias.setMontoDisponible(null); //*comprar*
                 }
                 preferencias.setBarrio(barrioTextField.getText()); //Se le puede pasar un string vacio (y no debería filtrar por barrio)
-                preferencias.setTipoInmueble(tipoCombo.getSelectedItem().toString());
+
 
                 //Se quita el panel con inmuebles
                 panelInmuebles.remove(0);

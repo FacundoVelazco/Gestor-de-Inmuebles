@@ -2,56 +2,54 @@ package DAO;
 
 import DAO.Util.Conexion;
 import Domain.Cliente;
-import Domain.Propietario;
-
+import Domain.Vendedor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class DAOBdPropietario implements PropietarioDAO{
+public class DAOBdVendedor implements VendedorDAO{
 
     @Override
-    public List<Propietario> listAll() {
+    public List<Vendedor> listAll() {
         EntityManager manager = Conexion.emf.createEntityManager();
-        List<Propietario> lista = (List<Propietario>) manager.createQuery("From Propietario").getResultList();
+        List<Vendedor> lista = (List<Vendedor>) manager.createQuery("From Vendedor").getResultList();
         manager.close();
+
         return lista;
     }
 
     @Override
-    public void save(Propietario p) {
+    public void save(Vendedor v) {
         EntityManager manager = Conexion.emf.createEntityManager();
-
-
         manager.getTransaction().begin();
-        manager.persist(p);
+        manager.persist(v);
         manager.getTransaction().commit();
         manager.close();
     }
 
     @Override
-    public void update(Propietario p) {
+    public void update(Vendedor v) {
         EntityManager manager = Conexion.emf.createEntityManager();
 
-        String username = p.getUsername();
+        String username = v.getUsername();
         manager.getTransaction().begin();
-        Query query = manager.createQuery("from Propietario c where c.username = :username");
+        Query query = manager.createQuery("from Vendedor c where c.username = :username");
         query.setParameter("username",username);
         if(!query.getResultList().isEmpty()){
-            Query query2 = manager.createQuery("delete from Propietario c where c.username = :username");
+            Query query2 = manager.createQuery("delete from Vendedor c where c.username = :username");
             query2.setParameter("username",username).executeUpdate();
         }
-        manager.persist(p);
+        manager.persist(v);
         manager.getTransaction().commit();
-        manager.close();;
+        manager.close();
     }
 
     @Override
     public void deleteByUsername(String username) {
         EntityManager manager = Conexion.emf.createEntityManager();
         manager.getTransaction().begin();
-        Query query = manager.createQuery("delete from Propietario c where c.username = :username");
+        Query query = manager.createQuery("delete from Vendedor c where c.username = :username");
         query.setParameter("username",username).executeUpdate();
 
         manager.getTransaction().commit();
@@ -59,11 +57,11 @@ public class DAOBdPropietario implements PropietarioDAO{
     }
 
     @Override
-    public Propietario getByUsername(String username) {
+    public Vendedor getByUsername(String username) {
         EntityManager manager = Conexion.emf.createEntityManager();
-        Query query = manager.createQuery("from Propietario c where c.username = :username");
-        Propietario propietario = (Propietario) query.setParameter("username",username).getSingleResult();
+        Query query = manager.createQuery("from Vendedor c where c.username = :username");
+        Vendedor vendedor = (Vendedor) query.setParameter("username",username).getSingleResult();
         manager.close();
-        return propietario;
+        return vendedor;
     }
 }
