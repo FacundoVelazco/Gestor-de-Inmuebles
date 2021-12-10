@@ -56,10 +56,6 @@ public class GestorVendedor {
         vDao.deleteByUsername(username);
     }
 
-    public Integer cargarVendedor(VendedorDTO vDTO){
-        return null;
-    }
-
     public List<VendedorDTO> listarVendedores(){
         DAOBdVendedor vDao = new DAOBdVendedor();
         ArrayList<VendedorDTO> listaDto=new ArrayList<>();

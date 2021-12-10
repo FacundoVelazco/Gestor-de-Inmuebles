@@ -58,11 +58,6 @@ public class GestorPropietario {
         pDao.deleteByUsername(username);
     }
 
-    public Propietario cargarPropietario(PropietarioDTO pDTO){
-        DAOBdPropietario pDao = new DAOBdPropietario();
-        return pDao.getByUsername(pDTO.getUsername()); // -> seria de esta forma como hay que realizar el cargar propietario?
-    }
-
     public List<PropietarioDTO> listarPropietarios(){
         DAOBdPropietario pDao = new DAOBdPropietario();
         ArrayList<PropietarioDTO> listaDto=new ArrayList<>();
