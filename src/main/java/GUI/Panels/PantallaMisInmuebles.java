@@ -83,6 +83,8 @@ public class PantallaMisInmuebles {
     private ActionListener actionListenerBotonSiguiente;
 
 
+
+    //TODO HACER REMAKE CONSTRUCTOR
     public PantallaMisInmuebles() {
         //Seteamos parámetros del inmueble por defecto
         crearInmueblePorDefecto();

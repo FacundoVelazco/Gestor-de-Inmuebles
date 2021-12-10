@@ -108,9 +108,7 @@ public class PantallaVerInmueble{
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GestorClientes gC = new GestorClientes();
-                //TODO OBTENER USERNAME DESDE GESTOR
-                GestorGUI.popModificar(gC.getClienteByUsername("Pepe"));
+                GestorGUI.popModificar(idto.getPreferenciasClienteDTO());
             }
         });
 

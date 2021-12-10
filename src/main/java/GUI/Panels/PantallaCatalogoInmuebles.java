@@ -124,14 +124,13 @@ public class PantallaCatalogoInmuebles{
     private Integer idPropietario;
     private Integer paginaActual;
     private ActionListener actionListenerBotonSiguiente;
-
+    private PreferenciaDTO preferenciasCliente;
 
     public PantallaCatalogoInmuebles(PreferenciaDTO preferencias){
         //Seteamos parámetros del inmueble por defecto
         crearInmueblePorDefecto();
 
-        //TODO REMOVER
-        idPropietario = 1;
+        preferenciasCliente=preferencias;
 
         //Defino el gestor
         gestorInmuebles = new GestorInmuebles();
@@ -188,6 +187,7 @@ public class PantallaCatalogoInmuebles{
             @Override
             public void actionPerformed(ActionEvent e) {
                 InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
         });
@@ -197,6 +197,7 @@ public class PantallaCatalogoInmuebles{
             @Override
             public void actionPerformed(ActionEvent e) {
                 InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
         });
@@ -205,6 +206,7 @@ public class PantallaCatalogoInmuebles{
             @Override
             public void actionPerformed(ActionEvent e) {
                 InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
         });
@@ -213,6 +215,7 @@ public class PantallaCatalogoInmuebles{
             @Override
             public void actionPerformed(ActionEvent e) {
                 InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
         });
@@ -221,6 +224,7 @@ public class PantallaCatalogoInmuebles{
             @Override
             public void actionPerformed(ActionEvent e) {
                 InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
         });
