@@ -18,8 +18,6 @@ public class Localidad {
     private String nombre;
     @Column(name = "provincia")
     private String provincia;
-    @Column(name = "Barrios")
-    private List<String> barrios;
 
     public Localidad(String nombre) {
         this.nombre = nombre;
@@ -60,11 +58,4 @@ public class Localidad {
         this.provincia = provincia;
     }
 
-    public List<String> getBarrios() {
-        return barrios;
-    }
-
-    public void setBarrios(List<String> barrios) {
-        this.barrios = barrios;
-    }
 }

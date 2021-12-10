@@ -61,7 +61,7 @@ public class GestorInmuebles {
     }
 
 
-    public List<InmuebleDTO> listarInmueblesPorPropietario(Long idPropietario) {
+    public List<InmuebleDTO> listarInmueblesPorPropietario(Integer idPropietario) {
         ArrayList<InmuebleDTO> listaInmueblesDTO = new ArrayList<>();
         DAOBdInmueble daoInmueble = new DAOBdInmueble();
         ArrayList<Inmueble> listaInmueblesDominio = new ArrayList<>();
@@ -127,13 +127,6 @@ public class GestorInmuebles {
 
         ArrayList<Inmueble> listaAux = new ArrayList<>();
         listaAux.addAll(listaInmuebles);
-
-//        System.out.println(filtro.getLocalidad());
-//        System.out.println(filtro.getBarrio());
-//        System.out.println(filtro.getTipoInmueble());
-//        System.out.println(filtro.getMontoDisponible());
-//        System.out.println(filtro.getCantidadDormitorios());
-
 
 
         //Filtrar por localidad, barrio, tipo, precio, dormitorios

@@ -103,7 +103,8 @@ public class PantallaCrearCliente {
         }
 
         //init de combo box localidades
-        comboBoxLocalidad.addItem("Santa Fe");
+        comboBoxLocalidad.addItem("Cualquiera");
+        comboBoxLocalidad.addItem("Santa Fe");//TODO agregar localidades
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -187,8 +188,17 @@ public class PantallaCrearCliente {
 
     private PreferenciaDTO collectDataPreferencias() {
     PreferenciaDTO preferencias = new PreferenciaDTO();
-    preferencias.setTipoInmueble(comboBoxTipo.getSelectedItem().toString());
-    preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+
+    if(comboBoxTipo.getSelectedItem().toString().equals("Cualquiera")){
+        preferencias.setTipoInmueble(null);
+    }else{
+        preferencias.setTipoInmueble(comboBoxTipo.getSelectedItem().toString());
+    }
+    if(comboBoxLocalidad.getSelectedItem().toString().equals("Cualquiera")){
+        preferencias.setLocalidad(null);
+    }else{
+        preferencias.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
+    }
 
     //nos fijamos que ingresen numeros
     if (formattedTextFieldMonto.getText().replaceAll("[^0-9]", "").length()>0) {
