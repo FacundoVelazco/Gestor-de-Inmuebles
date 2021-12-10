@@ -27,17 +27,7 @@ public class GestorVendedor {
         v.setApellido(vDTO.getApellido());
         v.setPassword(vDTO.getPassword());
         v.setUsername(vDTO.getUsername());
-
-        Localidad localidad = new Localidad();
-        localidad.setNombre(vDTO.getLocalidad());
-        localidad.setId(vDTO.getIdLocalidad());
-        v.setLocalidad(localidad);
-
-        Direccion direccion = new Direccion();
-        direccion.setCalle(vDTO.getCalle());
-        direccion.setNumero(vDTO.getNumeroDeCalle());
-        direccion.setId(vDTO.getIdDireccion());
-        v.setDireccion(direccion);
+        v.setId(vDTO.getId());
 
         vDao.update(v);
     }
@@ -62,5 +52,18 @@ public class GestorVendedor {
         return listaDto;
     }
 
+    public VendedorDTO getVendedorByUsername(String username){
+        DAOBdVendedor vDao = new DAOBdVendedor();
+        Vendedor v = vDao.getByUsername(username);
+        VendedorDTO vDTO = new VendedorDTO();
+        vDTO.setUsername(v.getUsername());
+        vDTO.setNombre(v.getNombre());
+        vDTO.setApellido(v.getApellido());
+        vDTO.setPassword(v.getPassword());
+        vDTO.setDni(v.getDni());
+        vDTO.setNroLegajo(v.getNroLegajo());
+        vDTO.setId(v.getId());
 
+        return vDTO;
+    }
 }

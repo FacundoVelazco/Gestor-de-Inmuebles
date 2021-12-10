@@ -2,10 +2,7 @@ package Domain;
 
 import Domain.Util.TipoUser;
 import Domain.Util.Usuario;
-
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "vendedor")
@@ -24,9 +21,6 @@ public class Vendedor implements Usuario {
     @Column(name = "dni")
     private Integer dni;
 
-    @Column(name = "tipo_dni")
-    private String tipoDni;
-
     @Column(name = "nro_legajo")
     private Integer nroLegajo;
 
@@ -36,19 +30,6 @@ public class Vendedor implements Usuario {
     @Column(name = "apellido")
     private String apellido;
 
-    @OneToOne
-    @JoinColumn(name = "id_localidad")
-    private Localidad localidad;
-
-    @OneToOne
-    @JoinColumn(name = "id_direccion")
-    private Direccion direccion;
-
-
-
-//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "vendedor")
-//    private List<Propietario> propietarios;
-
     @Override
     public String getUsername() {
         return username;
@@ -56,10 +37,6 @@ public class Vendedor implements Usuario {
 
     public Integer getDni() {
         return dni;
-    }
-
-    public String getTipoDni() {
-        return tipoDni;
     }
 
     public Integer getNroLegajo() {
@@ -90,10 +67,6 @@ public class Vendedor implements Usuario {
         this.dni = dni;
     }
 
-    public void setTipoDni(String tipoDni) {
-        this.tipoDni = tipoDni;
-    }
-
     public void setNroLegajo(Integer nroLegajo) {
         this.nroLegajo = nroLegajo;
     }
@@ -114,25 +87,8 @@ public class Vendedor implements Usuario {
         this.apellido = apellido;
     }
 
-    public Localidad getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(Localidad localidad) {
-        this.localidad = localidad;
-    }
-
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
-
     @Override
     public TipoUser getTipo() {
         return TipoUser.VENDEDOR;
-
     }
 }

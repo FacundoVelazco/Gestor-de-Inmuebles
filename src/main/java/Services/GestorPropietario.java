@@ -34,7 +34,6 @@ public class GestorPropietario {
         p.setPassword(pDTO.getPassword());
         p.setTelefono(pDTO.getTelefono());
 
-//        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
         ArrayList<Inmueble> listaInmuebles = new ArrayList<>();
         p.setInmuebles(listaInmuebles);
 
@@ -47,7 +46,6 @@ public class GestorPropietario {
 
         provincia = (pDTO.getProvincia());
         p.setProvincia(provincia);
-
         p.setCalle(pDTO.getCalle());
         p.setNroDeCalle(pDTO.getNroDeCalle());
 
@@ -93,5 +91,7 @@ public class GestorPropietario {
 
         return pDTO;
     }
+
+
 
 }

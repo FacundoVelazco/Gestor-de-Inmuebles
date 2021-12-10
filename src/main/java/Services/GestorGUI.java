@@ -3,6 +3,7 @@ package Services;
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
+import DAO.Util.VendedorDTO;
 import DAO.Util.PropietarioDTO;
 import GUI.Panels.*;
 import GUI.Util.Pantalla;
@@ -79,6 +80,18 @@ public class GestorGUI {
                     pantallaCrearPropietario = new PantallaCrearPropietario((PropietarioDTO) elemento);
                 }
                 framePrincipal.setContentPane(pantallaCrearPropietario.getPanelPrincipal());
+                break;
+            case ABM_VENDEDOR:
+                framePrincipal.setContentPane(new PantallaABMVendedor().getPanelPrincipal());
+                break;
+            case CREAR_VENDEDOR:
+                PantallaCrearVendedor pantallaCrearVendedor;
+                if(elemento == null){
+                    pantallaCrearVendedor = new PantallaCrearVendedor();
+                }else{
+                    pantallaCrearVendedor = new PantallaCrearVendedor((VendedorDTO) elemento);
+                }
+                framePrincipal.setContentPane(pantallaCrearVendedor.getPanelPrincipal());
                 break;
         }
         framePrincipal.setLocationRelativeTo(null);
