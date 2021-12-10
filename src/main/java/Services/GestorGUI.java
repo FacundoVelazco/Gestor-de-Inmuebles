@@ -58,7 +58,8 @@ public class GestorGUI {
              break;
 
             case CATALOGO:
-                framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal()); //TODO remover paneles de testeo
+                framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal());
+                framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 break;
 
             case VER_INMUEBLE:

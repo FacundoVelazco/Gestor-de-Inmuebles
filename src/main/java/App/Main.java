@@ -29,5 +29,7 @@ public class Main {
         //Pantalla de login
         GestorGUI.abrirLogin();
 
+        //GestorGUI.init(Pantalla.MENU_PRINCIPAL);
+
     }
 }

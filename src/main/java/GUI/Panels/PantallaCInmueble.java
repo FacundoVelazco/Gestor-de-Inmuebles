@@ -1,18 +1,14 @@
 package GUI.Panels;
 
-import DAO.Util.InmuebleDTO;
-import DAO.Util.LocalidadDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.Util.TipoInmueble;
 import GUI.AutoCompletion;
-import Services.GestorInmuebles;
 import Services.GestorLocalidades;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Arrays;
 import java.util.List;
 
 public class PantallaCInmueble {
@@ -53,13 +49,14 @@ public class PantallaCInmueble {
         AutoCompletion.enable(localidadCombo);
         AutoCompletion.enable(tipoCombo);
 
-        provinciaCombo.addItemListener(new ItemListenerProvincia());
-
         provinciaCombo.addItem("Santa Fe");
 
         localidadCombo.addItem("Cualquiera");
-        localidadCombo.addItem("Santa Fe");
-        //TODO AGREGAR LOCALIDADESn't
+        GestorLocalidades gestorLocalidades = new GestorLocalidades();
+        for(String loc : gestorLocalidades.listarLocalidades()){
+            localidadCombo.addItem(loc);
+        }
+
 
         tipoCombo.addItem("Cualquiera");
         for (TipoInmueble t: TipoInmueble.values()){
@@ -116,18 +113,6 @@ public class PantallaCInmueble {
 
     }
 
-    private class ItemListenerProvincia implements ItemListener{
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            if(provinciaCombo.getSelectedItem() != null){
-                localidadCombo.removeAllItems();
-                GestorLocalidades gestorLocalidades = new GestorLocalidades();
-                List<LocalidadDTO> localidadesDTO = gestorLocalidades.listarLocalidadesDTO();
-                for(LocalidadDTO localidadDTO: localidadesDTO){localidadCombo.addItem(localidadDTO.getNombre());}
-                getPanelPrincipal().revalidate();
-            }
-        }
-    }
     private class ActionListenerBotonAceptar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

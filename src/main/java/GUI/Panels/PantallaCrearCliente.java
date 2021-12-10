@@ -7,6 +7,7 @@ import Domain.Util.TipoInmueble;
 import GUI.AutoCompletion;
 import Services.GestorClientes;
 import Services.GestorGUI;
+import Services.GestorLocalidades;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -104,7 +105,10 @@ public class PantallaCrearCliente {
 
         //init de combo box localidades
         comboBoxLocalidad.addItem("Cualquiera");
-        comboBoxLocalidad.addItem("Santa Fe");//TODO agregar localidades
+        GestorLocalidades gestorLocalidades = new GestorLocalidades();
+        for(String loc : gestorLocalidades.listarLocalidades()){
+            comboBoxLocalidad.addItem(loc);
+        }
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -152,6 +156,11 @@ public class PantallaCrearCliente {
         //Relleno de campos de las preferencias
         comboBoxTipo.setSelectedItem(elemento.getPreferencias().getTipoInmueble());
         //Aqui se setearía la localidad
+        if(elemento.getPreferencias().getLocalidad() == null){
+            comboBoxLocalidad.setSelectedItem("Cualquiera");
+        }else{
+            comboBoxLocalidad.setSelectedItem(elemento.getPreferencias().getLocalidad());
+        }
         textFieldBarrio.setText(elemento.getPreferencias().getBarrio());
         if(elemento.getPreferencias().getMontoDisponible()!=null) formattedTextFieldMonto.setText(elemento.getPreferencias().getMontoDisponible().toString());
         dataModel.setValueAt(elemento.getPreferencias().getTieneCochera(),0,1);

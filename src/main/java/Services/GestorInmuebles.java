@@ -128,7 +128,7 @@ public class GestorInmuebles {
         ArrayList<Inmueble> listaAux = new ArrayList<>();
         listaAux.addAll(listaInmuebles);
 
-
+        //System.out.println("1: " + listaAux.size());
         //Filtrar por localidad, barrio, tipo, precio, dormitorios
         for(Inmueble i: listaInmuebles){
             if(filtro.getLocalidad() != null) {
@@ -136,6 +136,8 @@ public class GestorInmuebles {
                     listaAux.remove(i);
                 }
             }
+
+            //System.out.println("2: " + listaAux.size());
 
             //Si el barrio no es ""
             if(filtro.getBarrio() == null || !filtro.getBarrio().isEmpty()){
@@ -148,22 +150,29 @@ public class GestorInmuebles {
                     listaAux.remove(i);
                 }
             }
-            if(filtro.getTipoInmueble() != null){
+
+            //System.out.println("3: " + listaAux.size());
+            if(filtro.getTipoInmueble() != null && filtro.getTipoInmueble() != "Cualquiera"){
                 if(!i.getCaracteristicasInmueble().getTipoInmueble().equals(TipoInmueble.obtenerByString(filtro.getTipoInmueble()))){
                     listaAux.remove(i);
                 }
             }
+
+            //System.out.println("4: " + listaAux.size());
             if(filtro.getMontoDisponible() != null){
                 if(!(i.getPrecio()<=filtro.getMontoDisponible())){
                     listaAux.remove(i);
                 }
             }
+
+            //System.out.println("5: " + listaAux.size());
             if(filtro.getCantidadDormitorios() != null){
                 if(!(i.getCaracteristicasInmueble().getCantidadDormitorios()>=filtro.getCantidadDormitorios())){
                     listaAux.remove(i);
                 }
             }
 
+            //System.out.println("6: " + listaAux.size());
             //Si le interesa que tenga cochera, igual para las otras características
             if(filtro.getTieneCochera()!=null && filtro.getTieneCochera()) {
                 if (!i.getCaracteristicasInmueble().getTieneCochera()) {
@@ -171,30 +180,32 @@ public class GestorInmuebles {
                 }
             }
 
+            //System.out.println("7: " + listaAux.size());
+
             if(filtro.getTienePatio()!=null && filtro.getTienePatio()) {
                 if (!i.getCaracteristicasInmueble().getTienePatio()) {
                     listaAux.remove(i);
                 }
             }
-
+            //System.out.println("8: " + listaAux.size());
             if(filtro.getTienePiscina()!=null && filtro.getTienePiscina()) {
                 if (!i.getCaracteristicasInmueble().getTienePiscina()) {
                     listaAux.remove(i);
                 }
             }
-
+            //System.out.println("9: " + listaAux.size());
             if(filtro.getTieneAguaCorriente()!=null && filtro.getTieneAguaCorriente()) {
                 if (!i.getCaracteristicasInmueble().getTieneAguaCorriente()) {
                     listaAux.remove(i);
                 }
             }
-
+            //System.out.println("10: " + listaAux.size());
             if(filtro.getTieneCloacas()!=null && filtro.getTieneCloacas()) {
                 if (!i.getCaracteristicasInmueble().getTieneCloacas()) {
                     listaAux.remove(i);
                 }
             }
-
+            //System.out.println("11: " + listaAux.size());
             if(filtro.getTieneGasNatural()!=null && filtro.getTieneGasNatural()) {
                 if (!i.getCaracteristicasInmueble().getTieneGasNatural()) {
                     listaAux.remove(i);
