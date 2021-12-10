@@ -31,8 +31,9 @@ public class GestorPropietario {
         p.setUsername(pDTO.getUsername());
         p.setPassword(pDTO.getPassword());
 
-        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
-        p.setInmuebles(inmuebles);
+//        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
+        ArrayList<Inmueble> listaInmuebles = new ArrayList<>();
+        p.setInmuebles(listaInmuebles);
 
         Localidad localidad = new Localidad();
         localidad.setNombre(pDTO.getLocalidad());

@@ -1,6 +1,7 @@
 package GUI.Panels;
 
 import DAO.Util.PropietarioDTO;
+import Domain.Util.TipoDNI;
 import GUI.AutoCompletion;
 import Services.GestorGUI;
 import Services.GestorPropietario;
@@ -12,20 +13,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PantallaCrearPropietario {
-    private JPanel panelTitulo;
-    private JPanel panelCampos1;
     private JPanel panelBotones;
     private JLabel textoTitulo;
-    private JPanel panelCampos2;
     private JLabel textoUser;
     private JLabel textoContrasena;
     private JButton buttonCrear;
     private JButton buttonCancelar;
     private JPanel panelPrincipal;
-    private JPanel panelTituloUbicacionYEmail;
-    private JLabel labelSubtitulo;
-    private JPanel panelCampos3;
-    private JPanel panelCampos4;
     private JComboBox comboBoxLocalidad;
     private JComboBox comboBoxProvincia;
 
@@ -41,7 +35,7 @@ public class PantallaCrearPropietario {
     private JLabel labelEmail;
     private JLabel labelTelefono;
     private JTextField textFieldNumeroDocumento;
-    private JTextField textFieldContraseña;
+    private JPasswordField textFieldContraseña;
     private JFormattedTextField textFieldNombreUsuario;
     private JTextField textFieldNombre;
     private JTextField textFieldApellido;
@@ -56,9 +50,9 @@ public class PantallaCrearPropietario {
     private JLabel labelCalle;
     private JTextField textFieldNroDeCalle;
     private JLabel labelNroDeCalle;
-
+    private JLabel labelErrorNroCalle;
     private ActionListener actionListenerCrear;
-    private ActionListener actionListenerModificar;
+
 
     private GestorPropietario gestorPropietario = new GestorPropietario();
 
@@ -77,6 +71,7 @@ public class PantallaCrearPropietario {
             }
             if(Character.digit(s.charAt(i),radix) < 0) return false;
         }
+
         return true;
     }
     private  boolean emailValido(String email) {
@@ -99,6 +94,10 @@ public class PantallaCrearPropietario {
         AutoCompletion.enable(comboBoxLocalidad);
         AutoCompletion.enable(comboBoxProvincia);
 
+        for(TipoDNI t:TipoDNI.values()){
+            comboBoxTipoDocumento.addItem(TipoDNI.obtenerStringParaComboBox(t));
+        }
+
         comboBoxProvincia.addItem("Santa Fe");      // TODO Completar las localidades con el metodo que hizo AGUS
 
         comboBoxLocalidad.addItem("Santa Fe");
@@ -107,8 +106,6 @@ public class PantallaCrearPropietario {
         comboBoxLocalidad.addItem("Rincon");
         comboBoxLocalidad.addItem("Colastine Norte");
         comboBoxLocalidad.addItem("Colastine Sur");
-
-        // Santa Fe, Santo Tome, Sauce viejo, Rincon, Colastine Norte, Colastine Sur
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -122,7 +119,8 @@ public class PantallaCrearPropietario {
             public void actionPerformed(ActionEvent e) {
 
                 if (verificacion()) { // Si los datos cumplen con las verificaciones = TRUE
-                    // Aca deberia guardar el Propietario
+                    PropietarioDTO propietarioDTO = collectDataPropietario();
+                    gestorPropietario.guardarPropietario(propietarioDTO);
                     GestorGUI.pop();
                 }
             }
@@ -142,36 +140,17 @@ public class PantallaCrearPropietario {
         textFieldContraseña.setText(pDTO.getPassword());
         textFieldCalle.setText(pDTO.getCalle());
         textFieldNroDeCalle.setText(pDTO.getNroDeCalle());
+        textFieldEmail.setText(pDTO.getEmail());
+        textFieldTelefono.setText(pDTO.getTelefono());
+        textFieldNumeroDocumento.setText(pDTO.getDni());
 
-        buttonCrear.removeActionListener(actionListenerCrear);
 
-        actionListenerModificar = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(verificacion()){
-                    PropietarioDTO propietarioDTO = collectDataPropietario();
-                    gestorPropietario.guardarPropietario(propietarioDTO);
-                }
-            }
-        };
 
         //Autocompletado de los comboboxes
         AutoCompletion.enable(comboBoxTipoDocumento);
         AutoCompletion.enable(comboBoxLocalidad);
         AutoCompletion.enable(comboBoxProvincia);
 
-        buttonCrear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (verificacion()) { // Si los datos cumplen con las verificaciones = TRUE
-                    // Aca deberia guardar el Propietario
-                    GestorGUI.pop();
-                }
-            }
-
-
-        });
     }
 
 
@@ -180,9 +159,6 @@ public class PantallaCrearPropietario {
         return panelPrincipal;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
     private boolean verificacion(){
         boolean bandera = true;
 
@@ -227,6 +203,11 @@ public class PantallaCrearPropietario {
             labelErrorTelefono.setVisible(true);
             bandera = false;
         }
+        if (!(isInteger(textFieldNroDeCalle.getText()))) {
+            labelErrorNroCalle.setVisible(true);
+            bandera = false;
+        }
+
         else labelErrorTelefono.setVisible(false);
 
         if ((textFieldEmail.getText().length() > 60) || !(emailValido(textFieldEmail.getText()))){
@@ -235,6 +216,7 @@ public class PantallaCrearPropietario {
             bandera = false;
         }
         else labelErrorEmail.setVisible(false);
+        GestorGUI.pack();
 
         return bandera;
     }
@@ -247,6 +229,7 @@ public class PantallaCrearPropietario {
         propietario.setNombre(textFieldNombre.getText());
         propietario.setApellido(textFieldApellido.getText());
         propietario.setTelefono(textFieldTelefono.getText());
+        propietario.setLocalidad(comboBoxLocalidad.getSelectedItem().toString());
         return propietario;
 
     }

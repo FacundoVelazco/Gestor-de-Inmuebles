@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.Util.Conexion;
 import Domain.Cliente;
+import Domain.Inmueble;
+import Domain.Localidad;
 import Domain.Propietario;
 
 
@@ -31,20 +33,35 @@ public class DAOBdPropietario implements PropietarioDAO{
     }
 
     @Override
-    public void update(Propietario p) {
+    public void update(Propietario propietario) {
         EntityManager manager = Conexion.emf.createEntityManager();
 
-        String username = p.getUsername();
+        String username = propietario.getUsername();
         manager.getTransaction().begin();
-        Query query = manager.createQuery("from Propietario c where c.username = :username");
+        Query query = manager.createQuery("from Propietario p where p.username = :username");
         query.setParameter("username",username);
         if(!query.getResultList().isEmpty()){
-            Query query2 = manager.createQuery("delete from Propietario c where c.username = :username");
+            Query query2 = manager.createQuery("delete from Propietario p where p.username = :username");
             query2.setParameter("username",username).executeUpdate();
         }
-        manager.persist(p);
+        manager.persist(propietario);
         manager.getTransaction().commit();
-        manager.close();;
+        manager.close();
+
+//        EntityManager manager = Conexion.emf.createEntityManager();
+//        Integer id;
+//
+//        manager.getTransaction().begin();
+//
+//        if(p.getId() != null) {
+//            Propietario aux = manager.merge(p);
+//            manager.persist(aux);
+//        }else{
+//            manager.persist(p);
+//        }
+//        manager.getTransaction().commit();
+//        manager.close();
+
     }
 
     @Override

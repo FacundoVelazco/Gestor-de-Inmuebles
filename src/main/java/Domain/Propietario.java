@@ -44,7 +44,7 @@ public class Propietario implements Usuario {
     private Direccion direccion;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
-    @OneToOne
+    @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;
     @Column(name = "provincia")

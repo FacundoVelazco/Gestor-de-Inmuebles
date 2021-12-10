@@ -28,6 +28,10 @@ public class GestorGUI {
                 framePrincipal.setContentPane(new PantallaABMCliente().getPanelPrincipal());
                 break;
 
+            case ABM_PROPIETARIO:
+                framePrincipal.setContentPane(new PantallaABMPropietario().getPanelPrincipal());
+                break;
+
             case CREAR_CLIENTE:
                 PantallaCrearCliente pantallaCrearCliente;
                 if(elemento == null){
@@ -176,6 +180,10 @@ public class GestorGUI {
         frameLogin.setSize(350, 230);
         frameLogin.setLocationRelativeTo(null);
         frameLogin.setResizable(false);
+    }
+
+    public static void pack(){
+        framePrincipal.pack();
     }
 
 
