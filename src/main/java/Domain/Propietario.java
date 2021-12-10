@@ -38,7 +38,7 @@ public class Propietario implements Usuario {
     @Column(name = "tipo_dni")
     private TipoDNI tipoDNI;
     @Column(name = "dni")
-    private String Dni;
+    private String dni;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_direccion")
     private Direccion direccion;
@@ -51,12 +51,32 @@ public class Propietario implements Usuario {
     private String provincia;
     @Column(name = "email")
     private String email;
+    @Column(name = "calle")
+    private String calle;
+    @Column(name = "numeroDeCalle")
+    private Integer nroDeCalle;
     @ManyToOne()
     @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
 
     public String getProvincia() {
         return provincia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public Integer getNroDeCalle() {
+        return nroDeCalle;
+    }
+
+    public void setNroDeCalle(Integer nroDeCalle) {
+        this.nroDeCalle = nroDeCalle;
     }
 
     public Localidad getLocalidad() {
@@ -76,11 +96,11 @@ public class Propietario implements Usuario {
     }
 
     public String getDni() {
-        return Dni;
+        return dni;
     }
 
     public void setDni(String dni) {
-        Dni = dni;
+        dni = dni;
     }
 
     public Direccion getDireccion() {

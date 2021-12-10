@@ -4,8 +4,10 @@ import DAO.DAOBdCliente;
 import DAO.DAOBdInmueble;
 import DAO.DAOBdPropietario;
 import DAO.Util.ClienteDTO;
+import DAO.Util.PreferenciaDTO;
 import DAO.Util.PropietarioDTO;
 import Domain.*;
+import Domain.Util.TipoInmueble;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +45,11 @@ public class GestorPropietario {
         p.setProvincia(provincia);
 
         Direccion direccion = new Direccion();
-        direccion.setCalle(pDTO.getCalle());
-        direccion.setNumero(pDTO.getNumeroDeCalle());
+        //direccion.setCalle(pDTO.getCalle());         TODO ver como dejar CAllE y  -> si juntos o separados
+        //direccion.setNumero(pDTO.getNumeroDeCalle());
         direccion.setId(pDTO.getIdDireccion());
         p.setDireccion(direccion);
 
-
-       // -> deberiamos colocar los atributos de c/Clase en el DTO de propietario
        pDao.update(p);
     }
 
@@ -71,6 +71,25 @@ public class GestorPropietario {
         }
 
         return listaDto;
+    }
+    public PropietarioDTO getPropietarioByUsername(String username){
+        DAOBdPropietario pDao = new DAOBdPropietario();
+        Propietario p = pDao.getByUsername(username);
+        PropietarioDTO pDTO = new PropietarioDTO();
+        pDTO.setId(p.getId());
+        pDTO.setUsername(p.getUsername());
+        pDTO.setNombre(p.getNombre());
+        pDTO.setApellido(p.getApellido());
+        pDTO.setPassword(p.getPassword());
+        pDTO.setTipoDNI(p.getTipoDNI());
+        pDTO.setDni(p.getDni());
+        pDTO.setCalleYNumero(p.getCalleYNumero());
+        pDTO.setProvincia(p.getProvincia());
+        //pDTO.setLocalidad(p.getLocalidad());
+        pDTO.setTelefono(p.getTelefono());
+        pDTO.setEmail(p.getEmail());
+
+        return pDTO;
     }
 
 }

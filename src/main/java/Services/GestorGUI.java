@@ -3,6 +3,7 @@ package Services;
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
+import DAO.Util.PropietarioDTO;
 import GUI.Panels.*;
 import GUI.Util.Pantalla;
 import javax.swing.*;
@@ -56,6 +57,15 @@ public class GestorGUI {
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+                break;
+            case CREAR_PROPIETARIO:
+                PantallaCrearPropietario pantallaCrearPropietario;
+                if(elemento == null){
+                    pantallaCrearPropietario = new PantallaCrearPropietario();
+                }else{
+                    pantallaCrearPropietario = new PantallaCrearPropietario((PropietarioDTO) elemento);
+                }
+                framePrincipal.setContentPane(pantallaCrearPropietario.getPanelPrincipal());
                 break;
         }
         framePrincipal.setLocationRelativeTo(null);

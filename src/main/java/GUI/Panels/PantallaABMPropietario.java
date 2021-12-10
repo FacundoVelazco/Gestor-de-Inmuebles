@@ -1,8 +1,12 @@
 package GUI.Panels;
 
 
+import DAO.Util.ClienteDTO;
+import DAO.Util.PropietarioDTO;
 import GUI.Util.Pantalla;
+import Services.GestorClientes;
 import Services.GestorGUI;
+import Services.GestorPropietario;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -17,7 +21,7 @@ public class PantallaABMPropietario {
 
     private JPanel panelPrincipal;
     private JLabel titulo;
-    private JTable tablaClientes;
+    private JTable tablaPropietarios;
     private TableRowSorter sorter;
     private JButton botonEliminar;
     private JButton botonModificar;
@@ -29,6 +33,7 @@ public class PantallaABMPropietario {
     private JPanel panelTitulo;
     private JPanel panelControles;
     private JButton buttonLimpiar;
+    private JButton volverButton;
     private JTextField textFieldNombreUsuario;
     private JPasswordField passwordFieldContraseña;
     private JTextField textFieldNombre;
@@ -36,12 +41,10 @@ public class PantallaABMPropietario {
 
 
 
-    private DataModel dataModel = new DataModel(DATA, COLUMNS);
+    private DefaultTableModel dataModel = new DefaultTableModel(COLUMNS,0);
     private static final String[] COLUMNS = {"Nombre", "Apellido","Nombre de usuario"};
-    private static final Object[][] DATA = {
-            {"Pedro", "Picapiedras", "stoner123"}, {"Agustín Ignacio", "García", "garagus_99"},
-            {"Eira Micaela","Martínez","eira12"},{"Facundo Jesualdo","Velazco","elfacu"},
-            {"Bruno","Agretti","bagretti"},{"Pablo","Leonarduzzi","pablisky95"}};
+
+
 
     private class DataModel extends DefaultTableModel{
         public DataModel(Object[][] data, Object[] columnNames) {
@@ -58,12 +61,18 @@ public class PantallaABMPropietario {
     public PantallaABMPropietario() {
 
         //Configuración de la tabla
-        tablaClientes.setModel(new DataModel(DATA, COLUMNS));
-        tablaClientes.getTableHeader().setReorderingAllowed(false);
-        tablaClientes.getTableHeader().setResizingAllowed(false);
-        tablaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaPropietarios.setModel(dataModel);
+        tablaPropietarios.getTableHeader().setReorderingAllowed(false);
+        tablaPropietarios.getTableHeader().setResizingAllowed(false);
+        tablaPropietarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         sorter = new TableRowSorter<>(dataModel);
-        tablaClientes.setRowSorter(sorter);
+        tablaPropietarios.setRowSorter(sorter);
+
+        //Carga de datos en tabla
+        GestorPropietario gestorPropietarios =  new GestorPropietario();
+        for (PropietarioDTO p : gestorPropietarios.listarPropietarios()){
+            ((DefaultTableModel) tablaPropietarios.getModel()).insertRow(0,new Object[]{p.getUsername(),p.getNombre(),p.getApellido(),p.getId()});
+        }
 
         botonNuevoPropietario.addActionListener(new ActionListener() {
             @Override
@@ -88,7 +97,7 @@ public class PantallaABMPropietario {
             }
 
             public void search(String str) {
-                tablaClientes.clearSelection();
+                tablaPropietarios.clearSelection();
                 botonesActivados(false);
 
                 if (str.length() == 0) {
@@ -104,14 +113,37 @@ public class PantallaABMPropietario {
                 textFieldBuscar.setText("");
             }
         });
-        tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        tablaPropietarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (tablaClientes.getSelectedRow()>-1 && e.getValueIsAdjusting()){
-                    System.out.println("Cliente seleccionado: " +
-                            dataModel.getValueAt(tablaClientes.convertRowIndexToModel(tablaClientes.getSelectedRow()),0));
+                if (tablaPropietarios.getSelectedRow()>-1 && e.getValueIsAdjusting()){
                     botonesActivados(true);
                 }
+            }
+        });
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.pop();
+            }
+        });
+        botonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(GestorGUI.popUpConfirmacion("Eliminar propietario","¿Está seguro que desea eliminar el propietario?")){
+                    String username = dataModel.getValueAt(tablaPropietarios.convertRowIndexToModel(tablaPropietarios.getSelectedRow()),0).toString();
+                    gestorPropietarios.borrarPropietarioByUsername(username);
+                    botonesActivados(false);
+                    GestorGUI.refreshCurrent();
+                }
+            }
+        });
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PropietarioDTO propietario = gestorPropietarios.getPropietarioByUsername(
+                        dataModel.getValueAt(tablaPropietarios.convertRowIndexToModel(tablaPropietarios.getSelectedRow()),0).toString());
+                GestorGUI.pushModificar(Pantalla.CREAR_PROPIETARIO,propietario);
             }
         });
 

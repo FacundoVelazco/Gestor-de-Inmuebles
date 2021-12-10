@@ -1,10 +1,11 @@
 package GUI.Panels;
 
+import DAO.Util.PropietarioDTO;
 import GUI.AutoCompletion;
 import Services.GestorGUI;
+import Services.GestorPropietario;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
@@ -32,7 +33,7 @@ public class PantallaCrearPropietario {
 
     private JComboBox comboBoxTipoDocumento;
     private JLabel labelTipoDocumento;
-    private JTextField textFieldCalleNumero;
+    private JTextField textFieldCalle;
     private JLabel labelLocalidad;
     private JLabel labelProvincia;
     private JTextField textFieldTelefono;
@@ -52,6 +53,14 @@ public class PantallaCrearPropietario {
     private JLabel labelErrorTelefono;
     private JLabel labelErrorEmail;
     private JLabel labelErrorContraseña;
+    private JLabel labelCalle;
+    private JTextField textFieldNroDeCalle;
+    private JLabel labelNroDeCalle;
+
+    private ActionListener actionListenerCrear;
+    private ActionListener actionListenerModificar;
+
+    private GestorPropietario gestorPropietario = new GestorPropietario();
 
     /*Método que retorna true si un string es un numero entero escrito como string*/
 
@@ -90,7 +99,7 @@ public class PantallaCrearPropietario {
         AutoCompletion.enable(comboBoxLocalidad);
         AutoCompletion.enable(comboBoxProvincia);
 
-        comboBoxProvincia.addItem("Santa Fe");
+        comboBoxProvincia.addItem("Santa Fe");      // TODO Completar las localidades con el metodo que hizo AGUS
 
         comboBoxLocalidad.addItem("Santa Fe");
         comboBoxLocalidad.addItem("Santo Tome");
@@ -107,63 +116,56 @@ public class PantallaCrearPropietario {
                 GestorGUI.pop();
             }
         });
+
+        actionListenerCrear = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (verificacion()) { // Si los datos cumplen con las verificaciones = TRUE
+                    // Aca deberia guardar el Propietario
+                    GestorGUI.pop();
+                }
+            }
+        };
+        buttonCrear.addActionListener(actionListenerCrear);
+
+    }
+
+    public PantallaCrearPropietario(PropietarioDTO pDTO) {
+        this();
+        buttonCrear.setText("Modificar");
+        textoTitulo.setText("Modificar propietario");
+        textFieldNombreUsuario.setText(pDTO.getUsername());
+        textFieldNombreUsuario.setEnabled(false);
+        textFieldNombre.setText(pDTO.getNombre());
+        textFieldApellido.setText(pDTO.getApellido());
+        textFieldContraseña.setText(pDTO.getPassword());
+        textFieldCalle.setText(pDTO.getCalle());
+        textFieldNroDeCalle.setText(pDTO.getNroDeCalle());
+
+        buttonCrear.removeActionListener(actionListenerCrear);
+
+        actionListenerModificar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(verificacion()){
+                    PropietarioDTO propietarioDTO = collectDataPropietario();
+                    gestorPropietario.guardarPropietario(propietarioDTO);
+                }
+            }
+        };
+
+        //Autocompletado de los comboboxes
+        AutoCompletion.enable(comboBoxTipoDocumento);
+        AutoCompletion.enable(comboBoxLocalidad);
+        AutoCompletion.enable(comboBoxProvincia);
+
         buttonCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                boolean bandera = true;
-
-                if (textFieldNombreUsuario.getText().length() > 20 || textFieldNombreUsuario.getText().length() < 5){
-                    labelErrorUsuario.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorUsuario.setVisible(false);
-
-                if ((textFieldContraseña.getText().length() < 6) || (textFieldContraseña.getText().length() > 20)){
-                    labelErrorContraseña.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorContraseña.setVisible(false);
-
-                if (textFieldNombre.getText().length() > 20 || textFieldNombre.getText().length() < 3){
-                    labelErrorNombre.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorNombre.setVisible(false);
-
-                if (textFieldApellido.getText().length() > 20 || textFieldApellido.getText().length() < 2){
-                    labelErrorApellido.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorApellido.setVisible(false);
-
-                if (!(isInteger(textFieldNumeroDocumento.getText()))){
-                    labelErrorDocumento.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorDocumento.setVisible(false);
-
-
-                if (textFieldCalleNumero.getText().length() > 40 || (textFieldApellido.getText().length() < 2)){
-                    labelErrorCalleNumero.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorCalleNumero.setVisible(false);
-
-                if (!(isInteger(textFieldTelefono.getText()))) {
-                    labelErrorTelefono.setVisible(true);
-                    bandera = false;
-                }
-                else labelErrorTelefono.setVisible(false);
-
-                if ((textFieldEmail.getText().length() > 60) || !(emailValido(textFieldEmail.getText()))){
-                    labelErrorEmail.setVisible(true);
-
-                    bandera = false;
-                }
-                else labelErrorEmail.setVisible(false);
-
-                if (bandera) {
+                if (verificacion()) { // Si los datos cumplen con las verificaciones = TRUE
+                    // Aca deberia guardar el Propietario
                     GestorGUI.pop();
                 }
             }
@@ -180,5 +182,72 @@ public class PantallaCrearPropietario {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+    private boolean verificacion(){
+        boolean bandera = true;
+
+        if (textFieldNombreUsuario.getText().length() > 20 || textFieldNombreUsuario.getText().length() < 5){
+            labelErrorUsuario.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorUsuario.setVisible(false);
+
+        if ((textFieldContraseña.getText().length() < 6) || (textFieldContraseña.getText().length() > 20)){
+            labelErrorContraseña.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorContraseña.setVisible(false);
+
+        if (textFieldNombre.getText().length() > 20 || textFieldNombre.getText().length() < 3){
+            labelErrorNombre.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorNombre.setVisible(false);
+
+        if (textFieldApellido.getText().length() > 20 || textFieldApellido.getText().length() < 2){
+            labelErrorApellido.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorApellido.setVisible(false);
+
+        if (!(isInteger(textFieldNumeroDocumento.getText()))){
+            labelErrorDocumento.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorDocumento.setVisible(false);
+
+
+        if (textFieldCalle.getText().length() > 40 || (textFieldApellido.getText().length() < 2)){
+            labelErrorCalleNumero.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorCalleNumero.setVisible(false);
+
+        if (!(isInteger(textFieldTelefono.getText()))) {
+            labelErrorTelefono.setVisible(true);
+            bandera = false;
+        }
+        else labelErrorTelefono.setVisible(false);
+
+        if ((textFieldEmail.getText().length() > 60) || !(emailValido(textFieldEmail.getText()))){
+            labelErrorEmail.setVisible(true);
+
+            bandera = false;
+        }
+        else labelErrorEmail.setVisible(false);
+
+        return bandera;
+    }
+
+    private PropietarioDTO collectDataPropietario() {
+
+        PropietarioDTO propietario = new PropietarioDTO();
+        propietario.setUsername(textFieldNombreUsuario.getText());
+        propietario.setPassword(textFieldContraseña.getText());
+        propietario.setNombre(textFieldNombre.getText());
+        propietario.setApellido(textFieldApellido.getText());
+        propietario.setTelefono(textFieldTelefono.getText());
+        return propietario;
+
     }
 }
