@@ -1,8 +1,10 @@
 package App;
 
 import DAO.Util.Conexion;
+import DAO.Util.InmuebleDTO;
 import Services.GestorGUI;
 import GUI.Util.Pantalla;
+import Services.GestorInmuebles;
 
 
 import javax.persistence.EntityManager;

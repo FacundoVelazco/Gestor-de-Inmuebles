@@ -2,10 +2,13 @@ package DAO;
 
 import DAO.Util.Conexion;
 
+import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.*;
+import Domain.Util.EstadoInmueble;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,8 +45,6 @@ public class DAOBdInmueble implements InmuebleDAO{
     public Inmueble getById(int id) {
         EntityManager manager = Conexion.emf.createEntityManager();
         Inmueble i = manager.find(Inmueble.class, id);
-        //No logro que las imagenes se muestren bien, por lo tanto solo muestro por el momento la imagen principal
-        System.out.println(i.getFotosInmueble().size());
         ArrayList<Imagen> listaAux = new ArrayList<>();
         listaAux.addAll(i.getFotosInmueble());
         i.setFotosInmueble(Imagen.limpiezaDeDuplicados(i.getFotoPrincipal(), listaAux));

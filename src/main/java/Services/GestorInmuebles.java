@@ -1,6 +1,7 @@
 package Services;
 
 import DAO.*;
+import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.Direccion;
@@ -10,8 +11,10 @@ import Domain.Util.TipoInmueble;
 import Domain.*;
 import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
+
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,6 +176,27 @@ public class GestorInmuebles {
 
 
         return listaAux;
+    }
+
+    public Integer generarReserva(ClienteDTO clienteDTO, InmuebleDTO inmuebleDTO, Integer duracion){
+        DAOBdCliente daoBdCliente= new DAOBdCliente();
+        DAOBdInmueble daoBdInmueble= new DAOBdInmueble();
+        DAOBdReserva daoBdReserva = new DAOBdReserva();
+
+        Inmueble inmueble = daoBdInmueble.getById(inmuebleDTO.getId());
+        Cliente cliente = daoBdCliente.getByUsername(clienteDTO.getUsername());
+
+
+        inmueble.setEstado(EstadoInmueble.RESERVADO);
+
+        Reserva reserva = new Reserva();
+        reserva.setClienteReserva(cliente);
+        reserva.setFechaCreacionReserva(LocalDate.now());
+        reserva.setFechaFinReserva(LocalDate.now().plusDays(duracion));
+        reserva.setInmueble(inmueble);
+        reserva.setMonto(inmuebleDTO.getPrecioReserva()*duracion);
+
+        return daoBdReserva.save(reserva);
     }
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
