@@ -1,25 +1,26 @@
 package Domain;
 
 import Domain.Util.TipoDNI;
+import Domain.Util.TipoUser;
+import Domain.Util.Usuario;
 
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.util.List;
 
 @Entity
 @Table(name = "propietario")
-public class Propietario {
+public class Propietario implements Usuario {
     @Id
     @Column(name = "id_propietario")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(name = "username")
     protected String username;
 
     @Column(name = "password")
-    protected String password; //TODO implementar
+    protected String password;
 
     @Column(name = "nombre")
     protected String nombre;
@@ -76,11 +77,21 @@ public class Propietario {
         this.inmuebles = inmuebles;
     }
 
-    public Long getId() {
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    @Override
+    public TipoUser getTipo() {
+        return TipoUser.PROPIETARIO;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 }

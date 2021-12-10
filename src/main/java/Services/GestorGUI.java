@@ -5,8 +5,6 @@ import DAO.Util.InmuebleDTO;
 import GUI.Panels.*;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
-import TestGUI.PanelTest2;
-import TestGUI.PanelTest3;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -61,24 +59,17 @@ public class GestorGUI {
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 break;
+            case LOGIN:
+                framePrincipal.setContentPane(new PantallaLogin((JFrame) elemento).getPanelPrincipal());
+                break;
 
-            //TODO insertar creación de pantallas en cada case
-            case panelTest1:
-                framePrincipal.setContentPane(new PanelImagen().getPanelPrincipal()); //TODO remover paneles de testeo
-                break;
-            case panelTest2:
-                framePrincipal.setContentPane(new PanelTest2());
-                break;
-            case panelTest3:
-                framePrincipal.setContentPane(new PanelTest3());
-                break;
         }
         framePrincipal.revalidate();
         framePrincipal.pack();
     }
 
     public static void init(Pantalla pantalla) {
-        framePrincipal.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+        framePrincipal.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
                 .getImage());
         push(pantalla);
         framePrincipal.pack();
@@ -140,7 +131,7 @@ public class GestorGUI {
 
     public static void popUpReserva(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
         JFrame framePopUp = new JFrame();
-        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/casitadefault.png")
+        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
                 .getImage());
         framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         framePopUp.setTitle("Generar reserva");
@@ -149,6 +140,24 @@ public class GestorGUI {
         framePopUp.setContentPane(new PantallaReserva(cliente, inmuebleDTO, framePopUp).getPanelPrincipal());
         framePopUp.pack();
 
+    }
+
+    public static void abrirLogin(){
+
+        if(framePrincipal!=null){
+            framePrincipal.dispose();
+        }
+
+        JFrame frameLogin = new JFrame();
+        frameLogin.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+                .getImage());
+        frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameLogin.setTitle("Gestor de inmuebles");
+        frameLogin.setLocationRelativeTo(null);
+        frameLogin.setVisible(true);
+        frameLogin.setContentPane(new PantallaLogin(frameLogin).getPanelPrincipal());
+        frameLogin.setSize(350, 230);
+        frameLogin.setResizable(false);
     }
 
     public static void exit(){
