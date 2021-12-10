@@ -32,7 +32,7 @@ public class PantallaMenuPrincipal {
 
         switch (GestorUsuarios.getUsuarioLogueado().getTipo()){
             case ADMIN:
-                labelDescripcion.setText("Usted se ha logueado como Administrado");
+                labelDescripcion.setText("Usted se ha logueado como Administrador");
                 break;
             case CLIENTE:
                 labelDescripcion.setText("Usted se ha logueado como Cliente");
