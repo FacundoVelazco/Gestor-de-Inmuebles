@@ -97,6 +97,7 @@ public class PantallaCrearCliente {
         AutoCompletion.enable(comboBoxLocalidad);
 
         //Inicializado del combo box
+        comboBoxTipo.addItem("Cualquiera"); //Agrego opción de cualquiera (para no pedir in tipo de inmueble en especifico)
         for(TipoInmueble tipo : TipoInmueble.values()){
             comboBoxTipo.addItem(TipoInmueble.obtenerStringParaComboBox(tipo));
         }
@@ -120,8 +121,6 @@ public class PantallaCrearCliente {
                     PreferenciaDTO preferenciaDTO = collectDataPreferencias();
                     clienteDTO.setPreferencias(preferenciaDTO);
                     gestorClientes.guardarCliente(clienteDTO);
-
-                    System.out.println("Ejecutado boton crear"); //TODO sysout debug
 
                     GestorGUI.pop();
                 }
