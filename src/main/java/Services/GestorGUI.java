@@ -3,10 +3,8 @@ package Services;
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import GUI.Panels.*;
-import GUI.Panels.AMInmueblePanels.PanelImagen;
 import GUI.Util.Pantalla;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.Stack;
 
@@ -15,9 +13,6 @@ public class GestorGUI {
     static JFrame framePrincipal = new JFrame();
     static Stack<Pantalla> historia = new Stack<>();
 
-    //Variables para obtener tamaño de pantalla
-    static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    static Point centerPoint = ge.getCenterPoint();
 
     private static void setPantalla(Pantalla pantalla, Object elemento){
         switch (pantalla){
@@ -58,12 +53,10 @@ public class GestorGUI {
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                break;
-            case LOGIN:
-                framePrincipal.setContentPane(new PantallaLogin((JFrame) elemento).getPanelPrincipal());
-                break;
 
+                break;
         }
+        framePrincipal.setLocationRelativeTo(null);
         framePrincipal.revalidate();
         framePrincipal.pack();
     }
@@ -153,12 +146,16 @@ public class GestorGUI {
                 .getImage());
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameLogin.setTitle("Gestor de inmuebles");
-        frameLogin.setLocationRelativeTo(null);
+
         frameLogin.setVisible(true);
         frameLogin.setContentPane(new PantallaLogin(frameLogin).getPanelPrincipal());
+
+
         frameLogin.setSize(350, 230);
+        frameLogin.setLocationRelativeTo(null);
         frameLogin.setResizable(false);
     }
+
 
     public static void exit(){
         framePrincipal.dispatchEvent(new WindowEvent(framePrincipal, WindowEvent.WINDOW_CLOSING));

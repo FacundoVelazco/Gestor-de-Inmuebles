@@ -30,7 +30,7 @@ public class PantallaLogin {
     GestorUsuarios gestorUsuarios = new GestorUsuarios();
 
     for (TipoUser tipo:TipoUser.values()){
-        comboBoxTipoUsuario.addItem(tipo);
+        comboBoxTipoUsuario.addItem(TipoUser.obtenerStringParaComboBox(tipo));
     }
 
 
@@ -42,7 +42,7 @@ public class PantallaLogin {
                 try {
                     labelError.setVisible(false);
                     Usuario usuarioLogueandose = gestorUsuarios.getUsuario(textFieldUsername.getText(),new String(passwordField.getPassword()),
-                            (TipoUser) comboBoxTipoUsuario.getSelectedItem());
+                            TipoUser.obtenerByString((String) comboBoxTipoUsuario.getSelectedItem()));
                     GestorUsuarios.setUsuarioLogueado(usuarioLogueandose);
                     GestorGUI.init(Pantalla.MENU_PRINCIPAL);
                     framePadre.dispose();
