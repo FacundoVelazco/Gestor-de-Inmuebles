@@ -42,7 +42,6 @@ public class PantallaCInmueble {
     private JButton buttonLimpiar;
     private JLabel labelError;
     private PantallaMisInmuebles pantallaMisInmuebles;
-    private static final String[] TIPOS_INMUEBLE = {"Local-Oficina", "Casa", "Departamento", "Terreno", "Quinta", "Galpón"};
 
     public PantallaCInmueble() {
 
@@ -58,8 +57,9 @@ public class PantallaCInmueble {
 
         provinciaCombo.addItem("Santa Fe");
 
-        for (String s: TIPOS_INMUEBLE){
-            tipoCombo.addItem(s);
+        tipoCombo.addItem("Cualquiera");
+        for (TipoInmueble t: TipoInmueble.values()){
+            tipoCombo.addItem(TipoInmueble.obtenerStringParaComboBox(t));
         }
 
         buscarButton.addActionListener(new ActionListenerBotonAceptar());
@@ -128,8 +128,6 @@ public class PantallaCInmueble {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-            //TODO agregar validaciones
             if(validarCampos()){
 
                 PreferenciaDTO preferencias = new PreferenciaDTO();
