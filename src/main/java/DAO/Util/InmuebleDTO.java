@@ -374,4 +374,5 @@ public class InmuebleDTO {
     public Float getPrecioReserva() {
         return precioReserva;
     }
+
 }

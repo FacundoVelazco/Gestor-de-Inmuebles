@@ -137,9 +137,8 @@ public class GestorInmuebles {
                 }
             }
 
-
             //Si el barrio no es ""
-            if(!filtro.getBarrio().isEmpty()){
+            if(filtro.getBarrio() == null || !filtro.getBarrio().isEmpty()){
                 // Primero chequeamos que el barrio no sea nulo
                 if(i.getDireccion().getBarrio() == null){
                     listaAux.remove(i);
@@ -165,8 +164,68 @@ public class GestorInmuebles {
                 }
             }
 
-        }
+            //Si le interesa que tenga cochera, igual para las otras características
+            if(filtro.getTieneCochera()!=null && filtro.getTieneCochera()) {
+                if (!i.getCaracteristicasInmueble().getTieneCochera()) {
+                    listaAux.remove(i);
+                }
+            }
 
+            if(filtro.getTienePatio()!=null && filtro.getTienePatio()) {
+                if (!i.getCaracteristicasInmueble().getTienePatio()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTienePiscina()!=null && filtro.getTienePiscina()) {
+                if (!i.getCaracteristicasInmueble().getTienePiscina()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTieneAguaCorriente()!=null && filtro.getTieneAguaCorriente()) {
+                if (!i.getCaracteristicasInmueble().getTieneAguaCorriente()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTieneCloacas()!=null && filtro.getTieneCloacas()) {
+                if (!i.getCaracteristicasInmueble().getTieneCloacas()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTieneGasNatural()!=null && filtro.getTieneGasNatural()) {
+                if (!i.getCaracteristicasInmueble().getTieneGasNatural()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTieneAguaCaliente()!=null && filtro.getTieneAguaCaliente()) {
+                if (!i.getCaracteristicasInmueble().getTieneAguaCaliente()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTieneTelefono()!=null && filtro.getTieneTelefono()) {
+                if (!i.getCaracteristicasInmueble().getTieneTelefono()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTieneLavadero()!=null && filtro.getTieneLavadero()) {
+                if (!i.getCaracteristicasInmueble().getTieneLavadero()) {
+                    listaAux.remove(i);
+                }
+            }
+
+            if(filtro.getTienePavimento()!=null && filtro.getTienePavimento()) {
+                if (!i.getCaracteristicasInmueble().getTienePavimento()) {
+                    listaAux.remove(i);
+                }
+            }
+
+        }
 
         return listaAux;
     }

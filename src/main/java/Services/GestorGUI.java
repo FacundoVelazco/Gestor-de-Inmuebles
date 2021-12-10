@@ -55,8 +55,16 @@ public class GestorGUI {
             case C_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaCInmueble().getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+             break;
 
+            case CATALOGO:
+                framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal()); //TODO remover paneles de testeo
                 break;
+
+            case VER_INMUEBLE:
+                framePrincipal.setContentPane(new PantallaVerInmueble((InmuebleDTO) elemento).getPanelPrincipal());
+                break;
+              
         }
         framePrincipal.setLocationRelativeTo(null);
         framePrincipal.revalidate();
