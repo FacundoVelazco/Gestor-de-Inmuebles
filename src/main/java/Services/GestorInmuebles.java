@@ -1,6 +1,7 @@
 package Services;
 
 import DAO.*;
+import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import DAO.Util.PreferenciaDTO;
 import Domain.Direccion;
@@ -12,6 +13,7 @@ import Domain.Util.EstadoInmueble;
 import Domain.Util.Orientacion;
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,6 +175,23 @@ public class GestorInmuebles {
 
 
         return listaAux;
+    }
+
+    public Integer generarCompra(ClienteDTO clienteDTO, InmuebleDTO inmuebleDTO){
+        DAOBdCliente daoBdCliente= new DAOBdCliente();
+        DAOBdInmueble daoBdInmueble= new DAOBdInmueble();
+        DAOBdVenta daoBdVenta = new DAOBdVenta();
+
+        Inmueble inmueble = daoBdInmueble.getById(inmuebleDTO.getId());
+        Cliente cliente = daoBdCliente.getByUsername(clienteDTO.getUsername());
+
+        inmueble.setEstado(EstadoInmueble.VENDIDO);
+
+        Venta venta = new Venta();
+        venta.setCliente(cliente);
+        venta.setInmueble(inmueble);
+
+        return daoBdVenta.save(venta);
     }
 
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
