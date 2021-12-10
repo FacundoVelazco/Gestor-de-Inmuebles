@@ -142,6 +142,12 @@ public class PantallaMenuPrincipal {
 
             }
         });
+        altaBajaYModificarButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestorGUI.push(Pantalla.ABM_PROPIETARIO);
+            }
+        });
     }
 
     private void setFuncionalidades(TipoUser tipo) {

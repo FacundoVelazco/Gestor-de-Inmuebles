@@ -2,10 +2,13 @@ package Services;
 
 import DAO.DAOBdCliente;
 import DAO.DAOBdInmueble;
+import DAO.DAOBdLocalidad;
 import DAO.DAOBdPropietario;
 import DAO.Util.ClienteDTO;
+import DAO.Util.PreferenciaDTO;
 import DAO.Util.PropietarioDTO;
 import Domain.*;
+import Domain.Util.TipoInmueble;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,20 +24,23 @@ public class GestorPropietario {
         DAOBdInmueble iDao = new DAOBdInmueble();
 
         Propietario p = new Propietario();
+        p.setId(pDTO.getId());
         p.setEmail(pDTO.getEmail());
-        p.setDni(pDTO.getDni());
+        p.setDni(pDTO.getDni());     //aca el dni llega bien
         p.setTipoDNI(pDTO.getTipoDNI());
         p.setApellido(pDTO.getApellido());
         p.setNombre(pDTO.getNombre());
         p.setUsername(pDTO.getUsername());
         p.setPassword(pDTO.getPassword());
+        p.setTelefono(pDTO.getTelefono());
 
-        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
-        p.setInmuebles(inmuebles);
+//        List<Inmueble> inmuebles =  iDao.listAllByPropietario(pDTO.getId());
+        ArrayList<Inmueble> listaInmuebles = new ArrayList<>();
+        p.setInmuebles(listaInmuebles);
 
-        Localidad localidad = new Localidad();
-        localidad.setNombre(pDTO.getLocalidad());
-        localidad.setId(pDTO.getIdLocalidad());
+        DAOBdLocalidad daoBdLocalidad = new DAOBdLocalidad();
+        Localidad localidad = daoBdLocalidad.getByName(pDTO.getLocalidad());
+
         p.setLocalidad(localidad);
 
         String provincia;
@@ -42,14 +48,9 @@ public class GestorPropietario {
         provincia = (pDTO.getProvincia());
         p.setProvincia(provincia);
 
-        Direccion direccion = new Direccion();
-        direccion.setCalle(pDTO.getCalle());
-        direccion.setNumero(pDTO.getNumeroDeCalle());
-        direccion.setId(pDTO.getIdDireccion());
-        p.setDireccion(direccion);
+        p.setCalle(pDTO.getCalle());
+        p.setNroDeCalle(pDTO.getNroDeCalle());
 
-
-       // -> deberiamos colocar los atributos de c/Clase en el DTO de propietario
        pDao.update(p);
     }
 
@@ -71,6 +72,26 @@ public class GestorPropietario {
         }
 
         return listaDto;
+    }
+    public PropietarioDTO getPropietarioByUsername(String username){
+        DAOBdPropietario pDao = new DAOBdPropietario();
+        Propietario p = pDao.getByUsername(username);
+        PropietarioDTO pDTO = new PropietarioDTO();
+        pDTO.setId(p.getId());
+        pDTO.setUsername(p.getUsername());
+        pDTO.setNombre(p.getNombre());
+        pDTO.setApellido(p.getApellido());
+        pDTO.setPassword(p.getPassword());
+        pDTO.setTipoDNI(p.getTipoDNI());
+        pDTO.setDni(p.getDni());
+        pDTO.setCalle(p.getCalle());
+        pDTO.setNroDeCalle(p.getNroDeCalle());
+        pDTO.setProvincia(p.getProvincia());
+        pDTO.setLocalidad(p.getLocalidad().getNombre());
+        pDTO.setTelefono(p.getTelefono());
+        pDTO.setEmail(p.getEmail());
+
+        return pDTO;
     }
 
 }
