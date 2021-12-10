@@ -177,9 +177,54 @@ public class PantallaCatalogoInmuebles{
             }
         });
 
+        setearListenersVerMas();
 
         actualizarTablitaInmuebles(inmueblesActuales);
         actualizarBotones();
+    }
+
+    private void setearListenersVerMas() {
+        buttonVerMasProp1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
+            }
+        });
+
+
+        buttonVerMasProp2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
+            }
+        });
+
+        buttonVerMasProp3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
+            }
+        });
+
+        buttonVerMasProp4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
+            }
+        });
+
+        buttonVerMasProp5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
+            }
+        });
+
     }
 
 

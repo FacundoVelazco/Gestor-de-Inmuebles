@@ -64,13 +64,14 @@ public class GestorGUI {
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 break;
 
-            //TODO insertar creación de pantallas en cada case
-            case panelTest1:
+            case CATALOGO:
                 framePrincipal.setContentPane(new PantallaCatalogoInmuebles((PreferenciaDTO) elemento).getPanelPrincipal()); //TODO remover paneles de testeo
                 break;
-            case panelTest2:
+
+            case VER_INMUEBLE:
                 framePrincipal.setContentPane(new PantallaVerInmueble((InmuebleDTO) elemento).getPanelPrincipal());
                 break;
+
             case panelTest3:
                 framePrincipal.setContentPane(new PanelTest3());
                 break;
