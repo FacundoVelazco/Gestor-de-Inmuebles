@@ -76,10 +76,9 @@ public class PantallaVerInmueble{
 
     public PantallaVerInmueble(InmuebleDTO idto) {
 
-        //Seteo el cliente logueado para luego crear el dto Nota: tal vez esto delega demasiada responsabilidad a la GUI, no deberia conocer las clases de dominio
-        Cliente cliente = (Cliente) GestorUsuarios.getUsuarioLogueado();
+        //Seteo el cliente logueado para luego crear el dto
         GestorClientes gestorClientes = new GestorClientes();
-        ClienteDTO clienteDTO = gestorClientes.getClienteByUsername(cliente.getUsername());
+        ClienteDTO clienteDTO = gestorClientes.getClienteByUsername(GestorUsuarios.getUsuarioLogueado().getUsername());
 
         //Creamos el panel externo que va a mostrar nuestras imagenes
         panelImagenExternoClase = new PanelImagen();

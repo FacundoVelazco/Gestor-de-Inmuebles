@@ -94,18 +94,17 @@ public class GestorGUI {
                 framePrincipal.setContentPane(pantallaCrearVendedor.getPanelPrincipal());
                 break;
         }
-        framePrincipal.setLocationRelativeTo(null);
-        framePrincipal.revalidate();
         framePrincipal.pack();
+        framePrincipal.setLocationRelativeTo(null);
     }
 
     public static void init(Pantalla pantalla) {
         framePrincipal.setIconImage(new ImageIcon(GestorGUI.class.getClassLoader().getResource("G.png"))
                 .getImage());
         push(pantalla);
-        framePrincipal.pack();
         framePrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         framePrincipal.setTitle("Gestor de inmuebles");
+        framePrincipal.pack();
         framePrincipal.setLocationRelativeTo(null);
         framePrincipal.setVisible(true);
     }
@@ -123,7 +122,6 @@ public class GestorGUI {
     public static void pop() {
         if (historia.size() > 1) {
             historia.pop();
-            framePrincipal.setLocationRelativeTo(null);
             setPantalla(historia.lastElement(), null);
         } else {
             System.out.println("El stack del gestor de pantallas ya está en la base de la pila.");
