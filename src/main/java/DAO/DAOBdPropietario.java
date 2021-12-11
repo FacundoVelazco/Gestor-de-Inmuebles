@@ -76,6 +76,7 @@ public class DAOBdPropietario implements PropietarioDAO{
         manager.close();
     }
 
+
     @Override
     public Propietario getByUsername(String username) {
         EntityManager manager = Conexion.emf.createEntityManager();
