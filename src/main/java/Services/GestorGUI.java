@@ -45,8 +45,8 @@ public class GestorGUI {
 
             case AM_INMUEBLE:
                 PantallaAMInmueble p;
-                if (elemento == null){
-                     p = new PantallaAMInmueble();
+                if (elemento instanceof String){
+                     p = new PantallaAMInmueble((String) elemento);
                 }else{
                     p = new PantallaAMInmueble((InmuebleDTO) elemento);
                 }
@@ -54,7 +54,7 @@ public class GestorGUI {
                 break;
             
             case MIS_INMUEBLES:
-                framePrincipal.setContentPane(new PantallaMisInmuebles().getPanelPrincipal());
+                framePrincipal.setContentPane(new PantallaMisInmuebles((String) elemento).getPanelPrincipal());
                 framePrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 break;
 

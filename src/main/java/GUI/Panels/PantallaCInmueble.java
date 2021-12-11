@@ -41,7 +41,8 @@ public class PantallaCInmueble {
 
     public PantallaCInmueble() {
 
-        pantallaMisInmuebles = new PantallaMisInmuebles(null);
+        PreferenciaDTO preferenciaDTO = null;
+        pantallaMisInmuebles = new PantallaMisInmuebles(preferenciaDTO);
 
         panelInmuebles.add(pantallaMisInmuebles.getPanelPrincipal());
 

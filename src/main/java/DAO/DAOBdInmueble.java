@@ -23,7 +23,6 @@ public class DAOBdInmueble implements InmuebleDAO{
 
         manager.getTransaction().begin();
         Localidad locAux = manager.merge(i.getLocalidad());
-
         i.setLocalidad(locAux);
 
         if(i.getId() != null) {

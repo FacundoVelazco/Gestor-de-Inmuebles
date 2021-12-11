@@ -42,6 +42,7 @@ public class Propietario implements Usuario {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "propietarioInmueble")
     private List<Inmueble> inmuebles;
+
     @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;

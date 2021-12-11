@@ -48,8 +48,8 @@ public class InmuebleDTO {
     private List<ImageIcon> fotosInmueble;
     private List<String> nombresArchivosFotos;
     private String observaciones;
-    private Integer propietarioInmuebleID;
     private PreferenciaDTO preferenciasClienteDTO;
+    private String usernamePropietario;
 
     public InmuebleDTO(){
 
@@ -351,14 +351,6 @@ public class InmuebleDTO {
         this.nombresArchivosFotos = nombresArchivosFotos;
     }
 
-    public Integer getPropietarioInmuebleID() {
-        return propietarioInmuebleID;
-    }
-
-    public void setPropietarioInmuebleID(Integer propietarioInmuebleID) {
-        this.propietarioInmuebleID = propietarioInmuebleID;
-    }
-
     public String getObservaciones() {
         return observaciones;
     }
@@ -382,5 +374,13 @@ public class InmuebleDTO {
 
     public void setPreferenciasClienteDTO(PreferenciaDTO preferenciasClienteDTO) {
         this.preferenciasClienteDTO = preferenciasClienteDTO;
+    }
+
+    public String getUsernamePropietario() {
+        return usernamePropietario;
+    }
+
+    public void setUsernamePropietario(String usernamePropietario) {
+        this.usernamePropietario = usernamePropietario;
     }
 }

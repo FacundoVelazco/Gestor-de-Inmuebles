@@ -111,8 +111,7 @@ public class PantallaMenuPrincipal {
         misInmueblesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO IMPLEMENTAR OBTENER PROPIETARIO con gestor e inicializador
-                GestorGUI.push(Pantalla.MIS_INMUEBLES);
+                GestorGUI.pushModificar(Pantalla.MIS_INMUEBLES,GestorUsuarios.getUsuarioLogueado().getUsername());
             }
         });
         buttonReserva.addActionListener(new ActionListener() {
