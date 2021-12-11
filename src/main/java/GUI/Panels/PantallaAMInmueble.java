@@ -40,6 +40,7 @@ public class PantallaAMInmueble {
     private JPanel panelFotosAndObservaciones;
     private GestorInmuebles gestorInmuebles;
     private Boolean esModificar;
+    private String propietario;
 
 
     //Creamos el Data Transfer Object para el manejo de la información del inmueble
@@ -50,7 +51,7 @@ public class PantallaAMInmueble {
     }
 
 
-    public PantallaAMInmueble() {
+    public PantallaAMInmueble(String usernamePropietario) {
 
         //Creo el inmuebleDTO para el manejo de datos
         inmuebleDTO = new InmuebleDTO();
@@ -59,6 +60,8 @@ public class PantallaAMInmueble {
         gestorInmuebles = new GestorInmuebles();
 
         esModificar = false;
+
+        propietario = usernamePropietario;
 
         //Creamos todas las clases asociadas a los paneles a utilizar
         panelUbicacionClase = new PanelUbicacion();
@@ -98,15 +101,14 @@ public class PantallaAMInmueble {
         botonCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GestorGUI.pop();
+                GestorGUI.popModificar(usernamePropietario);
             }
         });
     }
 
     //Constructor en caso de que se ingrese al panel por la opción de modificar
     public PantallaAMInmueble(InmuebleDTO idto) {
-        this();
-
+        this(idto.getUsernamePropietario());
         esModificar = true;
 
         codigoLabel.setText("Código: " + idto.getId().toString());
@@ -176,13 +178,14 @@ public class PantallaAMInmueble {
                 perimtidoCambiarPantalla = panelFotosAndObservacionesClase.validarDatos();
                 if(perimtidoCambiarPantalla){
                     obtenerDatosPanel(panelActual);
+                    inmuebleDTO.setUsernamePropietario(propietario);
                     gestorInmuebles.guardarInmueble(inmuebleDTO);
                     if(esModificar){
                         GestorGUI.popUpExito("Éxito", "El inmueble ha sido modificado exitosamente");
                     }else{
                         GestorGUI.popUpExito("Éxito", "El inmueble ha sido creado exitosamente");
                     }
-                    GestorGUI.pop();
+                    GestorGUI.popModificar(propietario);
                 }
                 break;
         }

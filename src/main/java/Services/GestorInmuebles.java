@@ -35,18 +35,6 @@ public class GestorInmuebles {
             e.printStackTrace();
         }
 
-
-        //Si la competencia es recien creada (aun no tiene ID asignado)
-        if (iDTO.getId() == null) {
-            //Obtengo de la BD el propietario
-            //Propietario propietarioInmueble = propietarioDAO.getById(iDTO.getPropietarioInmuebleID());
-            //TODO SACAR, ES SOLO PARA PRUEBA
-            Propietario propietarioInmueble = new Propietario();
-            propietarioInmueble.setId(1);
-            //Se lo asigno al inmueble
-            inmueble.setPropietarioInmueble(propietarioInmueble);
-        }
-
         //Devuelvo el ID generado
         return inmuebleDAO.save(inmueble);
     }
@@ -265,12 +253,10 @@ public class GestorInmuebles {
     private Inmueble generarInmuebleDesdeDTO(InmuebleDTO iDTO) throws Exception {
         Inmueble inmueble = new Inmueble();
 
-
-        //TODO FALTA LOGICA DE LEVANTAR PROP DE LA BD
-        Propietario p = new Propietario();
-        p.setId(1);
+        DAOBdPropietario daoBdPropietario = new DAOBdPropietario();
+        Propietario p = daoBdPropietario.getByUsername(iDTO.getUsernamePropietario());
+        p.getInmuebles().add(inmueble);
         inmueble.setPropietarioInmueble(p);
-        //TODO QUITAR
 
         if(iDTO.getId()!=null) {
             inmueble.setId(iDTO.getId());
@@ -288,7 +274,6 @@ public class GestorInmuebles {
 
         DAOBdLocalidad daoLocalidad = new DAOBdLocalidad();
         Localidad localidad = daoLocalidad.getByName(iDTO.getLocalidad());
-        System.out.println(iDTO.getLocalidad());
         inmueble.setLocalidad(localidad);
 
         Direccion direccion = new Direccion();
@@ -357,8 +342,7 @@ public class GestorInmuebles {
         InmuebleDTO idto = new InmuebleDTO();
         idto.setId(inmueble.getId());
         idto.setEstado(inmueble.getEstado().toString());
-        idto.setPropietarioInmuebleID(inmueble.getPropietarioInmueble().getId());
-
+        idto.setUsernamePropietario(inmueble.getPropietarioInmueble().getUsername());
         idto.setFechaCarga(inmueble.getFechaCarga());
         idto.setPropiedadDestacada(inmueble.getPropiedadDestacada());
         idto.setProvincia(inmueble.getLocalidad().getProvincia());
