@@ -3,10 +3,7 @@ package GUI.Panels;
 import Domain.Cliente;
 import Domain.Util.TipoUser;
 import GUI.Util.Pantalla;
-import Services.GestorClientes;
-import Services.GestorGUI;
-import Services.GestorInmuebles;
-import Services.GestorUsuarios;
+import Services.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -72,7 +69,8 @@ public class PantallaMenuPrincipal {
                         //TODO MOSTRAR MODIFICAR VENDERDOR
                         break;
                     case PROPIETARIO:
-                        //TODO MOSTRAR MODIFICAR PROPIETARIO
+                        GestorPropietario gestorPropietario = new GestorPropietario();
+                        GestorGUI.pushModificar(Pantalla.CREAR_PROPIETARIO,gestorPropietario.getPropietarioByUsername(GestorUsuarios.getUsuarioLogueado().getUsername()));
                         break;
                 }
             }
