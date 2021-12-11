@@ -83,7 +83,8 @@ public class PantallaVenta {
                 comprarButton.setVisible(false);
                 imprimirButton.setVisible(true);
                 guardarDocumentoButton.setVisible(true);
-                salirButton.setText("Salir");
+                salirButton.setText("Salir"); //La noche es joven
+                framePadre.toFront();
                 GestorGUI.pop();
                 GestorGUI.enableFramePrincipal();
             }
