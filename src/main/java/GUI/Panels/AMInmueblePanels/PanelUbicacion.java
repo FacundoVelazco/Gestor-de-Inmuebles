@@ -12,16 +12,11 @@ import java.awt.event.ActionListener;
 public class PanelUbicacion {
     private JPanel panelUbicacion;
     private JLabel tituloLabel;
-    private JPanel panelTitulo;
-    private JPanel panelIzquierda;
-    private JPanel panelDerecha;
-    private JPanel espacioProvincia;
+    private JPanel panelIzquierdo;
     private JLabel tituloProvinciaLabel;
-    private JLabel provinciaLabel;
+    private JComboBox provinciaComboBox;
     private JLabel tituloLocalidadLabel;
     private JComboBox comboBoxLocalidad;
-    private JPanel espacioLocalidad;
-    private JPanel espacioBarrio;
     private JLabel tituloBarrio;
     private JTextField textFieldBarrio;
     private JCheckBox checkBoxActivador;
@@ -29,17 +24,13 @@ public class PanelUbicacion {
     private JTextField textFieldSVDireccion;
     private JTextField textFieldPiso;
     private JTextField textFieldDepartamento;
-    private JPanel espacioActivadorLatLong;
     private JLabel tituloActivadorLabel;
-    private JPanel espacioDirección;
     private JLabel tituloPVDireccionLabel;
     private JLabel tituloSVDireccionLabel;
     private JLabel tituloPisoLabel;
-    private JPanel espacioPisoDepto;
-    private JPanel espacioDepartamento;
-    private JPanel espacioPiso;
     private JLabel errorPVDireccionLabel;
     private JLabel errorSVDireccionLabel;
+    private JLabel labelDepartamento;
     private TipoPanelAMInmueble tipo;
     private InmuebleDTO inmuebleDTO;
     private String calleSeteada="";
@@ -49,6 +40,10 @@ public class PanelUbicacion {
 
     public PanelUbicacion() {
 
+
+        //Combo box de la prov
+        provinciaComboBox.addItem("Santa Fe");
+        provinciaComboBox.setSelectedItem("Santa Fe");
 
         //Rellenado del combobox con las localidades de la provincia
         AutoCompletion.enable(comboBoxLocalidad);
