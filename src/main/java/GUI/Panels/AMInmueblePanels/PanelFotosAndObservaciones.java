@@ -49,7 +49,7 @@ public class PanelFotosAndObservaciones{
         //Creamos el panel externo que va a mostrar nuestras imagenes
         panelImagenExternoClase = new PanelImagen();
         //Seteamos imagen por defecto
-        imagenPorDefecto = panelImagenExternoClase.obtenerImagen(getClass().getClassLoader().getResource("casitadefault.png").toString());
+        imagenPorDefecto = panelImagenExternoClase.obtenerImagen(getClass().getClassLoader().getResource("casitadefault.png").getFile());
         panelImagenExternoClase.setImagenVisible(imagenPorDefecto);
         panelImagenExterno = panelImagenExternoClase.getPanelPrincipal();
 

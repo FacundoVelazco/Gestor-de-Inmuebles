@@ -203,7 +203,6 @@
         </constraints>
         <properties>
           <font size="20"/>
-          <foreground color="-10610709"/>
           <name value=""/>
           <text value="Ubicación"/>
         </properties>

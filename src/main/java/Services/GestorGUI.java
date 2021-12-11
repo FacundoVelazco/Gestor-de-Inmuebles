@@ -107,6 +107,7 @@ public class GestorGUI {
         framePrincipal.pack();
         framePrincipal.setLocationRelativeTo(null);
         framePrincipal.setVisible(true);
+        framePrincipal.setResizable(false);
     }
 
     public static void push(Pantalla pantalla) {
@@ -188,6 +189,7 @@ public class GestorGUI {
             }
         });
         framePopUp.pack();
+        framePopUp.setResizable(false);
     }
 
     public static void popUpCompra(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
@@ -206,6 +208,7 @@ public class GestorGUI {
             }
         });
         framePopUp.pack();
+        framePopUp.setResizable(false);
 
     }
 
