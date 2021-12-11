@@ -100,7 +100,7 @@ public class GestorGUI {
     }
 
     public static void init(Pantalla pantalla) {
-        framePrincipal.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+        framePrincipal.setIconImage(new ImageIcon(GestorGUI.class.getClassLoader().getResource("G.png"))
                 .getImage());
         push(pantalla);
         framePrincipal.pack();
@@ -176,7 +176,7 @@ public class GestorGUI {
 
     public static void popUpReserva(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
         JFrame framePopUp = new JFrame();
-        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+        framePopUp.setIconImage(new ImageIcon(GestorGUI.class.getClassLoader().getResource("G.png"))
                 .getImage());
         framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         framePopUp.setTitle("Generar reserva");
@@ -194,7 +194,7 @@ public class GestorGUI {
 
     public static void popUpCompra(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
         JFrame framePopUp = new JFrame();
-        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+        framePopUp.setIconImage(new ImageIcon(GestorGUI.class.getClassLoader().getResource("G.png"))
                 .getImage());
         framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         framePopUp.setTitle("Comprar inmueble");
@@ -219,7 +219,7 @@ public class GestorGUI {
         }
 
         JFrame frameLogin = new JFrame();
-        frameLogin.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+        frameLogin.setIconImage(new ImageIcon(GestorGUI.class.getClassLoader().getResource("G.png"))
                 .getImage());
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameLogin.setTitle("Gestor de inmuebles");

@@ -32,7 +32,7 @@ public class PantallaMenuPrincipal {
 
     public PantallaMenuPrincipal() {
 
-        labelImagen.setIcon(new ImageIcon("src/main/java/Materials/GestorDeInmueblesrecortado.png"));
+        labelImagen.setIcon(new ImageIcon(getClass().getClassLoader().getResource("MenuPrincipal.png")));
 
 
 

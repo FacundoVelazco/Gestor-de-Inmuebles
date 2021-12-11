@@ -248,7 +248,7 @@ public class PantallaCatalogoInmuebles{
 
     private InmuebleDTO crearInmueblePorDefecto() {
         inmueblePorDefecto = new InmuebleDTO();
-        inmueblePorDefecto.setFotoPrincipal(new ImageIcon(new ImageIcon("src/main/java/Materials/casitadefault.png").getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+        inmueblePorDefecto.setFotoPrincipal(new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("casitadefault.png")).getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
         inmueblePorDefecto.setId(-1);
         inmueblePorDefecto.setLocalidad("Localidad de Prueba");
         inmueblePorDefecto.setCalle("Calle de Prueba");

@@ -84,7 +84,7 @@ public class PantallaVerInmueble{
         //Creamos el panel externo que va a mostrar nuestras imagenes
         panelImagenExternoClase = new PanelImagen();
         //Seteamos imagen por defecto
-        imagenPorDefecto = panelImagenExternoClase.obtenerImagen("src/main/java/Materials/casitadefault.png");
+        imagenPorDefecto = panelImagenExternoClase.obtenerImagen(getClass().getClassLoader().getResource("casitadefault.png").toString());
         panelImagenExternoClase.setImagenVisible(imagenPorDefecto);
         panelImagenExterno = panelImagenExternoClase.getPanelPrincipal();
 
