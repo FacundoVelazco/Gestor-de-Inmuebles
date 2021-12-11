@@ -512,7 +512,7 @@
               <focusable value="false"/>
               <font size="16"/>
               <requestFocusEnabled value="true"/>
-              <text value="Generar Venta"/>
+              <text value="Comprar"/>
               <verifyInputWhenFocusTarget value="true"/>
             </properties>
           </component>

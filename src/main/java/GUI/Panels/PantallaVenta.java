@@ -3,6 +3,7 @@ package GUI.Panels;
 import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
 import Services.GestorGUI;
+import Services.GestorInmuebles;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 
 public class PantallaVenta {
     private JPanel panelPrincipal;
@@ -25,7 +27,6 @@ public class PantallaVenta {
     private JButton salirButton;
     private JLabel labelSubtitulo;
     private JLabel labelNombreCliente;
-    private JLabel labelTituloInmueble;
     private JLabel imagenPropLabel;
     private JPanel panelDatosProp;
     private JLabel codigoPropLabel;
@@ -33,11 +34,13 @@ public class PantallaVenta {
     private JLabel pvDireccionPropLabel;
     private JLabel svDireccionPropLabel;
     private JPanel panelInformacion;
-    private JLabel labelInmuebleComprado;
     private JButton imprimirButton;
     private JPanel panelDatosInmueble;
     private JButton comprarButton;
+    private JLabel labelPrecio;
+    private JLabel tituloInmueble;
     private JFrame framePadre;
+    private Integer idCompra;
 
     public PantallaVenta(ClienteDTO cliente, InmuebleDTO inmueble, JFrame framePadre) {
         this.framePadre = framePadre;
@@ -49,6 +52,7 @@ public class PantallaVenta {
         pvDireccionPropLabel.setText("Calle: " + inmueble.getCalle());
         svDireccionPropLabel.setText("Número: " + inmueble.getNumeroCalle().toString());
         imagenPropLabel.setIcon(new ImageIcon(inmueble.getFotoPrincipal().getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
+        labelPrecio.setText("Precio: $" + inmueble.getPrecio());
 
         imprimirButton.addActionListener(new ActionListener() {
             @Override
@@ -61,20 +65,27 @@ public class PantallaVenta {
             @Override
             public void actionPerformed(ActionEvent e) {
                 framePadre.dispose();
+                GestorGUI.enableFramePrincipal();
             }
         });
 
         comprarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO agregar lógica de la compra
+                GestorInmuebles gestorInmuebles = new GestorInmuebles();
+                idCompra = gestorInmuebles.generarCompra(cliente,inmueble);
                 GestorGUI.popUpExito("Compra realizada", "Se generó la compra satisfactoriamente a nombre de " + cliente.getNombre() + " " + cliente.getApellido()
-                        + ".\nTambién se ha generado el comprobante que puede guardarlo y/o imprimirlo");
+                        + " por un monto total de: $" + inmueble.getPrecio() + ".\nTambién se ha generado el comprobante que puede guardarlo y/o imprimirlo");
 
+
+                labelSubtitulo.setText("Usted ha comprado a nombre de: ");
+                labelTitulo.setText("¡Compra Exitosa!");
                 comprarButton.setVisible(false);
                 imprimirButton.setVisible(true);
                 guardarDocumentoButton.setVisible(true);
                 salirButton.setText("Salir");
+                GestorGUI.pop();
+                GestorGUI.enableFramePrincipal();
             }
         });
 
@@ -84,12 +95,12 @@ public class PantallaVenta {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    // TODO logica guardar un archivo y ver como armarlo
+
                     File ruta = seleccionarPath();
-                    generarArchivoCompra(cliente, inmueble, ruta);
+                    generarArchivoCompra(cliente, inmueble, idCompra,ruta);
                     GestorGUI.popUpExito("Compra generada", "Se genero correctamente la compra a nombre de " + cliente.getNombre() + " " + cliente.getApellido());
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(framePadre,"Ha sucedido un error al generar la compra: "
+                    JOptionPane.showMessageDialog(framePadre,"Ha sucedido un error al guardar: "
                             + ex.getMessage(),"Ha ocurrido un error en compra", JOptionPane.ERROR_MESSAGE);
                 }
             };
@@ -101,7 +112,7 @@ public class PantallaVenta {
                 seleccionPath.setDialogTitle("Seleccione el archivo donde se guardará la reserva");
                 seleccionPath.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 seleccionPath.setMultiSelectionEnabled(false);
-                seleccionPath.setSelectedFile(new File("Reserva"));
+                seleccionPath.setSelectedFile(new File("Comprobante_Compra_"+idCompra));
                 seleccionPath.setFileFilter(new FileNameExtensionFilter(".txt", ".txt"));
                 seleccionPath.setAcceptAllFileFilterUsed(false);
                 if(seleccionPath.showSaveDialog(framePadre)==JFileChooser.APPROVE_OPTION){
@@ -112,17 +123,22 @@ public class PantallaVenta {
                 }
             }
 
-            private void generarArchivoCompra(ClienteDTO cliente, InmuebleDTO inmueble, File ruta) throws IOException {
+            private void generarArchivoCompra(ClienteDTO cliente, InmuebleDTO inmueble, Integer idCompra,File ruta) throws IOException {
                 // Escribir el documento
                 FileWriter fw = new FileWriter(ruta);
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println("##################################################################");
+                pw.println("VENTA CÓDIGO " + idCompra);
+                pw.println();
                 pw.println("Inmueble comprado a nombre de " + cliente.getNombre() + " " + cliente.getApellido());
                 pw.println("Código del inmueble: " + inmueble.getId());
                 pw.println("Provincia: " + inmueble.getProvincia());
                 pw.println("Localidad: " + inmueble.getLocalidad());
                 pw.println("Calle: " + inmueble.getCalle());
-                pw.println("Nro de Calle: " + inmueble.getNumeroCalle());
+                pw.println("Número de Calle: " + inmueble.getNumeroCalle());
+                pw.println();
+                pw.println();
+                pw.println("Precio: $" + inmueble.getPrecio());
                 pw.println("##################################################################");
 
                 pw.close();

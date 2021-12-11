@@ -123,6 +123,24 @@ public class GestorInmuebles {
         return listaInmueblesDTO;
     }
 
+    public Integer generarCompra(ClienteDTO clienteDTO, InmuebleDTO inmuebleDTO){
+        DAOBdCliente daoBdCliente= new DAOBdCliente();
+        DAOBdInmueble daoBdInmueble= new DAOBdInmueble();
+        DAOBdVenta daoBdVenta = new DAOBdVenta();
+
+        Inmueble inmueble = daoBdInmueble.getById(inmuebleDTO.getId());
+        Cliente cliente = daoBdCliente.getByUsername(clienteDTO.getUsername());
+
+        inmuebleDTO.setEstado("VENDIDO");
+        guardarInmueble(inmuebleDTO);
+
+        Venta venta = new Venta();
+        venta.setCliente(cliente);
+        venta.setInmueble(inmueble);
+
+        return daoBdVenta.save(venta);
+    }
+
     private ArrayList<Inmueble> aplicarFiltros(PreferenciaDTO filtro, ArrayList<Inmueble> listaInmuebles){
 
         ArrayList<Inmueble> listaAux = new ArrayList<>();

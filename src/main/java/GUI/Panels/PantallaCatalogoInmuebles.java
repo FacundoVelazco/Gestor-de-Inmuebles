@@ -196,7 +196,7 @@ public class PantallaCatalogoInmuebles{
         buttonVerMasProp2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5 +1).getId());
                 idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
@@ -205,7 +205,7 @@ public class PantallaCatalogoInmuebles{
         buttonVerMasProp3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5+ 2).getId());
                 idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
@@ -214,7 +214,7 @@ public class PantallaCatalogoInmuebles{
         buttonVerMasProp4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5+3).getId());
                 idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }
@@ -223,7 +223,7 @@ public class PantallaCatalogoInmuebles{
         buttonVerMasProp5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5).getId());
+                InmuebleDTO idto = gestorInmuebles.cargarInmueble(inmueblesActuales.get((paginaActual-1) * 5+4).getId());
                 idto.setPreferenciasClienteDTO(preferenciasCliente);
                 GestorGUI.pushModificar(Pantalla.VER_INMUEBLE,idto);
             }

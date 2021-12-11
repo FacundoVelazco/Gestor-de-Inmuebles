@@ -12,11 +12,13 @@ public class DAOBdVenta implements VentaDAO{
     public Integer save(Venta venta) {
         EntityManager manager = Conexion.emf.createEntityManager();
 
+
         manager.getTransaction().begin();
         manager.persist(venta);
         manager.getTransaction().commit();
         manager.close();
-        return null;
+
+        return venta.getId();
     }
 
 }

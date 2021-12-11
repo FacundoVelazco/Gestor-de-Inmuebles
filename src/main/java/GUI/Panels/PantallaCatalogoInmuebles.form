@@ -22,7 +22,7 @@
             </constraints>
             <properties>
               <font size="24"/>
-              <text value="Catálogo Inmuebles"/>
+              <text value="Catálogo de Inmuebles"/>
             </properties>
           </component>
         </children>

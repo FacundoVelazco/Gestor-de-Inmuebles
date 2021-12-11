@@ -7,11 +7,12 @@ import javax.persistence.*;
 public class Venta {
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
     @ManyToOne()
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_inmueble")
     private Inmueble inmueble;
 
@@ -31,11 +32,11 @@ public class Venta {
         this.inmueble = inmueble;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
