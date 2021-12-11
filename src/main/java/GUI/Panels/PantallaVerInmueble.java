@@ -1,9 +1,12 @@
 package GUI.Panels;
 
+import DAO.Util.ClienteDTO;
 import DAO.Util.InmuebleDTO;
+import Domain.Cliente;
 import GUI.Panels.AMInmueblePanels.PanelImagen;
 import Services.GestorClientes;
 import Services.GestorGUI;
+import Services.GestorUsuarios;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -73,6 +76,11 @@ public class PantallaVerInmueble{
 
     public PantallaVerInmueble(InmuebleDTO idto) {
 
+        //Seteo el cliente logueado para luego crear el dto Nota: tal vez esto delega demasiada responsabilidad a la GUI, no deberia conocer las clases de dominio
+        Cliente cliente = (Cliente) GestorUsuarios.getUsuarioLogueado();
+        GestorClientes gestorClientes = new GestorClientes();
+        ClienteDTO clienteDTO = gestorClientes.getClienteByUsername(cliente.getUsername());
+
         //Creamos el panel externo que va a mostrar nuestras imagenes
         panelImagenExternoClase = new PanelImagen();
         //Seteamos imagen por defecto
@@ -113,6 +121,24 @@ public class PantallaVerInmueble{
         });
 
 
+        reservaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GestorGUI.disableFramePrincipal();
+                GestorGUI.popUpReserva(clienteDTO,idto);
+
+            }
+        });
+        ventaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GestorGUI.disableFramePrincipal();
+                GestorGUI.popUpCompra(clienteDTO,idto);
+
+            }
+        });
     }
 
 
@@ -265,6 +291,12 @@ public class PantallaVerInmueble{
         //Habilito o deshabilito los botones según corresponda
         manejoBotones();
         panelImagenExternoClase.setImagenVisible(fotosSeleccionadas.get(0));
+
+        //Deshabilito los botones si esta comprado o reservado
+        if(idto.getEstado().equals("RESERVADO") || idto.getEstado().equals("BAJA") || idto.getEstado().equals("VENDIDO")){
+            reservaButton.setEnabled(false);
+            ventaButton.setEnabled(false);
+        }
     }
 
     public JPanel getPanelPrincipal() {

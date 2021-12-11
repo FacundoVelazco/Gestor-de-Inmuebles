@@ -183,9 +183,34 @@ public class GestorGUI {
         framePopUp.setLocationRelativeTo(null);
         framePopUp.setVisible(true);
         framePopUp.setContentPane(new PantallaReserva(cliente, inmuebleDTO, framePopUp).getPanelPrincipal());
+        framePopUp.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                GestorGUI.enableFramePrincipal();
+            }
+        });
+        framePopUp.pack();
+    }
+
+    public static void popUpCompra(ClienteDTO cliente, InmuebleDTO inmuebleDTO){
+        JFrame framePopUp = new JFrame();
+        framePopUp.setIconImage(new ImageIcon("src/main/java/Materials/G.png")
+                .getImage());
+        framePopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        framePopUp.setTitle("Comprar inmueble");
+        framePopUp.setLocationRelativeTo(null);
+        framePopUp.setVisible(true);
+        framePopUp.setContentPane(new PantallaVenta(cliente, inmuebleDTO, framePopUp).getPanelPrincipal());
+        framePopUp.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                GestorGUI.enableFramePrincipal();
+            }
+        });
         framePopUp.pack();
 
     }
+
 
     public static void abrirLogin(){
 
@@ -210,6 +235,15 @@ public class GestorGUI {
 
     public static void pack(){
         framePrincipal.pack();
+    }
+
+    public static void disableFramePrincipal(){
+        framePrincipal.setEnabled(false);
+    }
+
+    public static void enableFramePrincipal(){
+        framePrincipal.setEnabled(true);
+        framePrincipal.toFront();
     }
 
 

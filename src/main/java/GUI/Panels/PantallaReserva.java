@@ -48,10 +48,7 @@ public class PantallaReserva {
     public PantallaReserva(ClienteDTO cliente, InmuebleDTO inmueble, JFrame framePadre) {
         this.framePadre=framePadre;
 
-        //TODO poner precio de la reserva real a la hora de integrar
-        inmueble.setPrecioReserva(167.5f);
         precioReservaInmueble= inmueble.getPrecioReserva();
-
 
         //Init inmueble y cliente
         labelNombreCliente.setText(cliente.getNombre()+ " "+ cliente.getApellido());
@@ -77,6 +74,7 @@ public class PantallaReserva {
             @Override
             public void actionPerformed(ActionEvent e) {
                 framePadre.dispose();
+                GestorGUI.enableFramePrincipal();
             }
         });
         buttonGenerarReserva.addActionListener(new ActionListener() {
@@ -94,7 +92,9 @@ public class PantallaReserva {
                     JOptionPane.showMessageDialog(framePadre,"Ha sucedido un error al generar la reserva: "
                             + ex.getMessage(),"Ha ocurrido un error en reserva", JOptionPane.ERROR_MESSAGE);
                 }
+                GestorGUI.enableFramePrincipal();
                 framePadre.dispose();
+                GestorGUI.pop();
             }
         });
     }
@@ -111,7 +111,7 @@ public class PantallaReserva {
         seleccionPath.setDialogTitle("Seleccione el archivo donde se guardará la reserva");
         seleccionPath.setFileSelectionMode(JFileChooser.FILES_ONLY);
         seleccionPath.setMultiSelectionEnabled(false);
-        seleccionPath.setSelectedFile(new File("Reserva"));
+        seleccionPath.setSelectedFile(new File("Comprobante_Reserva"));
         seleccionPath.setFileFilter(new FileNameExtensionFilter(".txt",".txt"));
         seleccionPath.setAcceptAllFileFilterUsed(false);
         if(seleccionPath.showSaveDialog(framePadre)==JFileChooser.APPROVE_OPTION){
@@ -134,7 +134,7 @@ public class PantallaReserva {
         pw.println("Provincia: " + inmueble.getProvincia());
         pw.println("Localidad: " + inmueble.getLocalidad());
         pw.println("Calle: " + inmueble.getCalle());
-        pw.println("Nro de Calle: " + inmueble.getNumeroCalle());
+        pw.println("Número de Calle: " + inmueble.getNumeroCalle());
         pw.println();
         pw.println();
         pw.println("Vigencia de la reserva: hasta el " + LocalDate.now().plusDays(dias));
