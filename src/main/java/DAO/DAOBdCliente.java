@@ -16,7 +16,13 @@ public class DAOBdCliente implements ClienteDAO{
 
 
         manager.getTransaction().begin();
-        manager.persist(cliente);
+
+        if(cliente.getId()!=null){
+            Cliente c = manager.merge(cliente);
+            manager.persist(c);
+        }else {
+            manager.persist(cliente);
+        }
         manager.getTransaction().commit();
         manager.close();
 

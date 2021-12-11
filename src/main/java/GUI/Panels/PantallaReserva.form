@@ -22,6 +22,7 @@
             </constraints>
             <properties>
               <font size="24"/>
+              <foreground color="-10610709"/>
               <text value="Generar Reserva"/>
             </properties>
           </component>

@@ -184,10 +184,9 @@ public class PantallaCrearCliente {
                 if(validarUsername() & validarContrasenia() & validarNombre() & validarApellido() & validarTelefono()){
                     ClienteDTO clienteDTO = collectDataCliente();
                     PreferenciaDTO preferenciaDTO = collectDataPreferencias();
+                    clienteDTO.setId(elemento.getId());
                     clienteDTO.setPreferencias(preferenciaDTO);
                     gestorClientes.guardarCliente(clienteDTO);
-
-
                     GestorGUI.pop();
                 }
             }

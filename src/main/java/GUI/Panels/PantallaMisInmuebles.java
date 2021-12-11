@@ -105,7 +105,6 @@ public class PantallaMisInmuebles {
                 paginaActual--;
                 Integer fin = paginaActual * 5;
                 Integer inicio = fin - 5;
-
                 //Actualizamos la lista de inmuebles
                 ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
                 inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio,fin));
@@ -162,23 +161,6 @@ public class PantallaMisInmuebles {
 
         siguienteButton.addActionListener(actionListenerBotonSiguiente);
 
-
-        anteriorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                paginaActual--;
-                Integer fin = paginaActual * 5;
-                Integer inicio = fin - 5;
-
-                //Actualizamos la lista de inmuebles
-                ArrayList<InmuebleDTO> inmueblesAMostrar = new ArrayList<>();
-                inmueblesAMostrar.addAll(inmueblesActuales.subList(inicio,fin));
-                actualizarTablitaInmuebles(inmueblesAMostrar);
-                actualizarBotones();
-                numeroDePaginaLabel.setText(paginaActual.toString());
-
-            }
-        });
 
         crearInmuebleButton.addActionListener(new ActionListener() {
             @Override

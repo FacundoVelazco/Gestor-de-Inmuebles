@@ -50,8 +50,8 @@ public class ClienteDTO {
         return id;
     }
 
-    public void setId(Long id) {
-        id = id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {

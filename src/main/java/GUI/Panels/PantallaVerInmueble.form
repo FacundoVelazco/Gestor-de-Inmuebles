@@ -27,6 +27,7 @@
             </constraints>
             <properties>
               <font size="24"/>
+              <foreground color="-10610709"/>
               <text value="Ver Inmueble"/>
             </properties>
           </component>

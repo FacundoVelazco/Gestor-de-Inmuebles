@@ -3,6 +3,9 @@ package Domain;
 
 import Domain.Util.TipoUser;
 import Domain.Util.Usuario;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 

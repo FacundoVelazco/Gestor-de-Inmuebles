@@ -22,7 +22,7 @@ public class Reserva {
     @Column(name = "monto")
     private Float monto;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_inmueble")
     private Inmueble inmueble;
 

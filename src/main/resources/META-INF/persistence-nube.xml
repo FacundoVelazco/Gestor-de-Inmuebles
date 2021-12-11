@@ -14,9 +14,9 @@
         <class>Domain.Admin</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://kesavan.db.elephantsql.com:5432/jlxqzzsm"/>
-            <property name="javax.persistence.jdbc.user" value="jlxqzzsm"/>
-            <property name="javax.persistence.jdbc.password" value="TBDV8Or5VYtHSRvqo8GgRrCON82eyU79" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/TP-MA"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="postgres" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>

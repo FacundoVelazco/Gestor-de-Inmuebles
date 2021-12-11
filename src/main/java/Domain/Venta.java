@@ -9,7 +9,7 @@ public class Venta {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
     @ManyToOne(cascade = CascadeType.MERGE)
