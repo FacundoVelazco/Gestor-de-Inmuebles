@@ -66,7 +66,8 @@ public class PantallaMenuPrincipal {
                         GestorGUI.pushModificar(Pantalla.CREAR_CLIENTE,gestorClientes.getClienteByUsername(GestorUsuarios.getUsuarioLogueado().getUsername()));
                         break;
                     case VENDEDOR:
-                        //TODO MOSTRAR MODIFICAR VENDERDOR
+                        GestorVendedor gestorVendedor = new GestorVendedor();
+                        GestorGUI.pushModificar(Pantalla.CREAR_VENDEDOR, gestorVendedor.getVendedorByUsername(GestorUsuarios.getUsuarioLogueado().getUsername()));
                         break;
                     case PROPIETARIO:
                         GestorPropietario gestorPropietario = new GestorPropietario();
@@ -88,18 +89,6 @@ public class PantallaMenuPrincipal {
                 GestorGUI.push(Pantalla.ABM_CLIENTE);
             }
         });
-        altaBajaYModificarButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO ABRIR ABM VENDEDOR
-            }
-        });
-        altaBajaYModificarButton3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO ABRIR ABM PROPIETARIO
-            }
-        });
         consultarInmuebleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,15 +101,15 @@ public class PantallaMenuPrincipal {
                 GestorGUI.pushModificar(Pantalla.MIS_INMUEBLES,GestorUsuarios.getUsuarioLogueado().getUsername());
             }
         });
-        buttonReserva.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO Estos clientes e inmuebles son de prueba
-                GestorClientes gestorClientes=new GestorClientes();
-                GestorInmuebles gestorInmuebles=new GestorInmuebles();
-                GestorGUI.popUpReserva(gestorClientes.listarClientes().get(0),gestorInmuebles.listarInmuebles(1,2).get(0));
-            }
-        });
+//        buttonReserva.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //TODO Estos clientes e inmuebles son de prueba
+//                GestorClientes gestorClientes=new GestorClientes();
+//                GestorInmuebles gestorInmuebles=new GestorInmuebles();
+//                GestorGUI.popUpReserva(gestorClientes.listarClientes().get(0),gestorInmuebles.listarInmuebles(1,2).get(0));
+//            }
+//        });
 
         catalogoInmueblesButton.addActionListener(new ActionListener() {
             @Override
@@ -135,8 +124,6 @@ public class PantallaMenuPrincipal {
             public void actionPerformed(ActionEvent e) {
                 GestorGUI.abrirLogin();
                 GestorUsuarios.setUsuarioLogueado(null);
-
-
             }
         });
         altaBajaYModificarButton2.addActionListener(new ActionListener() {
