@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="postgres@localhost">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.23">
+    <root id="1"/>
+    <database id="2" parent="1" name="TP-MA">
+      <ObjectId>24742</ObjectId>
+      <Grants>11||10|C|G
+11||-9223372036854775808|U|G
+11||10|U|G
+2200||-9223372036854775808|C|G
+2200||10|C|G
+2200||-9223372036854775808|U|G
+2200||10|U|G
+13018||10|C|G
+13018||-9223372036854775808|U|G
+13018||10|U|G</Grants>
+      <Owner>postgres</Owner>
+      <IntrospectionStateNumber>653</IntrospectionStateNumber>
+    </database>
+    <database id="3" parent="1" name="postgres">
+      <ObjectId>13318</ObjectId>
+      <Comment>default administrative connection database</Comment>
+      <Grants>11||10|C|G
+11||-9223372036854775808|U|G
+11||10|U|G
+2200||-9223372036854775808|C|G
+2200||10|C|G
+2200||-9223372036854775808|U|G
+2200||10|U|G
+13018||10|C|G
+13018||-9223372036854775808|U|G
+13018||10|U|G</Grants>
+      <Owner>postgres</Owner>
+      <Current>1</Current>
+      <Relations>sequence|table|16550|16552|1
+sequence|table|16558|16560|1
+sequence|table|16569|16571|1
+sequence|table|16587|16589|1
+sequence|table|16598|16600|1
+sequence|table|16611|16613|1
+sequence|table|16619|16621|1
+sequence|table|16638|16640|1
+sequence|table|16646|16648|2
+sequence|table|16660|16662|1
+sequence|table|16668|16670|1
+sequence|table|16691|16693|1
+sequence|table|16699|16701|1
+sequence|table|16707|16709|1
+</Relations>
+    </database>
+    <role id="4" parent="1" name="pg_execute_server_program">
+      <ObjectId>4571</ObjectId>
+    </role>
+    <role id="5" parent="1" name="pg_monitor">
+      <ObjectId>3373</ObjectId>
+      <RoleGrants>3374
+3375
+3377</RoleGrants>
+    </role>
+    <role id="6" parent="1" name="pg_read_all_settings">
+      <ObjectId>3374</ObjectId>
+    </role>
+    <role id="7" parent="1" name="pg_read_all_stats">
+      <ObjectId>3375</ObjectId>
+    </role>
+    <role id="8" parent="1" name="pg_read_server_files">
+      <ObjectId>4569</ObjectId>
+    </role>
+    <role id="9" parent="1" name="pg_signal_backend">
+      <ObjectId>4200</ObjectId>
+    </role>
+    <role id="10" parent="1" name="pg_stat_scan_tables">
+      <ObjectId>3377</ObjectId>
+    </role>
+    <role id="11" parent="1" name="pg_write_server_files">
+      <ObjectId>4570</ObjectId>
+    </role>
+    <role id="12" parent="1" name="postgres">
+      <ObjectId>10</ObjectId>
+      <CreateDb>1</CreateDb>
+      <CreateRole>1</CreateRole>
+      <CanLogin>1</CanLogin>
+      <SuperRole>1</SuperRole>
+      <Replication>1</Replication>
+      <BypassRls>1</BypassRls>
+    </role>
+    <tablespace id="13" parent="1" name="pg_default">
+      <ObjectId>1663</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1</StateNumber>
+    </tablespace>
+    <tablespace id="14" parent="1" name="pg_global">
+      <ObjectId>1664</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1</StateNumber>
+    </tablespace>
+  </database-model>
+</dataSource>
