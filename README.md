@@ -8,3 +8,4 @@ Este es el trabajo práctico desarrollado para la materia de Métodos Ágiles de
 - Como un propietarios, crear inmuebles con sus respectivos datos, fotos y propiedades.
 - Como un cliente, generar un catálogo personalizado según tus intereses.
 - También como cliente, hacer reservas o compras de inmuebles a tu nombre.
+
