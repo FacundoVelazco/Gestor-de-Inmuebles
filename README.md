@@ -1,5 +1,5 @@
 # Gestor de Inmuebles
-Diciembre 2021
+Diciembre de 2021
 
 ## Objetivos
 Este es el trabajo práctico desarrollado para la materia de Métodos Ágiles de desarrollo de software.
